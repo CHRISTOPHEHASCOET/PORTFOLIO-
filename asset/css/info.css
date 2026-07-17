@@ -1,0 +1,915 @@
+@layer components {
+
+  :root {
+    /* ═══════════════════════════════════════════════════════════
+       TERMINAL - VARIABLES SPÉCIFIQUES
+    ═══════════════════════════════════════════════════════════ */
+    --terminal-active-color: var(--color-accent);
+    --terminal-scene-height: clamp(36rem, 70dvh, 50rem);
+    --terminal-beam-size: 3.6rem;
+    --terminal-beam-opacity: 0.42;
+    --terminal-beam-hover-opacity: 0.9;
+    --terminal-cut: 1.05rem;
+    --terminal-post-height: 2.4rem;
+
+    /* Clip-path terminal (utilise --terminal-cut différent de --cut global) */
+    --clip-terminal: polygon(
+      0 var(--terminal-cut),
+      var(--terminal-cut) 0,
+      calc(100% - var(--terminal-cut)) 0,
+      100% var(--terminal-cut),
+      100% calc(100% - var(--terminal-cut)),
+      calc(100% - var(--terminal-cut)) 100%,
+      var(--terminal-cut) 100%,
+      0 calc(100% - var(--terminal-cut))
+    );
+
+    /* ═══════════════════════════════════════════════════════════
+       TERMINAL - BACKGROUNDS SPÉCIFIQUES
+    ═══════════════════════════════════════════════════════════ */
+    
+    --bg-terminal-main: 
+      radial-gradient(circle at 62% 44%, rgba(0, 180, 255, 0.055), transparent 48%),
+      radial-gradient(circle at 86% 76%, rgba(255, 149, 0, 0.024), transparent 34%),
+      linear-gradient(180deg, rgba(3, 9, 16, 0.99), rgba(1, 5, 10, 0.99));
+
+    --bg-terminal-panel: 
+      linear-gradient(180deg, rgba(9, 18, 28, 0.96), rgba(4, 10, 18, 0.98));
+
+    --bg-terminal-panel-alt: 
+      linear-gradient(180deg, rgba(12, 18, 26, 0.96), rgba(7, 12, 18, 0.98));
+
+    --bg-terminal-lines: 
+      linear-gradient(90deg,
+        transparent 0 8%,
+        rgba(255, 255, 255, 0.015) 8.3% 8.65%,
+        transparent 9% 22%,
+        rgba(0, 210, 255, 0.022) 22.3% 22.65%,
+        transparent 23% 49%,
+        rgba(255, 255, 255, 0.015) 49.3% 49.65%,
+        transparent 50% 74%,
+        rgba(0, 210, 255, 0.02) 74.3% 74.65%,
+        transparent 75% 91%,
+        rgba(255, 255, 255, 0.013) 91.3% 91.65%,
+        transparent 92% 100%);
+
+    --bg-terminal-top-glow: 
+      linear-gradient(to bottom,
+        rgba(0, 120, 255, 0.065),
+        rgba(0, 210, 255, 0.022) 48%,
+        transparent 100%);
+
+    --bg-terminal-scene-glow: 
+      radial-gradient(circle at 62% 46%, rgba(0, 180, 255, 0.05), transparent 46%),
+      radial-gradient(ellipse at 60% 80%, rgba(0, 210, 255, 0.032), transparent 46%);
+
+    --bg-terminal-floor-glow: 
+      radial-gradient(ellipse at 68% 72%, rgba(0, 210, 255, 0.04), transparent 38%),
+      radial-gradient(ellipse at 80% 86%, rgba(255, 255, 255, 0.016), transparent 42%);
+
+    --bg-terminal-concourse-lines:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 72%),
+      repeating-linear-gradient(90deg,
+        transparent 0 5.4rem,
+        rgba(0, 210, 255, 0.035) 5.45rem 5.55rem,
+        transparent 5.6rem 10.2rem),
+      linear-gradient(90deg,
+        transparent 0 18%,
+        rgba(255, 255, 255, 0.014) 18.4% 18.75%,
+        transparent 19.2% 42%,
+        rgba(0, 210, 255, 0.026) 42.4% 42.75%,
+        transparent 43.2% 68%,
+        rgba(255, 255, 255, 0.012) 68.5% 68.85%,
+        transparent 69.3% 100%);
+
+    --bg-terminal-floor-grid:
+      radial-gradient(ellipse at 52% 34%, rgba(0, 210, 255, 0.052), transparent 44%),
+      linear-gradient(to top, rgba(0, 180, 255, 0.03), transparent 44%),
+      linear-gradient(rgba(0, 210, 255, 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 210, 255, 0.018) 1px, transparent 1px);
+
+    --bg-terminal-gates-glow:
+      linear-gradient(135deg,
+        transparent 0 18%,
+        rgba(0, 210, 255, 0.032) 33%,
+        rgba(0, 210, 255, 0.018) 48%,
+        transparent 66% 100%);
+
+    /* Gate card backgrounds */
+    --bg-gate-card: 
+      linear-gradient(180deg, 
+        var(--color-white-05), 
+        var(--color-white-01));
+
+    --bg-gate-active: 
+      linear-gradient(180deg, rgba(14, 28, 40, 0.98), rgba(3, 8, 14, 0.98));
+
+    --bg-scan-effect: 
+      linear-gradient(100deg,
+        transparent 0 38%,
+        var(--color-white-08) 48%,
+        transparent 58% 100%);
+
+    /* ═══════════════════════════════════════════════════════════
+       TERMINAL - SHADOWS SPÉCIFIQUES
+    ═══════════════════════════════════════════════════════════ */
+    
+    --shadow-terminal-panel: 
+      0 10px 24px var(--color-black-35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+    --shadow-gate-card: 
+      inset 0 1px 0 var(--color-white-04),
+      0 0 18px rgba(0, 150, 255, 0.08);
+
+    --shadow-gate-hover: 0 14px 28px var(--color-black-72);
+
+    --shadow-gate-active-profile: 
+      0 0 22px rgba(0, 210, 255, 0.16),
+      0 0 40px rgba(0, 210, 255, 0.05);
+
+    /* ═══════════════════════════════════════════════════════════
+       TERMINAL - BORDERS SPÉCIFIQUES
+    ═══════════════════════════════════════════════════════════ */
+    
+    --border-terminal-main: 1px solid var(--color-accent-12);
+    --border-terminal-orientation: 1px solid rgba(0, 210, 255, 0.13);
+    --border-gate-card: 1px solid rgba(0, 210, 255, 0.28);
+
+    /* ═══════════════════════════════════════════════════════════
+       TERMINAL - TRANSITIONS
+    ═══════════════════════════════════════════════════════════ */
+    
+    --transition-gate: 
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+
+    --transition-beam: 
+      opacity var(--transition-fast),
+      filter var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  /* =========================
+     MAIN WRAPPER
+  ========================= */
+
+  .terminal-main {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(1rem, 2vw, 1.6rem) clamp(1.8rem, 3.5vw, 2.8rem);
+    border-block: var(--border-terminal-main);
+    background: var(--bg-terminal-main);
+  }
+
+  .terminal-main::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.48;
+    background: var(--bg-terminal-lines);
+  }
+
+  .terminal-main::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: clamp(5.8rem, 12vw, 8.5rem);
+    pointer-events: none;
+    background: var(--bg-terminal-top-glow);
+  }
+
+  /* =========================
+     SCENE
+  ========================= */
+
+  .terminal-scene {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(15.5rem, 17.5rem) 1fr;
+    align-items: center;
+    min-height: var(--terminal-scene-height);
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+
+  .terminal-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background: var(--bg-terminal-scene-glow);
+  }
+
+  .terminal-scene::after {
+    content: "";
+    position: absolute;
+    inset: 24% -8% -12%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.42;
+    filter: blur(18px);
+    background: var(--bg-terminal-floor-glow);
+  }
+
+  /* =========================
+     GUIDE PANEL
+  ========================= */
+
+  .terminal-guide {
+    position: relative;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.82rem;
+    align-self: center;
+    min-height: clamp(20rem, 38dvh, 25rem);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    background: var(--bg-terminal-panel);
+    border: var(--border-glass);
+    box-shadow: var(--shadow-terminal-panel);
+    clip-path: var(--clip-terminal);
+  }
+
+  .terminal-guide::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 3px;
+    background: var(--gradient-neon-line);
+    border-radius: var(--radius-md);
+    filter: blur(0.2px);
+    pointer-events: none;
+  }
+
+  .terminal-guide::after {
+    content: "";
+    position: absolute;
+    inset: 0.55rem;
+    pointer-events: none;
+    box-shadow: var(--shadow-flap-inset);
+    background: var(--gradient-glass-overlay);
+    border: var(--border-glass-inner);
+    clip-path: inherit;
+  }
+
+  .terminal-guide__header {
+    padding-block-start: 0.55rem;
+  }
+
+  .terminal-guide__title {
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 2.1rem;
+    line-height: 0.92;
+  }
+
+  .terminal-guide__title strong {
+    display: block;
+    font-size: clamp(1.3rem, 2.3vw, 1.8rem);
+    background: var(--gradient-title);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 12px var(--color-accent-15);
+  }
+
+  .terminal-guide__label {
+    margin-block-start: 0.75rem;
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.82;
+  }
+
+  .terminal-guide__content {
+    display: grid;
+    gap: 0.6rem;
+    padding-block-start: var(--space-1);
+  }
+
+  .terminal-guide__zone {
+    width: fit-content;
+    color: var(--terminal-active-color);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+
+  .terminal-guide__content h2 {
+    max-width: 20ch;
+    color: var(--color-text);
+    font-size: var(--text-base);
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .terminal-guide__content p:not(.terminal-guide__zone, .terminal-guide__status) {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .terminal-guide__status {
+    width: fit-content;
+    margin-block-start: 0.2rem;
+    padding: 0.35rem 0.6rem;
+    color: var(--color-green);
+    font-size: var(--text-xs);
+    border: var(--border-green-26);
+    border-radius: var(--radius-pill);
+    background: var(--color-green-065);
+  }
+
+  /* =========================
+     CONCOURSE
+  ========================= */
+
+  .terminal-concourse {
+    position: relative;
+    isolation: isolate;
+    min-height: var(--terminal-scene-height);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .terminal-concourse::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: 58%;
+    pointer-events: none;
+    opacity: 0.38;
+    mask-image: linear-gradient(to bottom, black 0 70%, transparent 100%);
+    background: var(--bg-terminal-concourse-lines);
+  }
+
+  .terminal-concourse::after {
+    content: "";
+    position: absolute;
+    left: -12%;
+    right: -10%;
+    bottom: -20%;
+    z-index: 0;
+    height: 70%;
+    pointer-events: none;
+    opacity: 0.36;
+    transform: perspective(58rem) rotateX(63deg) scale(1.08);
+    transform-origin: bottom;
+    mask-image: linear-gradient(to top, black 0 65%, transparent 100%);
+    background: var(--bg-terminal-floor-grid);
+    background-size:
+      100% 100%,
+      100% 100%,
+      5.8rem 3.35rem,
+      5.8rem 3.35rem;
+  }
+
+  /* =========================
+     BACK SIGN
+  ========================= */
+
+  .terminal-back-sign {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    font-size: clamp(7rem, 16vw, 14rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.035);
+    opacity: 0.045;
+    filter: blur(1px);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* =========================
+     CENTER PANEL (ORIENTATION)
+  ========================= */
+
+  .terminal-orientation {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    z-index: 3;
+    width: min(25rem, 39%);
+    translate: -50% -50%;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    pointer-events: none;
+    border-radius: var(--radius-md);
+    border-block: var(--border-terminal-orientation);
+    background: var(--bg-terminal-panel-alt);
+    box-shadow: var(--shadow-board);
+    clip-path: var(--clip-terminal);
+    text-shadow: 0 0 12px var(--color-accent-10);
+  }
+
+  .terminal-orientation::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 3px;
+    background: var(--gradient-neon-line);
+    border-radius: var(--radius-md);
+    filter: blur(0.2px);
+    pointer-events: none;
+  }
+
+  .terminal-orientation::after {
+    content: "";
+    position: absolute;
+    inset: 0.55rem;
+    pointer-events: none;
+    box-shadow: var(--shadow-flap-inset);
+    background: var(--gradient-glass-overlay);
+    border: var(--border-glass-inner);
+    clip-path: inherit;
+  }
+
+  .terminal-orientation h2 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  .terminal-orientation p {
+    margin-block-start: 0.25rem;
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.68;
+  }
+
+  /* =========================
+     GATES WRAPPER
+  ========================= */
+
+  .terminal-gates {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    width: 100%;
+    min-height: 4.8rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .terminal-gates::before {
+    content: "";
+    position: absolute;
+    inset: 4% 2% 8%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.82;
+    filter: blur(16px);
+    background: var(--bg-terminal-gates-glow);
+  }
+
+  .terminal-gates ol {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* =========================
+     GATE SLOT
+  ========================= */
+
+  .terminal-gate-slot {
+    --gate-color: var(--color-accent);
+    position: absolute;
+    z-index: 2;
+    width: clamp(12rem, 14vw, 15rem);
+    isolation: isolate;
+  }
+
+  /* ===== Beam ===== */
+  .terminal-gate-slot::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    z-index: 0;
+    width: 2px;
+    height: var(--terminal-post-height);
+    translate: -50% 0;
+    opacity: var(--terminal-beam-opacity);
+    transition: var(--transition-beam);
+    background:
+      linear-gradient(to bottom,
+        var(--color-white-14),
+        var(--gate-color) 24%,
+        transparent 100%);
+    box-shadow:
+      0 0 6px color-mix(in srgb, var(--gate-color) 55%, transparent),
+      0 0 14px color-mix(in srgb, var(--gate-color) 28%, transparent);
+  }
+
+  /* ===== Ground circle ===== */
+  .terminal-gate-slot::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    z-index: 0;
+    width: var(--terminal-beam-size);
+    aspect-ratio: 1;
+    translate: -50% 0;
+    transform: rotateX(78deg);
+    border-radius: 50%;
+    opacity: 0.12;
+    transition: var(--transition-beam);
+    border: 1px solid color-mix(in srgb, var(--gate-color) 42%, white 8%);
+    background:
+      radial-gradient(circle,
+        color-mix(in srgb, var(--gate-color) 65%, white 6%) 0 11%,
+        var(--color-white-06) 13% 34%,
+        transparent 42%);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--gate-color) 45%, transparent));
+  }
+
+  /* ===== TOP GATES ===== */
+  .terminal-gate-slot:not(
+    .terminal-gate-slot--terminal,
+    .terminal-gate-slot--cockpit,
+    .terminal-gate-slot--control-tower
+  )::before {
+    top: calc(100% + 0.25rem);
+  }
+
+  .terminal-gate-slot:not(
+    .terminal-gate-slot--terminal,
+    .terminal-gate-slot--cockpit,
+    .terminal-gate-slot--control-tower
+  )::after {
+    top: calc(100% + var(--terminal-post-height));
+  }
+
+  /* ===== BOTTOM GATES ===== */
+  .terminal-gate-slot--terminal::before,
+  .terminal-gate-slot--cockpit::before,
+  .terminal-gate-slot--control-tower::before {
+    top: calc(100% + 0.25rem);
+    background:
+      linear-gradient(to top,
+        var(--color-white-14),
+        var(--gate-color) 24%,
+        transparent 100%);
+  }
+
+  .terminal-gate-slot--terminal::after,
+  .terminal-gate-slot--cockpit::after,
+  .terminal-gate-slot--control-tower::after {
+    top: calc(100% + var(--terminal-post-height));
+  }
+
+  .terminal-gate-slot--crew-profile .terminal-gate {
+    border-color: rgba(0, 210, 255, 0.65);
+    box-shadow: var(--shadow-gate-active-profile);
+  }
+
+  /* =========================
+     GATE CARD
+  ========================= */
+
+  .terminal-gate {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(10rem, 15vw, 14rem);
+    min-height: 3rem;
+    padding: 0.9rem 1.1rem;
+    text-align: center;
+    opacity: 0.82;
+    border-radius: 8px;
+    border: var(--border-gate-card);
+    background: var(--bg-gate-card);
+    box-shadow: var(--shadow-gate-card);
+    transition: var(--transition-gate);
+  }
+
+  .terminal-gate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-115%);
+    background: var(--bg-scan-effect);
+  }
+
+  .terminal-gate p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .terminal-gate__name {
+    display: block;
+    width: 100%;
+    color: var(--color-text);
+    font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-shadow:
+      0 0 8px var(--color-white-08),
+      0 0 16px var(--color-accent-08);
+  }
+
+  .terminal-gate small {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: clamp(0.65rem, 0.85vw, 0.78rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  /* =========================
+     HOVER & ACTIVE STATES
+  ========================= */
+
+  .terminal-gate:hover,
+  .terminal-gate:focus-visible,
+  .terminal-gate.is-terminal-active {
+    opacity: 1;
+    scale: 1.015;
+    box-shadow:
+      0 0 0 1px var(--gate-color),
+      var(--shadow-gate-hover),
+      0 0 8px color-mix(in srgb, var(--gate-color) 30%, transparent);
+  }
+
+  .terminal-gate:hover::before,
+  .terminal-gate:focus-visible::before,
+  .terminal-gate.is-terminal-active::before {
+    opacity: 0.75;
+    animation: terminal-gate-scan 0.75s ease-out;
+  }
+
+  .terminal-gate-slot:hover::before,
+  .terminal-gate-slot.is-terminal-active::before {
+    opacity: var(--terminal-beam-hover-opacity);
+    box-shadow:
+      0 0 10px var(--gate-color),
+      0 0 24px color-mix(in srgb, var(--gate-color) 45%, transparent);
+  }
+
+  .terminal-gate-slot:hover::after,
+  .terminal-gate-slot.is-terminal-active::after {
+    opacity: 1;
+    border-color: color-mix(in srgb, var(--gate-color) 70%, white 12%);
+    filter:
+      drop-shadow(0 0 10px var(--gate-color))
+      drop-shadow(0 0 20px color-mix(in srgb, var(--gate-color) 35%, transparent));
+  }
+
+  .terminal-gate.is-terminal-active {
+    background:
+      var(--bg-gate-active) padding-box,
+      linear-gradient(135deg,
+        color-mix(in srgb, var(--gate-color) 82%, white 10%),
+        var(--color-white-14)) border-box;
+  }
+
+  @keyframes terminal-gate-scan {
+    to {
+      transform: translateX(115%);
+    }
+  }
+
+  /* =========================
+     GATE POSITIONS
+  ========================= */
+
+  .terminal-gate-slot--crew-profile {
+    --gate-color: var(--color-primary);
+    top: 5%;
+    left: 3%;
+  }
+
+  .terminal-gate-slot--black-box {
+    --gate-color: var(--color-tech);
+    top: 5%;
+    right: 3%;
+  }
+
+  .terminal-gate-slot--departures {
+    --gate-color: var(--color-accent);
+    top: 39%;
+    left: 2%;
+    z-index: 5;
+  }
+
+  .terminal-gate-slot--boarding-gate {
+    --gate-color: var(--color-amber);
+    top: 39%;
+    right: 2%;
+    z-index: 5;
+  }
+
+  .terminal-gate-slot--terminal {
+    --gate-color: var(--color-green);
+    bottom: 15%;
+    left: 12%;
+  }
+
+  .terminal-gate-slot--cockpit {
+    --gate-color: var(--color-cockpit);
+    bottom: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+
+  .terminal-gate-slot--control-tower {
+    --gate-color: var(--color-tower);
+    right: 12%;
+    bottom: 15%;
+  }
+
+  /* =========================
+     ACTIVE TABLE ROWS
+  ========================= */
+
+  #flight-body tr[data-terminal-zone] {
+    cursor: pointer;
+  }
+
+  #flight-body tr.is-terminal-active > td {
+    background: color-mix(in srgb, var(--terminal-active-color) 10%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -1px 0 color-mix(in srgb, var(--terminal-active-color) 28%, transparent);
+  }
+
+  #flight-body tr.is-terminal-active .flap {
+    color: var(--terminal-active-color);
+    text-shadow:
+      0 0 8px color-mix(in srgb, var(--terminal-active-color) 45%, transparent),
+      0 0 16px color-mix(in srgb, var(--terminal-active-color) 24%, transparent);
+  }
+
+
+  /* =========================
+     RESPONSIVE
+  ========================= */
+
+  @media (max-width: 1024px) {
+
+    .terminal-gate-slot {
+      width: 11rem;
+    }
+
+    .terminal-gate-slot--crew-profile {
+      top: 5%;
+      left: 2%;
+    }
+
+    .terminal-gate-slot--black-box {
+      top: 5%;
+      right: 2%;
+    }
+
+    .terminal-gate-slot--departures {
+      top: 38%;
+      left: 5%;
+    }
+
+    .terminal-gate-slot--boarding-gate {
+      top: 38%;
+      right: 5%;
+    }
+  }
+
+  @media (max-width: 960px) {
+
+    :root {
+      --terminal-scene-height: auto;
+    }
+
+    .terminal-main {
+      padding-block: var(--space-3);
+    }
+
+    .terminal-scene {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+
+      min-height: auto;
+    }
+
+    .terminal-guide {
+      min-height: auto;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .terminal-concourse {
+      min-height: auto;
+      height: auto;
+    }
+
+    .terminal-back-sign,
+    .terminal-back-subsign {
+      display: none;
+    }
+
+    .terminal-orientation {
+      position: relative;
+      top: auto;
+      left: auto;
+
+      width: 90%;
+
+      translate: none;
+
+      margin: var(--space-3) auto;
+    }
+
+    .terminal-orientation::before,
+    .terminal-orientation::after {
+      display: none;
+    }
+
+    .terminal-gates {
+      position: relative;
+
+      min-height: auto;
+      height: auto;
+
+      padding: var(--space-3) 0;
+    }
+
+    .terminal-gates ol {
+      position: relative;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-3);
+
+      height: auto;
+    }
+
+    .terminal-gate-slot {
+      position: relative;
+
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+
+      width: 100%;
+      max-width: 350px;
+
+      margin: 0 auto;
+
+      transform: none !important;
+    }
+
+    .terminal-gate-slot::before,
+    .terminal-gate-slot::after {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .terminal-gate,
+    .terminal-gate::before {
+      transition: none;
+      animation: none;
+    }
+  }
+}

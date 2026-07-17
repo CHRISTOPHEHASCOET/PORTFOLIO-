@@ -1,0 +1,351 @@
+@layer components {
+
+    /* ═══════════════════════════════════════════
+     ZONE / HEADER DE PAGE
+  ═══════════════════════════════════════════ */
+    .boarding-zone {
+        width: 100%;
+        max-width: var(--container);
+        /* réutilise --container au lieu de --container-width */
+        margin-inline: auto;
+    }
+
+    .zone-header {
+        margin-bottom: var(--space-4);
+        border-bottom: 2px solid var(--color-bg-card);
+        padding-bottom: var(--space-2);
+    }
+
+    .zone-header__title {
+        font-family: var(--font-sans);
+        font-size: var(--text-2xl);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+    }
+
+    .zone-header__subtitle {
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+        margin-top: var(--space-1);
+        letter-spacing: 1px;
+    }
+
+    .ticker-bar {
+        background: var(--color-bg-panel);
+        border: 1px solid var(--color-primary);
+        padding: var(--space-1) var(--space-2);
+        border-radius: var(--radius-xs);
+        margin-bottom: var(--space-4);
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: var(--text-sm);
+    }
+
+    /* Classes utilitaires (si pas déjà globales) */
+    .txt-mono {
+        font-family: var(--font-mono);
+    }
+
+    .txt-accent {
+        color: var(--color-accent);
+    }
+
+    .txt-green {
+        color: var(--color-green);
+    }
+
+    .txt-amber {
+        color: var(--color-amber);
+    }
+
+    .txt-muted {
+        color: var(--color-muted);
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .flex-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ═══════════════════════════════════════════
+     FLIGHT PASS - carte
+  ═══════════════════════════════════════════ */
+    .flight-pass-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-card);
+        padding: 5px;
+        margin-bottom: var(--space-4);
+    }
+
+    .flight-pass {
+        display: flex;
+        background: var(--bg-main);
+        border: 2px solid var(--color-bg-card);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-card);
+        position: relative;
+        clip-path: inset(0 0 100% 0);
+        /* caché pour GSAP */
+        transition: border-color var(--transition-fast);
+    }
+
+    .flight-pass:hover {
+        border-color: var(--color-primary);
+    }
+
+    .flight-pass__main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: var(--space-3);
+    }
+
+    .flight-pass__header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 2px dashed var(--color-bg-card);
+        padding-bottom: var(--space-2);
+        margin-bottom: var(--space-2);
+    }
+
+    .flight-pass__meta {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .flight-pass__meta--center {
+        flex: 1;
+        margin-inline: var(--space-3);
+    }
+
+    .flight-pass__value {
+        font-weight: 700;
+        font-size: var(--text-lg);
+    }
+
+    .flight-pass__value--title {
+        font-size: var(--text-xl);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .flight-pass__body {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: var(--space-3);
+        margin-bottom: var(--space-3);
+    }
+
+    .flight-pass__visual {
+        background: var(--color-bg-panel);
+        border: 2px solid var(--color-bg-card);
+        border-radius: var(--radius-sm);
+        height: 130px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 10px var(--color-black-50);
+    }
+
+    .flight-pass__visual img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .flight-pass__desc {
+        font-size: var(--text-base);
+        line-height: 1.5;
+        margin-block: var(--space-1) var(--space-2);
+    }
+
+    .tech-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-1);
+    }
+
+    .tech-list__item {
+        background: var(--color-accent-15);
+        border: var(--border-accent-35);
+        padding: 0.2rem 0.5rem;
+        border-radius: var(--radius-xs);
+        font-size: var(--text-xs);
+        font-weight: 700;
+    }
+
+    .flight-pass__footer {
+        margin-top: auto;
+        background: var(--color-bg-panel);
+        border: var(--border-white-06);
+        padding: var(--space-1);
+        border-radius: var(--radius-sm);
+        display: flex;
+        gap: var(--space-2);
+    }
+
+    /* STUB */
+    .flight-pass__stub {
+        width: 250px;
+        background: var(--color-bg-panel);
+        border-left: 2px dashed var(--color-bg-card);
+        padding: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    .flight-pass__stub::before,
+    .flight-pass__stub::after {
+        content: '';
+        position: absolute;
+        left: -13px;
+        width: 24px;
+        height: 24px;
+        background: var(--color-bg-page);
+        border-radius: 50%;
+        border: 2px solid var(--color-bg-card);
+        z-index: 2;
+    }
+
+    .flight-pass__stub::before {
+        top: -12px;
+    }
+
+    .flight-pass__stub::after {
+        bottom: -12px;
+    }
+
+    .flight-pass__gate {
+        font-size: var(--text-2xl);
+        line-height: 1;
+        margin-top: var(--space-1);
+    }
+
+    /* BARCODE */
+    .flight-pass__barcode-box {
+        width: 100%;
+        height: 60px;
+        position: relative;
+        overflow: hidden;
+        margin-block: var(--space-3);
+        opacity: 0.4;
+        transition: opacity var(--transition-medium);
+    }
+
+    .flight-pass__barcode {
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(to right,
+                var(--color-text) 0, var(--color-text) 2px, transparent 2px, transparent 4px,
+                var(--color-text) 4px, var(--color-text) 6px, transparent 6px, transparent 9px,
+                var(--color-text) 9px, var(--color-text) 10px, transparent 10px, transparent 14px);
+    }
+
+    .flight-pass__scanner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--color-green);
+        box-shadow: 0 0 15px 2px var(--color-green);
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    .flight-pass:hover .flight-pass__barcode-box {
+        opacity: 0.8;
+    }
+
+    /* BOUTONS */
+    .btn-action-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+    }
+
+    .btn-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-1);
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-primary);
+        padding: var(--space-2);
+        border-radius: var(--radius-xs);
+        font-weight: bold;
+        transition: all var(--transition-fast);
+        cursor: pointer;
+    }
+
+    .btn-action:hover {
+        background: var(--color-primary);
+        color: var(--color-text);
+        box-shadow: 0 0 15px var(--color-accent-35);
+    }
+
+    .btn-action--outline {
+        background: transparent;
+        border-color: var(--color-white-18);
+    }
+
+    .btn-action--outline:hover {
+        border-color: var(--color-text);
+        background: var(--color-white-05);
+        box-shadow: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+        .flight-pass__body {
+            grid-template-columns: 1fr;
+        }
+
+        .flight-pass__visual {
+            height: 180px;
+        }
+
+        .flight-pass {
+            flex-direction: column;
+        }
+
+        .flight-pass__header {
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .flight-pass__meta--center {
+            margin: 0;
+        }
+
+        .flight-pass__stub {
+            width: 100%;
+            border-left: none;
+            border-top: 2px dashed var(--color-bg-card);
+            padding: var(--space-3);
+        }
+
+        .flight-pass__stub::before,
+        .flight-pass__stub::after {
+            top: -12px;
+            left: auto;
+        }
+
+        .flight-pass__stub::before {
+            left: -12px;
+        }
+
+        .flight-pass__stub::after {
+            right: -12px;
+        }
+    }
+}

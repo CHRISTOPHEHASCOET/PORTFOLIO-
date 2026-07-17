@@ -1,0 +1,1152 @@
+:root {
+  --crew-accent: var(--color-accent, #00d2ff);
+  --crew-primary: var(--color-primary, #1f6fea);
+  --crew-green: var(--color-green, #3fb950);
+  --crew-amber: var(--color-amber, #ff9500);
+  --crew-violet: var(--color-violet, #9b5cff);
+  --crew-cockpit: var(--color-cockpit, #caa24f);
+  --crew-tower: var(--color-tower, #4f7cff);
+  --crew-tech: var(--color-tech, #7c8aa6);
+  --crew-red: #ff4d6d;
+
+  --crew-readable: #f1f7ff;
+  --crew-readable-soft: #c7d4e8;
+  --crew-muted: #7f8da3;
+
+  --crew-border: rgba(0, 210, 255, 0.18);
+  --crew-border-strong: rgba(0, 210, 255, 0.36);
+
+  --crew-radius: 1.15rem;
+  --crew-radius-sm: 0.7rem;
+
+  --crew-text-size: 15px;
+  --crew-text-line: 1.7;
+  --crew-text-width: 70ch;
+  --crew-point-size: 26px;
+
+  /* ═══════════════════════════════════════════════════════════
+     NOUVEAU : Shadow inset pour les fiches
+  ═══════════════════════════════════════════════════════════ */
+  --inset-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.crew-main {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(1.4rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(circle at 50% 8%, rgba(0, 210, 255, 0.08), transparent 34rem),
+    radial-gradient(circle at 14% 48%, rgba(31, 111, 234, 0.055), transparent 30rem),
+    radial-gradient(circle at 84% 62%, rgba(255, 149, 0, 0.03), transparent 28rem),
+    linear-gradient(180deg, rgba(1, 6, 12, 0.99), rgba(0, 3, 8, 0.99));
+}
+
+.crew-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.26;
+  background:
+    linear-gradient(90deg, transparent 0 10%, rgba(0, 210, 255, 0.025) 10.2% 10.35%, transparent 10.6% 100%),
+    linear-gradient(90deg, transparent 0 32%, rgba(255, 255, 255, 0.014) 32.2% 32.35%, transparent 32.6% 100%),
+    linear-gradient(90deg, transparent 0 70%, rgba(0, 210, 255, 0.02) 70.2% 70.35%, transparent 70.6% 100%);
+}
+
+.crew-profile {
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================================================
+   FICHE
+===================================================== */
+
+.preflight-sheet {
+  container: crew-sheet / inline-size;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  padding: 0.85rem;
+
+  color: var(--crew-readable);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.11), transparent 24rem),
+    linear-gradient(180deg, rgba(7, 19, 30, 0.98), rgba(2, 8, 15, 0.985));
+
+  border: 1px solid var(--crew-border-strong);
+  border-radius: var(--crew-radius);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.52),
+    0 0 36px rgba(0, 210, 255, 0.065),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.58);
+}
+
+.preflight-sheet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: clamp(1rem, 4vw, 3rem);
+  right: clamp(1rem, 4vw, 3rem);
+  height: 3px;
+  border-radius: 999px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, var(--crew-accent), var(--crew-green), var(--crew-amber), transparent);
+  opacity: 0.9;
+}
+
+.preflight-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0.6rem;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid rgba(0, 210, 255, 0.1);
+  border-radius: calc(var(--crew-radius) - 0.35rem);
+  background:
+    linear-gradient(180deg, rgba(0, 210, 255, 0.065), transparent 28%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.011) 0 1px, transparent 1px 30px);
+}
+
+/* =====================================================
+   EN-TÊTE
+===================================================== */
+
+.preflight-hero {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  padding-block: 0.65rem 0.75rem;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Titre principal en gradient
+═══════════════════════════════════════════════════════════ */
+.preflight-hero__title {
+  order: 1;
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.preflight-hero__eyebrow {
+  order: 2;
+  color: var(--crew-accent);
+  font-size: clamp(0.82rem, 1.25vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+
+.preflight-hero__subtitle {
+  order: 3;
+  color: var(--crew-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+}
+
+/* =====================================================
+   INFORMATIONS APPAREIL
+===================================================== */
+
+.preflight-section-title {
+  margin-block: 0 0.45rem;
+  color: var(--crew-accent);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.preflight-info {
+  margin-block: 0.2rem 0.65rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Shadow inset sur la fiche Informations appareil
+═══════════════════════════════════════════════════════════ */
+.preflight-identity {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--crew-border);
+  border-radius: var(--crew-radius-sm);
+  background: rgba(4, 14, 23, 0.84);
+  box-shadow: var(--inset-shadow);
+}
+
+.preflight-identity div {
+  min-width: 0;
+  padding: 0.55rem 0.68rem;
+  border-right: 1px solid rgba(0, 210, 255, 0.1);
+}
+
+.preflight-identity div:last-child {
+  border-right: 0;
+}
+
+.preflight-identity dt {
+  color: var(--crew-muted);
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.preflight-identity dd {
+  margin-top: 0.22rem;
+  color: var(--crew-readable);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.preflight-identity__status dd {
+  color: var(--crew-amber);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* =====================================================
+   MESSAGE INITIAL
+===================================================== */
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Shadow inset sur le message initial
+═══════════════════════════════════════════════════════════ */
+.preflight-message {
+  display: grid;
+  gap: 0.2rem;
+  margin-block-end: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(0, 210, 255, 0.16);
+  border-radius: var(--crew-radius-sm);
+  background:
+    linear-gradient(180deg, rgba(0, 210, 255, 0.065), rgba(0, 210, 255, 0.02)),
+    rgba(5, 18, 29, 0.86);
+  box-shadow: var(--inset-shadow);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Paragraphes en couleur (test)
+═══════════════════════════════════════════════════════════ */
+.preflight-message p {
+  color: var(--crew-readable-soft);
+  font-size: var(--crew-text-size);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Titre du message en gradient
+═══════════════════════════════════════════════════════════ */
+.preflight-message__title {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.preflight-message__hint {
+  margin-top: 0.25rem;
+  color: var(--crew-primary) !important;
+  font-size: 0.72rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.preflight-message__hint[hidden] {
+  display: none;
+}
+
+/* =====================================================
+   MATRICE PRINCIPALE — LAYOUT 2 COLONNES
+===================================================== */
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Shadow inset sur la console d'inspection
+═══════════════════════════════════════════════════════════ */
+.inspection-console {
+  display: grid;
+  grid-template-columns: minmax(285px, 45%) minmax(0, 55%);
+  min-height: 430px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 210, 255, 0.16);
+  border-radius: var(--crew-radius-sm);
+  background:
+    linear-gradient(180deg, rgba(6, 18, 28, 0.92), rgba(2, 8, 15, 0.96));
+  box-shadow: var(--inset-shadow);
+}
+
+/* =====================================================
+   AVION
+===================================================== */
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Shadow inset sur la carte avion
+═══════════════════════════════════════════════════════════ */
+.aircraft-map {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 0;
+  border-right: 1px solid rgba(0, 210, 255, 0.13);
+  background:
+    radial-gradient(circle at 50% 43%, rgba(0, 210, 255, 0.09), transparent 15rem),
+    linear-gradient(180deg, rgba(6, 20, 34, 0.76), rgba(2, 8, 14, 0.94));
+  box-shadow: var(--inset-shadow);
+}
+
+.aircraft-map__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.68rem;
+  border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Titre "Plan appareil" en gradient
+═══════════════════════════════════════════════════════════ */
+.aircraft-map__header h2 {
+  margin: 0;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.aircraft-map__header p {
+  color: var(--crew-muted);
+  font-size: 0.54rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.aircraft-map__figure {
+  display: grid;
+  place-items: center;
+  height: 400px;
+  margin: 0;
+  padding: 0.25rem;
+  overflow: hidden;
+}
+
+.aircraft-map__stage {
+  position: relative;
+  width: min(112%, 350px);
+  aspect-ratio: 1 / 1.08;
+  display: grid;
+  place-items: center;
+}
+
+.aircraft-map__image {
+  width: 110%;
+  height: 110%;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.95;
+  filter:
+    drop-shadow(0 16px 24px rgba(0, 0, 0, 0.72)) drop-shadow(0 0 18px rgba(0, 210, 255, 0.13));
+  user-select: none;
+  pointer-events: none;
+}
+
+.aircraft-map__points {
+  position: absolute;
+  inset: 0;
+}
+
+.aircraft-map__points li {
+  list-style: none;
+}
+
+.map-point {
+  position: absolute;
+  display: grid;
+  place-items: center;
+
+  width: var(--crew-point-size);
+  height: var(--crew-point-size);
+  aspect-ratio: 1;
+
+  color: var(--point-color);
+  border: 1px solid color-mix(in srgb, var(--point-color) 55%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      color-mix(in srgb, var(--point-color) 18%, transparent),
+      rgba(4, 12, 20, 0.88) 62%);
+
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--point-color) 7%, transparent),
+    0 0 14px color-mix(in srgb, var(--point-color) 18%, transparent);
+
+  cursor: pointer;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease,
+    background 0.25s ease;
+  animation: pulseRing 2s ease-out infinite
+}
+
+
+.map-point--nose {
+  left: 50%;
+  top: 5%;
+  translate: -50% 0;
+}
+
+.map-point--wing-r {
+  right: 6%;
+  top: 60%;
+}
+
+.map-point--wing-l {
+  left: 6%;
+  top: 60%;
+}
+
+.map-point--tail {
+  left: 50%;
+  bottom: 9%;
+  translate: -50% 0;
+}
+
+.map-point__code,
+.map-point__label {
+  display: none !important;
+}
+
+.map-point__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow:
+    0 0 8px currentColor,
+    0 0 16px color-mix(in srgb, currentColor 45%, transparent);
+}
+
+.map-point__check {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  color: currentColor;
+  font-size: 0.35rem;
+  font-weight: 900;
+  text-shadow: 0 0 12px currentColor;
+  pointer-events: none;
+}
+
+.map-point[data-state="locked"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.58) 68%);
+  box-shadow: none;
+  filter: grayscale(0.85);
+}
+
+.map-point[data-state="locked"] .map-point__dot {
+  display: block;
+  width: 9px;
+  height: 9px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: none;
+}
+
+.map-point[data-state="available"] {
+  opacity: 1;
+  border-color: currentColor;
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--point-color) 10%, transparent),
+    0 0 24px color-mix(in srgb, var(--point-color) 42%, transparent);
+}
+
+.map-point[data-state="selected"] {
+  opacity: 1;
+  transform: scale(1.04);
+  border-color: currentColor;
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--point-color) 12%, transparent),
+    0 0 28px color-mix(in srgb, var(--point-color) 52%, transparent);
+}
+
+.map-point[data-state="validated"] {
+  opacity: 1;
+  cursor: default;
+  border-color: currentColor;
+  background:
+    radial-gradient(circle,
+      color-mix(in srgb, var(--point-color) 18%, transparent),
+      rgba(4, 12, 20, 0.9) 62%);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--point-color) 9%, transparent),
+    0 0 20px color-mix(in srgb, var(--point-color) 34%, transparent);
+}
+
+.map-point[data-state="validated"] .map-point__dot {
+  opacity: 0;
+}
+
+.map-point[data-state="validated"] .map-point__check {
+  opacity: 1;
+}
+
+.aircraft-map__legend {
+  padding: 0.48rem 0.65rem;
+  border-top: 1px solid rgba(0, 210, 255, 0.1);
+}
+
+.aircraft-map__legend ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.6rem;
+}
+
+.aircraft-map__legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  color: var(--crew-muted);
+  font-size: 0.54rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.aircraft-map__legend li span {
+  width: 0.42rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--point-color);
+  box-shadow: 0 0 8px var(--point-color);
+}
+
+/* =====================================================
+   PANNEAU DROIT
+===================================================== */
+
+.inspection-reader {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.inspection-reader__header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.45rem 1rem;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Titre "Contrôles pré-vol" en gradient
+═══════════════════════════════════════════════════════════ */
+.inspection-reader__header h2 {
+  margin: 0;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.inspection-reader__header p {
+  color: var(--crew-muted);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.inspection-progressbar {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 0.24rem;
+  overflow: hidden;
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.inspection-progressbar::-webkit-progress-bar {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.inspection-progressbar::-webkit-progress-value {
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, var(--crew-accent), var(--crew-green), var(--crew-amber));
+  box-shadow: 0 0 14px rgba(0, 210, 255, 0.28);
+}
+
+.inspection-progressbar::-moz-progress-bar {
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, var(--crew-accent), var(--crew-green), var(--crew-amber));
+}
+
+.inspection-panel {
+  min-height: 300px;
+  padding: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Shadow inset sur les panneaux (wait, step, final)
+═══════════════════════════════════════════════════════════ */
+.wait-panel,
+.step-card,
+.final-card {
+  min-height: 265px;
+  border-radius: var(--crew-radius-sm);
+  border: 1px solid rgba(0, 210, 255, 0.18);
+  background:
+    radial-gradient(circle at top left, rgba(0, 210, 255, 0.08), transparent 18rem),
+    linear-gradient(180deg, rgba(7, 20, 32, 0.96), rgba(3, 10, 18, 0.98));
+  box-shadow: var(--inset-shadow);
+}
+
+/* =====================================================
+   PANNEAU D'ATTENTE
+===================================================== */
+
+.wait-panel {
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+  padding: 1rem;
+}
+
+.wait-panel__kicker,
+.step-card__kicker,
+.final-card__kicker {
+  color: var(--crew-accent);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Titres h3 en gradient
+═══════════════════════════════════════════════════════════ */
+.wait-panel h3,
+.step-card h3,
+.final-card h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.wait-panel__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1rem;
+}
+
+.wait-panel__status {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.wait-panel__status li {
+  list-style: none;
+  color: var(--crew-readable-soft);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.wait-panel__metrics {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.metric strong {
+  display: block;
+  color: var(--crew-accent);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.metric span {
+  color: var(--crew-muted);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.action-required {
+  color: var(--crew-amber);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   CARTE D'ÉTAPE
+===================================================== */
+
+.step-card {
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--step-color) 38%, transparent);
+}
+
+.step-card::before,
+.final-card::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background:
+    linear-gradient(90deg, transparent, var(--step-color, var(--crew-amber)), transparent);
+}
+
+.step-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.step-card__number {
+  color: var(--step-color);
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Titre de la carte d'étape en gradient
+═══════════════════════════════════════════════════════════ */
+.step-card h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.step-card__body {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.step-card__text {
+  display: grid;
+  gap: 0.75rem;
+  max-width: var(--crew-text-width);
+  color: var(--crew-readable-soft);
+  font-size: var(--crew-text-size);
+  line-height: var(--crew-text-line);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Paragraphes de la carte d'étape en couleur
+═══════════════════════════════════════════════════════════ */
+.step-card__text p {
+  max-width: 65ch;
+  font-size: var(--crew-text-size);
+  line-height: var(--crew-text-line);
+  margin: 0;
+  color: var(--crew-readable-soft);
+  padding-left: 0.75rem;
+}
+
+/* Premier paragraphe plus lumineux */
+.step-card__text p:first-child {
+  color: var(--crew-readable);
+  font-weight: 600;
+}
+
+.step-card__validation {
+  color: var(--step-color);
+  font-size: 0.88rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.step-card__footer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 1rem 1rem;
+}
+
+.validate-button,
+.final-card__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0.62rem 0.82rem;
+  color: var(--step-color, var(--crew-amber));
+  font: inherit;
+  font-size: 0.66rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  border: 1px solid color-mix(in srgb, currentColor 42%, transparent);
+  border-radius: 0.55rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, currentColor 14%, transparent), rgba(0, 0, 0, 0.16));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 12px color-mix(in srgb, currentColor 12%, transparent);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.validate-button:hover,
+.validate-button:focus-visible,
+.final-card__link:hover,
+.final-card__link:focus-visible {
+  transform: translateY(-1px);
+  border-color: currentColor;
+  box-shadow:
+    0 0 0 1px currentColor,
+    0 0 22px color-mix(in srgb, currentColor 25%, transparent);
+}
+
+/* =====================================================
+   FINALE
+===================================================== */
+
+.final-card {
+  --step-color: var(--crew-amber);
+  overflow: hidden;
+  border-color: rgba(255, 149, 0, 0.35);
+}
+
+.final-card__header {
+  padding: 0.85rem 0.95rem;
+  border-bottom: 1px solid rgba(255, 149, 0, 0.16);
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MODIFIÉ : Titre final en gradient
+═══════════════════════════════════════════════════════════ */
+.final-card__header h3 {
+  margin-top: 0.3rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  background: var(--gradient-title, linear-gradient(135deg, #00d2ff, #1f6fea 35%, #3fb950 65%, #ff9500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+.final-card__checks {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.final-card__checks li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--crew-readable);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.final-card__checks span {
+  color: var(--point-color);
+  font-weight: 900;
+}
+
+.final-card__message {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  gap: 0.45rem;
+  text-align: center;
+  color: var(--crew-readable);
+  font-size: var(--crew-text-size);
+  line-height: var(--crew-text-line);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODIFIÉ : Paragraphes du message final en couleur
+═══════════════════════════════════════════════════════════ */
+.final-card__message p {
+  max-width: 55ch;
+  margin: 0 auto;
+  text-align: center;
+  font-size: var(--crew-text-size);
+  line-height: var(--crew-text-line);
+  color: var(--crew-readable-soft);
+}
+
+/* Premier paragraphe plus lumineux */
+.final-card__message p:first-child {
+  color: var(--crew-readable);
+  font-weight: 600;
+}
+
+.final-card__message strong {
+  color: var(--crew-amber);
+}
+
+.final-card__footer {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid rgba(255, 149, 0, 0.12);
+  background: rgba(255, 149, 0, 0.035);
+  text-align: center;
+}
+
+.final-card__status-label {
+  color: var(--crew-amber);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.final-card__status {
+  color: var(--crew-readable);
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.final-card__complete {
+  color: var(--crew-amber);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* =====================================================
+   PROGRESSION BASSE
+===================================================== */
+
+.inspection-status {
+  border-top: 1px solid rgba(0, 210, 255, 0.1);
+  background: rgba(2, 8, 15, 0.58);
+}
+
+.inspection-status ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.inspection-status li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.42rem;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.42rem 0.58rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.045);
+  color: var(--crew-muted);
+  opacity: 0.35;
+}
+
+.inspection-status li:first-child {
+  border-left: 0;
+}
+
+.inspection-status li>span:first-child {
+  color: var(--point-color);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.inspection-status strong {
+  color: inherit;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.inspection-status li[data-state="available"],
+.inspection-status li[data-state="selected"],
+.inspection-status li[data-state="validated"] {
+  opacity: 1;
+  color: var(--crew-readable);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--point-color) 12%, transparent), transparent 70%);
+}
+
+.inspection-status li[data-state="selected"] {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--point-color) 18%, transparent), transparent 70%);
+}
+
+/* =====================================================
+   COULEURS DES POINTS VIA CLASSES
+===================================================== */
+
+.map-point--nose {
+  --point-color: var(--crew-cockpit, #caa24f);
+}
+
+.map-point--wing-r {
+  --point-color: var(--crew-violet, #9b5cff);
+}
+
+.map-point--wing-l {
+  --point-color: var(--crew-green, #3fb950);
+}
+
+.map-point--tail {
+  --point-color: var(--crew-primary, #1f6fea);
+}
+
+/* Légende */
+.aircraft-map__legend li:nth-child(1) {
+  --point-color: var(--crew-cockpit, #caa24f);
+}
+
+.aircraft-map__legend li:nth-child(2) {
+  --point-color: var(--crew-violet, #9b5cff);
+}
+
+.aircraft-map__legend li:nth-child(3) {
+  --point-color: var(--crew-green, #3fb950);
+}
+
+.aircraft-map__legend li:nth-child(4) {
+  --point-color: var(--crew-primary, #1f6fea);
+}
+
+/* Progression basse */
+.inspection-status li:nth-child(1) {
+  --point-color: var(--crew-cockpit, #caa24f);
+}
+
+.inspection-status li:nth-child(2) {
+  --point-color: var(--crew-violet, #9b5cff);
+}
+
+.inspection-status li:nth-child(3) {
+  --point-color: var(--crew-green, #3fb950);
+}
+
+.inspection-status li:nth-child(4) {
+  --point-color: var(--crew-primary, #1f6fea);
+}
+
+/* =====================================================
+   A11Y / RESPONSIVE
+===================================================== */
+
+.map-point:focus-visible,
+.validate-button:focus-visible,
+.final-card__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+@container crew-sheet (max-width: 900px) {
+  .inspection-console {
+    grid-template-columns: 1fr;
+  }
+
+  .aircraft-map {
+    border-right: 0;
+    border-bottom: 1px solid rgba(0, 210, 255, 0.13);
+  }
+
+  .preflight-identity {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .preflight-identity {
+    grid-template-columns: 1fr;
+  }
+
+  .inspection-status ol {
+    grid-template-columns: 1fr;
+  }
+
+  .wait-panel__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step-card__header {
+    grid-template-columns: 1fr;
+  }
+
+  .aircraft-map__figure {
+    height: 330px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .map-point,
+  .validate-button,
+  .final-card__link {
+    transition: none;
+  }
+}
