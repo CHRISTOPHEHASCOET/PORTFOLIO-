@@ -2,321 +2,938 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christophe Hascoet — Terminal A56</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christophe Hascoet — Terminal A56</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
 
 
 
-     <link rel="stylesheet" href="./asset/css/style.css">
-    <link rel="stylesheet" href="./asset/css/black-box.css">
-    <link rel="stylesheet" href="./asset/css/footer.css">
+  <link rel="stylesheet" href="./asset/css/style.css">
+  <link rel="stylesheet" href="./asset/css/black-box.css">
+  <link rel="stylesheet" href="./asset/css/footer.css">
 
 </head>
 
 <body>
 
-    <!-- ═══ HEADER — Flight Strip ═══ -->
-    <header class="header">
-        <div class="header__inner container">
-            <!-- PILOTE -->
-            <article class="pilot-card" aria-labelledby="pilot-heading">
-                <span class="pilot-card__role">Commandant de bord</span>
+  <!-- ═══ HEADER — Flight Strip ═══ -->
+  <header class="header">
+    <div class="header__inner container">
+      <!-- PILOTE -->
+      <article class="pilot-card" aria-labelledby="pilot-heading">
+        <span class="pilot-card__role">Commandant de bord</span>
 
-                <div class="pilot-card__main">
-                    <img src="./asset/images/pilote christophehascoet3.png"
-                        alt="Portrait professionnel de Christophe Hascoet" class="pilot-card__avatar">
+        <div class="pilot-card__main">
+          <img src="./asset/images/pilote christophehascoet3.png" alt="Portrait professionnel de Christophe Hascoet"
+            class="pilot-card__avatar">
 
-                    <div class="pilot-card__info">
-                        <h2 id="pilot-heading" class="pilot-card__name">Christophe Hascoet</h2>
-                        <div class="pilot-card__meta">
-                            <span class="pilot-card__id">CPT-001</span>
-                            <span class="pilot-card__status">
-                                <span class="pilot-card__dot" aria-hidden="true"></span>ACTIF
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <figure class="pilot-card__logo">
-                    <img src="./asset/images/logo5.PNG" alt="Logo">
-                </figure>
-            </article>
-
-            <!-- TABLEAU -->
-            <section class="flight-board" aria-label="Tableau des vols en temps réel">
-                <table class="flight-table">
-                    <caption>Vols en temps réel</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">VOL</th>
-                            <th scope="col">DESTINATION</th>
-                            <th scope="col">HEURE</th>
-                            <th scope="col">PORTE</th>
-                            <th scope="col">STATUT</th>
-                        </tr>
-                    </thead>
-                    <tbody id="flight-body"></tbody>
-                </table>
-            </section>
-
-            <!-- CASIO -->
-            <aside class="casio" aria-label="Horloge de bord">
-                <div class="casio__body">
-                    <div class="casio__header">
-                        <span class="casio__brand">CASIO</span>
-                        <span class="casio__model">F-91W</span>
-                    </div>
-                    <div class="casio__function-bar">
-                        <span class="casio__light">LIGHT</span>
-                        <span class="casio__alarm">ALARM CHRONOGRAPH</span>
-                    </div>
-                    <div class="casio__screen-border">
-                        <div class="casio__screen">
-                            <div class="casio__top">
-                                <div class="casio__icons" aria-hidden="true">
-                                    <span class="fa-solid fa-signal casio__icon-bars"></span>
-                                    <span class="fa-solid fa-bell casio__icon-bell"></span>
-                                    <span id="casio-ampm" class="casio__ampm">PM</span>
-                                </div>
-                                <p class="casio__date" aria-hidden="true">
-                                    <span id="casio-day">SA</span>
-                                    <span id="casio-date">31</span>
-                                </p>
-                            </div>
-                            <p class="casio__time" aria-hidden="true">
-                                <time id="casio-time" datetime="00:00">11:04</time>
-                                <span id="casio-seconds" class="casio__seconds">33</span>
-                            </p>
-                            <span id="casio-sr-time" class="casio__sr-time" aria-live="polite"></span>
-                        </div>
-                    </div>
-                    <p class="casio__footer" aria-hidden="true">
-                        <span>WATER</span>
-                        <span class="casio__wr">WR</span>
-                        <span>RESIST</span>
-                    </p>
-                    <span class="casio__btn casio__btn--lt" aria-hidden="true"></span>
-                    <span class="casio__btn casio__btn--lb" aria-hidden="true"></span>
-                    <span class="casio__btn casio__btn--rb" aria-hidden="true"></span>
-                </div>
-            </aside>
+          <div class="pilot-card__info">
+            <h2 id="pilot-heading" class="pilot-card__name">Christophe Hascoet</h2>
+            <div class="pilot-card__meta">
+              <span class="pilot-card__id">CPT-001</span>
+              <span class="pilot-card__status">
+                <span class="pilot-card__dot" aria-hidden="true"></span>ACTIF
+              </span>
+            </div>
+          </div>
         </div>
-    </header>
-    <!-- ═══ MAIN  ═══ -->
-   
+        <figure class="pilot-card__logo">
+          <img src="./asset/images/logo5.PNG" alt="Logo">
+        </figure>
+      </article>
 
+      <!-- TABLEAU -->
+      <section class="flight-board" aria-label="Tableau des vols en temps réel">
+        <table class="flight-table">
+          <caption>Vols en temps réel</caption>
+          <thead>
+            <tr>
+              <th scope="col">VOL</th>
+              <th scope="col">DESTINATION</th>
+              <th scope="col">HEURE</th>
+              <th scope="col">PORTE</th>
+              <th scope="col">STATUT</th>
+            </tr>
+          </thead>
+          <tbody id="flight-body"></tbody>
+        </table>
+      </section>
 
-    <footer class="claim-footer" role="contentinfo">
-        <div class="container claim-footer__layout">
-
-            <!-- 1. TERMINAL STATUS -->
-            <section class="airport-panel claim-status" aria-label="Statut du terminal d’arrivée">
-                <p class="claim-status__item">
-                    <span>TERMINAL CH-2025</span>
-                    <i aria-hidden="true"></i>
-                    <strong>PORTE D’ARRIVÉE</strong>
-                </p>
-
-                <p class="claim-status__item">
-                    <span>STATUT</span>
-                    <i aria-hidden="true"></i>
-                    <strong>APPROCHE TERMINÉE</strong>
-                </p>
-
-                <p class="claim-status__item">
-                    <span>7 ESCALES VALIDÉES</span>
-                    <i aria-hidden="true"></i>
-                    <strong>SORTIE AUTORISÉE</strong>
-                </p>
-            </section>
-
-            <!-- 2. BAGGAGE CLAIM -->
-            <section class="airport-panel claim-stage" aria-labelledby="baggageClaimTitle">
-                <header class="claim-stage__head">
-                    <div class="claim-stage__copy">
-                        <p class="claim-stage__eyebrow">Zone bagages · accès de sortie</p>
-                        <h2 id="baggageClaimTitle" class="claim-stage__title">
-                            Hall d’arrivée · récupération finale
-                        </h2>
-                    </div>
-
-                    <p class="claim-stage__state">
-                        Carrousel 01 · convoyeur en mouvement lent
-                    </p>
-                </header>
-
-                <div class="claim-belt-shell">
-                    <nav class="claim-belt claim-belt-track" aria-label="Points d’accès finaux">
-
-                        <!-- BAG 01 — GITHUB -->
-                        <a href="https://github.com/ton-profil" target="_blank" rel="noreferrer noopener"
-                            class="luggage luggage--lg luggage--github" style="--y:2px;--tilt:-1deg;"
-                            aria-label="Bagage GitHub, accès au code source">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--priority"
-                                    aria-hidden="true">PRIORITY</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.9.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3" />
-                                    </svg>
-                                    <h3 class="luggage__title">GITHUB</h3>
-                                    <p class="luggage__desc">Code source</p>
-                                </div>
-                            </div>
-
-                            <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
-                                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none"
-                                    stroke-linecap="round" />
-                            </svg>
-
-                            <div class="luggage__tag">
-                                <span class="luggage__tag-ring" aria-hidden="true"></span>
-                                <strong>ACCÈS<br>VALIDÉ</strong>
-                                <span class="luggage__tag-bar" aria-hidden="true"></span>
-                                <span class="luggage__tag-code">CH-01</span>
-                            </div>
-                        </a>
-
-                        <!-- BAG 02 — LINKEDIN -->
-                        <a href="https://www.linkedin.com/in/ton-profil" target="_blank" rel="noreferrer noopener"
-                            class="luggage luggage--md luggage--linkedin" style="--y:-4px;--tilt:1.2deg;"
-                            aria-label="Bagage LinkedIn, canal professionnel ouvert">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--fragile"
-                                    aria-hidden="true">FRAGILE</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M19 0H5a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5h14a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zM8 19H5V8h3v11zM6.5 6.7a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5zM20 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.6-1.7 1.3-.1.2-.1.6-.1.9V19h-3V8h3v1.3c.4-.7 1.2-1.6 2.9-1.6 2.1 0 3.6 1.4 3.6 4.3V19z" />
-                                    </svg>
-                                    <h3 class="luggage__title">LINKEDIN</h3>
-                                    <p class="luggage__desc">Canal pro</p>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- BAG 03 — CV -->
-                        <a href="/docs/cv.pdf" download class="luggage luggage--md luggage--cv"
-                            style="--y:1px;--tilt:-0.8deg;" aria-label="Dossier de vol, CV prêt au téléchargement">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--checked"
-                                    aria-hidden="true">CHECKED</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
-                                    </svg>
-                                    <h3 class="luggage__title">CV</h3>
-                                    <p class="luggage__desc">Dossier de vol</p>
-                                </div>
-                            </div>
-
-                            <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
-                                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none"
-                                    stroke-linecap="round" />
-                            </svg>
-
-                            <div class="luggage__tag">
-                                <span class="luggage__tag-ring" aria-hidden="true"></span>
-                                <strong>FICHIER<br>PRÊT</strong>
-                                <span class="luggage__tag-bar" aria-hidden="true"></span>
-                                <span class="luggage__tag-code">CH-03</span>
-                            </div>
-                        </a>
-
-                        <!-- BAG 04 — CONTACT -->
-                        <a href="mailto:contact@tonsite.com" class="luggage luggage--lg luggage--contact"
-                            style="--y:-2px;--tilt:0.7deg;" aria-label="Bagage contact, transmission finale prête">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--vip" aria-hidden="true">VIP</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                                    </svg>
-                                    <h3 class="luggage__title">CONTACT</h3>
-                                    <p class="luggage__desc">Tour de contrôle</p>
-                                </div>
-                            </div>
-                        </a>
-
-                    </nav>
+      <!-- CASIO -->
+      <aside class="casio" aria-label="Horloge de bord">
+        <div class="casio__body">
+          <div class="casio__header">
+            <span class="casio__brand">CASIO</span>
+            <span class="casio__model">F-91W</span>
+          </div>
+          <div class="casio__function-bar">
+            <span class="casio__light">LIGHT</span>
+            <span class="casio__alarm">ALARM CHRONOGRAPH</span>
+          </div>
+          <div class="casio__screen-border">
+            <div class="casio__screen">
+              <div class="casio__top">
+                <div class="casio__icons" aria-hidden="true">
+                  <span class="fa-solid fa-signal casio__icon-bars"></span>
+                  <span class="fa-solid fa-bell casio__icon-bell"></span>
+                  <span id="casio-ampm" class="casio__ampm">PM</span>
                 </div>
-
-                <p class="claim-stage__hint">
-                    Sélectionnez vos bagages avant de quitter le terminal
+                <p class="casio__date" aria-hidden="true">
+                  <span id="casio-day">SA</span>
+                  <span id="casio-date">31</span>
                 </p>
-            </section>
+              </div>
+              <p class="casio__time" aria-hidden="true">
+                <time id="casio-time" datetime="00:00">11:04</time>
+                <span id="casio-seconds" class="casio__seconds">33</span>
+              </p>
+              <span id="casio-sr-time" class="casio__sr-time" aria-live="polite"></span>
+            </div>
+          </div>
+          <p class="casio__footer" aria-hidden="true">
+            <span>WATER</span>
+            <span class="casio__wr">WR</span>
+            <span>RESIST</span>
+          </p>
+          <span class="casio__btn casio__btn--lt" aria-hidden="true"></span>
+          <span class="casio__btn casio__btn--lb" aria-hidden="true"></span>
+          <span class="casio__btn casio__btn--rb" aria-hidden="true"></span>
+        </div>
+      </aside>
+    </div>
+  </header>
 
-            <!-- 3. SCAN LINE -->
-            <div class="claim-scan" aria-hidden="true"></div>
 
-            <!-- 4. FLIGHT SUMMARY -->
-            <section class="airport-panel claim-summary" aria-label="Résumé final du trajet">
-                <p class="claim-summary__route">
-                    <span>Terminal CH-2025</span>
-                    <span>7 escales validées</span>
-                    <span>Atterrissage confirmé</span>
-                    <span>Prêt pour le prochain départ</span>
-                </p>
 
-                <div class="claim-summary__side">
-                    <span>Autorisation finale</span>
-                    <strong>Sortie validée</strong>
-                </div>
-            </section>
+  <!-- ═══ MAIN  ═══ -->
+    <main id="main-content" class="blackbox-main">
+
+    <section class="blackbox container" aria-labelledby="blackbox-title">
+
+      <!-- ═══════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════ -->
+
+      <header class="blackbox-hero">
+        <p class="blackbox-hero__eyebrow">
+          <span aria-hidden="true">●</span>
+          FDR / CVR · Archives opérationnelles
+        </p>
+
+        <h1 id="blackbox-title">BLACK BOX</h1>
+
+        <p class="blackbox-hero__subtitle">
+          Station de récupération et d'analyse des données de mission
+        </p>
+      </header>
+
+
+      <!-- ═══════════════════════════════════════════
+         ÉTAT SYSTÈME
+    ═══════════════════════════════════════════ -->
+
+      <section class="bbx-system" aria-label="État de la station Black Box">
+
+        <p>
+          <span>STATION</span>
+          <strong>BBX-01</strong>
+        </p>
+
+        <p>
+          <span>SYSTÈME</span>
+          <strong class="bbx-green">ONLINE</strong>
+        </p>
+
+        <p>
+          <span>ENREGISTREURS</span>
+          <strong>03 DÉTECTÉS</strong>
+        </p>
+
+        <p>
+          <span>INTÉGRITÉ</span>
+          <strong class="bbx-green">NOMINALE</strong>
+        </p>
+
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════
+         STATION DE RÉCUPÉRATION
+    ═══════════════════════════════════════════ -->
+
+      <section class="recovery-station" aria-labelledby="recorders-title">
+
+        <header class="station-heading">
+          <div>
+            <p>ARCHIVE STORAGE / SECTOR 01</p>
+            <h2 id="recorders-title">Enregistreurs de vol récupérés</h2>
+          </div>
+
+          <p class="station-signal">
+            <span aria-hidden="true"></span>
+            SIGNAL STABLE
+          </p>
+        </header>
+
+
+        <p class="station-intro">
+          Sélectionnez un enregistreur afin d'initialiser la récupération
+          de ses données. Chaque boîte noire correspond à une mission
+          documentée dans son cahier des charges.
+        </p>
+
+
+        <!-- ═════════════════════════════════════
+           ENREGISTREURS
+      ═════════════════════════════════════ -->
+
+        <div class="recorder-grid">
+
+          <!-- COOK'N WAY -->
+
+          <article class="flight-recorder flight-recorder--cockpit" data-recorder="cnw">
+            <header class="flight-recorder__head">
+              <span>FLIGHT DATA RECORDER</span>
+              <span class="flight-recorder__led">LOCATED</span>
+            </header>
+
+            <button type="button" class="flight-recorder__select" data-select="cnw"
+              aria-label="Sélectionner l'enregistreur Cook'N Way">
+              <span class="flight-recorder__code">CNW-01</span>
+
+              <strong>COOK'N WAY</strong>
+
+              <span class="flight-recorder__module" aria-hidden="true">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <b>FDR</b>
+              </span>
+            </button>
+
+            <footer class="flight-recorder__foot">
+              <span>DATA LOCKED</span>
+              <span data-recorder-state>READY FOR RECOVERY</span>
+            </footer>
+          </article>
+
+
+          <!-- CAMI COURSES EXPRESS -->
+
+          <article class="flight-recorder flight-recorder--violet" data-recorder="cce">
+            <header class="flight-recorder__head">
+              <span>FLIGHT DATA RECORDER</span>
+              <span class="flight-recorder__led">LOCATED</span>
+            </header>
+
+            <button type="button" class="flight-recorder__select" data-select="cce"
+              aria-label="Sélectionner l'enregistreur Cami Courses Express">
+              <span class="flight-recorder__code">CCE-02</span>
+
+              <strong>CAMI COURSES EXPRESS</strong>
+
+              <span class="flight-recorder__module" aria-hidden="true">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <b>FDR</b>
+              </span>
+            </button>
+
+            <footer class="flight-recorder__foot">
+              <span>DATA LOCKED</span>
+              <span data-recorder-state>READY FOR RECOVERY</span>
+            </footer>
+          </article>
+
+
+          <!-- FKM MOBILITÉ -->
+
+          <article class="flight-recorder flight-recorder--green" data-recorder="fkm">
+            <header class="flight-recorder__head">
+              <span>FLIGHT DATA RECORDER</span>
+              <span class="flight-recorder__led">LOCATED</span>
+            </header>
+
+            <button type="button" class="flight-recorder__select" data-select="fkm"
+              aria-label="Sélectionner l'enregistreur FKM Mobilité">
+              <span class="flight-recorder__code">FKM-03</span>
+
+              <strong>FKM MOBILITÉ</strong>
+
+              <span class="flight-recorder__module" aria-hidden="true">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <b>FDR</b>
+              </span>
+            </button>
+
+            <footer class="flight-recorder__foot">
+              <span>DATA LOCKED</span>
+              <span data-recorder-state>READY FOR RECOVERY</span>
+            </footer>
+          </article>
 
         </div>
-    </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="./asset/js/main.js"></script>
+
+        <!-- ═════════════════════════════════════
+           CONSOLE
+      ═════════════════════════════════════ -->
+
+        <section class="recovery-console" aria-labelledby="recovery-title">
+
+          <header class="recovery-console__head">
+            <div>
+              <p>RECOVERY TERMINAL / CHANNEL A</p>
+              <h3 id="recovery-title">En attente d'un enregistreur</h3>
+            </div>
+
+            <span class="console-status" data-console-status>
+              STANDBY
+            </span>
+          </header>
+
+
+          <!-- État initial -->
+
+          <div class="console-empty" data-console-empty>
+            <span class="console-radar" aria-hidden="true"></span>
+
+            <strong>AUCUN ENREGISTREUR SÉLECTIONNÉ</strong>
+
+            <p>
+              Sélectionnez une boîte noire pour établir la connexion.
+            </p>
+          </div>
+
+
+          <!-- État sélectionné -->
+
+          <div class="console-selected" data-console-selected hidden>
+
+            <!-- SYNTHÈSE -->
+
+            <section class="mission-summary" aria-labelledby="summary-title">
+
+              <header class="mission-summary__head">
+                <p>FLIGHT RECORD / IDENTIFICATION</p>
+                <h4 id="summary-title">Synthèse de mission</h4>
+              </header>
+
+
+              <dl class="mission-data">
+
+                <div>
+                  <dt>ENREGISTREUR</dt>
+                  <dd data-selected-code>---</dd>
+                </div>
+
+                <div>
+                  <dt>MISSION</dt>
+                  <dd data-selected-name>---</dd>
+                </div>
+
+                <div>
+                  <dt>PÉRIODE</dt>
+                  <dd data-selected-period>---</dd>
+                </div>
+
+                <div>
+                  <dt>DURÉE</dt>
+                  <dd data-selected-duration>---</dd>
+                </div>
+
+                <div>
+                  <dt>SPRINTS</dt>
+                  <dd data-selected-sprints>---</dd>
+                </div>
+
+                <div>
+                  <dt>RÔLE</dt>
+                  <dd data-selected-role>---</dd>
+                </div>
+
+                <div>
+                  <dt>STATUT MISSION</dt>
+                  <dd class="mission-status" data-selected-status>---</dd>
+                </div>
+
+                <div>
+                  <dt>DONNÉES</dt>
+                  <dd class="mission-data-state" data-selected-data>
+                    VERROUILLÉES
+                  </dd>
+                </div>
+
+              </dl>
+
+
+              <div class="mission-context">
+                <span>CONTEXTE</span>
+                <p data-selected-context>---</p>
+              </div>
+
+
+              <div class="mission-stack">
+                <span>ÉQUIPEMENT / STACK PRÉVUE</span>
+                <div data-selected-stack></div>
+              </div>
+
+            </section>
+
+
+            <!-- EXTRACTION -->
+
+            <section class="data-recovery" aria-labelledby="data-recovery-title">
+
+              <header class="data-recovery__head">
+                <div>
+                  <p>DATA RECOVERY SEQUENCE</p>
+                  <h4 id="data-recovery-title">
+                    Extraction des données
+                  </h4>
+                </div>
+
+                <strong data-recovery-percent>0 %</strong>
+              </header>
+
+
+              <div class="recovery-progress" role="progressbar" aria-label="Progression de la récupération"
+                aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-recovery-progress>
+                <span data-recovery-bar></span>
+              </div>
+
+
+              <ol class="recovery-log">
+
+                <li data-recovery-step="0">
+                  <span aria-hidden="true">○</span>
+                  Connexion enregistreur
+                </li>
+
+                <li data-recovery-step="1">
+                  <span aria-hidden="true">○</span>
+                  Identification mémoire
+                </li>
+
+                <li data-recovery-step="2">
+                  <span aria-hidden="true">○</span>
+                  Vérification intégrité
+                </li>
+
+                <li data-recovery-step="3">
+                  <span aria-hidden="true">○</span>
+                  Extraction FDR
+                </li>
+
+                <li data-recovery-step="4">
+                  <span aria-hidden="true">○</span>
+                  Synchronisation CVR
+                </li>
+
+                <li data-recovery-step="5">
+                  <span aria-hidden="true">○</span>
+                  Reconstruction Timeline
+                </li>
+
+              </ol>
+
+
+              <div class="recovery-actions">
+
+                <button type="button" class="bbx-btn bbx-btn--primary" data-start-recovery>
+                  INITIALISER LA RÉCUPÉRATION
+                </button>
+
+              </div>
+
+
+              <div class="recovery-complete" data-recovery-complete hidden>
+
+                <span class="recovery-complete__icon" aria-hidden="true">
+                  ✓
+                </span>
+
+                <div>
+                  <strong>DATA RECOVERY COMPLETE</strong>
+
+                  <p>
+                    Intégrité 100 % · FDR / CVR / Timeline exploitables
+                  </p>
+                </div>
+
+                <button type="button" class="bbx-btn bbx-btn--primary" data-open-analysis>
+                  CONSULTER LE RAPPORT
+                </button>
+
+              </div>
+
+
+              <p class="sr-only" role="status" aria-live="polite" data-recovery-live></p>
+
+            </section>
+
+          </div>
+
+        </section>
+
+      </section>
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+       CONSOLE D'ANALYSE
+  ═══════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════
+     MODALE — CONSOLE D'ANALYSE BLACK BOX
+
+     Ouverte uniquement après récupération des données.
+
+     Parcours :
+     SYNTHÈSE → FDR → CVR → TIMELINE → CLÔTURE RAPPORT
+════════════════════════════════════════════════════════ -->
+
+    <dialog id="analysis-dialog" class="analysis-dialog" aria-labelledby="analysis-title">
+
+      <article class="analysis-console">
+
+        <!-- ═════════════════════════════════════════════
+         1. EN-TÊTE DU RAPPORT
+    ═════════════════════════════════════════════ -->
+
+        <header class="analysis-header">
+
+          <div>
+            <p>BLACK BOX / DATA ANALYSIS</p>
+
+            <h2 id="analysis-title">
+              <span data-analysis-code>---</span>
+              <span aria-hidden="true">/</span>
+              <span data-analysis-name>---</span>
+            </h2>
+          </div>
+
+
+          <p class="analysis-header__status">
+            ● INTEGRITY 100 %
+          </p>
+
+        </header>
+
+
+        <!-- ═════════════════════════════════════════════
+         2. MODES D'ANALYSE
+    ═════════════════════════════════════════════ -->
+
+        <nav class="analysis-modes" aria-label="Modes d'analyse du rapport">
+
+          <button type="button" class="is-active" data-mode="summary">
+            SYNTHÈSE
+            <span>Mission record</span>
+          </button>
+
+
+          <button type="button" data-mode="fdr">
+            FDR
+            <span>Données techniques</span>
+          </button>
+
+
+          <button type="button" data-mode="cvr">
+            CVR
+            <span>Journal de mission</span>
+          </button>
+
+
+          <button type="button" data-mode="timeline">
+            TIMELINE
+            <span>Chronologie</span>
+          </button>
+
+        </nav>
+
+
+        <!-- ═════════════════════════════════════════════
+         3. LÉGENDE DES DONNÉES
+
+         REQ  = exigence du cahier des charges
+         DEC  = décision de conception
+         RISK = risque / contrainte
+         VAL  = élément validé
+    ═════════════════════════════════════════════ -->
+
+        <aside class="analysis-legend" aria-label="Légende des types de données">
+
+          <span class="legend-req">
+            REQ · Exigence
+          </span>
+
+          <span class="legend-dec">
+            DEC · Décision
+          </span>
+
+          <span class="legend-risk">
+            RISK · Risque
+          </span>
+
+          <span class="legend-val">
+            VAL · Validé
+          </span>
+
+        </aside>
+
+
+        <!-- ═════════════════════════════════════════════
+         4. ZONE PRINCIPALE D'ANALYSE
+    ═════════════════════════════════════════════ -->
+
+        <div class="analysis-layout">
+
+
+          <!-- ===========================================
+           Navigation entre les blocs du mode actuel
+      ============================================ -->
+
+          <aside class="analysis-nav" aria-label="Blocs de données">
+
+            <p>DATA BLOCKS</p>
+
+            <ol data-analysis-nav></ol>
+
+          </aside>
+
+
+          <!-- ===========================================
+           Lecteur du bloc sélectionné
+      ============================================ -->
+
+          <section class="analysis-reader" aria-labelledby="analysis-block-title">
+
+            <header class="analysis-reader__head">
+
+              <span data-block-number>
+                DATA BLOCK 01
+              </span>
+
+              <h3 id="analysis-block-title" data-block-title>
+                ---
+              </h3>
+
+            </header>
+
+
+            <!-- Contenu généré par black-box.js -->
+
+            <div class="analysis-reader__body" data-block-content aria-live="polite"></div>
+
+
+            <!-- Navigation interne -->
+
+            <footer class="analysis-reader__footer">
+
+              <button type="button" data-prev-block>
+                ← PRÉCÉDENT
+              </button>
+
+
+              <span data-block-counter>
+                01 / 01
+              </span>
+
+
+              <button type="button" data-next-block>
+                SUIVANT →
+              </button>
+
+            </footer>
+
+          </section>
+
+        </div>
+
+
+        <!-- ═════════════════════════════════════════════
+         5. PROGRESSION GLOBALE DE LA CONSULTATION
+
+         Ce compteur concerne l'ENSEMBLE :
+         Synthèse + tous les FDR + tous les CVR + Timeline.
+    ═════════════════════════════════════════════ -->
+
+        <footer class="analysis-completion">
+
+          <div class="analysis-completion__status">
+
+            <p>
+              PROGRESSION DE L'ANALYSE
+            </p>
+
+
+            <div class="analysis-completion__meter">
+
+              <progress max="100" value="0" data-analysis-progress
+                aria-label="Progression de la consultation du rapport">
+                0 %
+              </progress>
+
+
+              <strong data-analysis-progress-text>
+                0 %
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- ═══════════════════════════════════════════
+           Apparaît uniquement lorsque 100 % des
+           blocs ont été consultés.
+      ═══════════════════════════════════════════ -->
+
+          <section class="analysis-completion__result" data-analysis-complete aria-labelledby="analysis-complete-title"
+            hidden>
+
+            <div>
+
+              <h3 id="analysis-complete-title">
+                ✓ ANALYSE DE L'ENREGISTREUR TERMINÉE
+              </h3>
+
+              <p>
+                Tous les blocs de données ont été consultés.
+                Le rapport peut maintenant être clôturé.
+              </p>
+
+            </div>
+
+
+            <button type="button" class="bbx-btn bbx-btn--primary" data-analysis-finish>
+              CLÔTURER LE RAPPORT
+            </button>
+
+          </section>
+
+        </footer>
+
+      </article>
+
+    </dialog>
+
+  </main>
+
+
+
+
+  <footer class="claim-footer" role="contentinfo">
+    <div class="container claim-footer__layout">
+
+      <!-- 1. TERMINAL STATUS -->
+      <section class="airport-panel claim-status" aria-label="Statut du terminal d’arrivée">
+        <p class="claim-status__item">
+          <span>TERMINAL CH-2025</span>
+          <i aria-hidden="true"></i>
+          <strong>PORTE D’ARRIVÉE</strong>
+        </p>
+
+        <p class="claim-status__item">
+          <span>STATUT</span>
+          <i aria-hidden="true"></i>
+          <strong>APPROCHE TERMINÉE</strong>
+        </p>
+
+        <p class="claim-status__item">
+          <span>7 ESCALES VALIDÉES</span>
+          <i aria-hidden="true"></i>
+          <strong>SORTIE AUTORISÉE</strong>
+        </p>
+      </section>
+
+      <!-- 2. BAGGAGE CLAIM -->
+      <section class="airport-panel claim-stage" aria-labelledby="baggageClaimTitle">
+        <header class="claim-stage__head">
+          <div class="claim-stage__copy">
+            <p class="claim-stage__eyebrow">Zone bagages · accès de sortie</p>
+            <h2 id="baggageClaimTitle" class="claim-stage__title">
+              Hall d’arrivée · récupération finale
+            </h2>
+          </div>
+
+          <p class="claim-stage__state">
+            Carrousel 01 · convoyeur en mouvement lent
+          </p>
+        </header>
+
+        <div class="claim-belt-shell">
+          <nav class="claim-belt claim-belt-track" aria-label="Points d’accès finaux">
+
+            <!-- BAG 01 — GITHUB -->
+            <a href="https://github.com/ton-profil" target="_blank" rel="noreferrer noopener"
+              class="luggage luggage--lg luggage--github" style="--y:2px;--tilt:-1deg;"
+              aria-label="Bagage GitHub, accès au code source">
+              <span class="luggage__shadow" aria-hidden="true"></span>
+
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--priority" aria-hidden="true">PRIORITY</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.9.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3" />
+                  </svg>
+                  <h3 class="luggage__title">GITHUB</h3>
+                  <p class="luggage__desc">Code source</p>
+                </div>
+              </div>
+
+              <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
+                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none" stroke-linecap="round" />
+              </svg>
+
+              <div class="luggage__tag">
+                <span class="luggage__tag-ring" aria-hidden="true"></span>
+                <strong>ACCÈS<br>VALIDÉ</strong>
+                <span class="luggage__tag-bar" aria-hidden="true"></span>
+                <span class="luggage__tag-code">CH-01</span>
+              </div>
+            </a>
+
+            <!-- BAG 02 — LINKEDIN -->
+            <a href="https://www.linkedin.com/in/ton-profil" target="_blank" rel="noreferrer noopener"
+              class="luggage luggage--md luggage--linkedin" style="--y:-4px;--tilt:1.2deg;"
+              aria-label="Bagage LinkedIn, canal professionnel ouvert">
+              <span class="luggage__shadow" aria-hidden="true"></span>
+
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--fragile" aria-hidden="true">FRAGILE</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M19 0H5a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5h14a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zM8 19H5V8h3v11zM6.5 6.7a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5zM20 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.6-1.7 1.3-.1.2-.1.6-.1.9V19h-3V8h3v1.3c.4-.7 1.2-1.6 2.9-1.6 2.1 0 3.6 1.4 3.6 4.3V19z" />
+                  </svg>
+                  <h3 class="luggage__title">LINKEDIN</h3>
+                  <p class="luggage__desc">Canal pro</p>
+                </div>
+              </div>
+            </a>
+
+            <!-- BAG 03 — CV -->
+            <a href="/docs/cv.pdf" download class="luggage luggage--md luggage--cv" style="--y:1px;--tilt:-0.8deg;"
+              aria-label="Dossier de vol, CV prêt au téléchargement">
+              <span class="luggage__shadow" aria-hidden="true"></span>
+
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--checked" aria-hidden="true">CHECKED</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
+                  </svg>
+                  <h3 class="luggage__title">CV</h3>
+                  <p class="luggage__desc">Dossier de vol</p>
+                </div>
+              </div>
+
+              <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
+                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none" stroke-linecap="round" />
+              </svg>
+
+              <div class="luggage__tag">
+                <span class="luggage__tag-ring" aria-hidden="true"></span>
+                <strong>FICHIER<br>PRÊT</strong>
+                <span class="luggage__tag-bar" aria-hidden="true"></span>
+                <span class="luggage__tag-code">CH-03</span>
+              </div>
+            </a>
+
+            <!-- BAG 04 — CONTACT -->
+            <a href="mailto:contact@tonsite.com" class="luggage luggage--lg luggage--contact"
+              style="--y:-2px;--tilt:0.7deg;" aria-label="Bagage contact, transmission finale prête">
+              <span class="luggage__shadow" aria-hidden="true"></span>
+
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--vip" aria-hidden="true">VIP</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                  </svg>
+                  <h3 class="luggage__title">CONTACT</h3>
+                  <p class="luggage__desc">Tour de contrôle</p>
+                </div>
+              </div>
+            </a>
+
+          </nav>
+        </div>
+
+        <p class="claim-stage__hint">
+          Sélectionnez vos bagages avant de quitter le terminal
+        </p>
+      </section>
+
+      <!-- 3. SCAN LINE -->
+      <div class="claim-scan" aria-hidden="true"></div>
+
+      <!-- 4. FLIGHT SUMMARY -->
+      <section class="airport-panel claim-summary" aria-label="Résumé final du trajet">
+        <p class="claim-summary__route">
+          <span>Terminal CH-2025</span>
+          <span>7 escales validées</span>
+          <span>Atterrissage confirmé</span>
+          <span>Prêt pour le prochain départ</span>
+        </p>
+
+        <div class="claim-summary__side">
+          <span>Autorisation finale</span>
+          <strong>Sortie validée</strong>
+        </div>
+      </section>
+
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="./asset/js/main.js"></script>
+  <script src="./asset/js/black-box.js"></script>
 </body>
 
 </html>

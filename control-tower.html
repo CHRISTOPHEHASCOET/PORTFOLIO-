@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christophe Hascoet — Terminal A56</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
@@ -17,9 +17,11 @@
 
 
 
-     <link rel="stylesheet" href="./asset/css/style.css">
+    <link rel="stylesheet" href="./asset/css/style.css">
     <link rel="stylesheet" href="./asset/css/control-tower.css">
     <link rel="stylesheet" href="./asset/css/footer.css">
+   
+
 
 </head>
 
@@ -112,7 +114,969 @@
         </div>
     </header>
     <!-- ═══ MAIN  ═══ -->
-   
+   <main id="main-content" class="tower-main">
+
+  <section class="tower container" aria-labelledby="tower-title">
+
+    <!-- ═══════════════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════════════ -->
+
+    <header class="tower-hero">
+
+      <p class="tower-hero__eyebrow">
+        <span aria-hidden="true">●</span>
+        ATC / Communication & Clearance
+      </p>
+
+      <h1 id="tower-title">
+        CONTROL TOWER
+      </h1>
+
+      <p class="tower-hero__subtitle">
+        Centre de contrôle · Identification · Communication · Transmission
+      </p>
+
+    </header>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         ÉTAT DE LA TOUR
+    ═══════════════════════════════════════════════════ -->
+
+    <section
+      class="tower-system"
+      aria-labelledby="tower-system-title"
+    >
+
+      <h2 id="tower-system-title" class="sr-only">
+        État de la tour de contrôle
+      </h2>
+
+      <dl>
+
+        <div>
+          <dt>STATION</dt>
+          <dd>TWR-01</dd>
+        </div>
+
+        <div>
+          <dt>SECTEUR</dt>
+          <dd>APP-CH</dd>
+        </div>
+
+        <div>
+          <dt>FRÉQUENCE</dt>
+          <dd class="tower-system__frequency">
+            118.700 MHz
+          </dd>
+        </div>
+
+        <div>
+          <dt>SYSTÈME</dt>
+          <dd class="tower-system__online">
+            ONLINE
+          </dd>
+        </div>
+
+      </dl>
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         POSTE ATC
+    ═══════════════════════════════════════════════════ -->
+
+    <section
+      class="atc"
+      aria-labelledby="atc-title"
+    >
+
+      <header class="atc__header">
+
+        <div>
+          <p>
+            APPROACH CONTROL / SECTOR CH-01
+          </p>
+
+          <h2 id="atc-title">
+            Poste de contrôle
+          </h2>
+        </div>
+
+        <output
+          class="atc__global-status"
+          data-atc-global-status
+        >
+          MONITORING
+        </output>
+
+      </header>
+
+
+      <div class="atc__workspace">
+
+
+        <!-- ═══════════════════════════════════════════════
+             RADAR
+        ═══════════════════════════════════════════════ -->
+
+        <section
+          class="radar"
+          aria-labelledby="radar-title"
+        >
+
+          <header class="radar__header">
+
+            <div>
+              <p>RADAR / APPROACH</p>
+
+              <h3 id="radar-title">
+                Secteur d'approche
+              </h3>
+            </div>
+
+            <span class="radar__status">
+              SCANNING
+            </span>
+
+          </header>
+
+
+          <div class="radar__screen" data-radar-screen>
+
+            <div class="radar__scope" aria-hidden="true">
+
+              <span class="radar__ring radar__ring--1"></span>
+              <span class="radar__ring radar__ring--2"></span>
+              <span class="radar__axis radar__axis--x"></span>
+              <span class="radar__axis radar__axis--y"></span>
+              <span class="radar__sweep"></span>
+
+              <!-- Contact radar -->
+
+              <button
+                type="button"
+                class="radar__target"
+                data-radar-target
+                aria-label="Contact radar non identifié détecté"
+              >
+                <span class="radar__aircraft" aria-hidden="true">
+                  ✈
+                </span>
+
+                <span class="radar__target-data">
+                  <strong data-radar-callsign>UNKNOWN</strong>
+                  <small>FL 035</small>
+                </span>
+              </button>
+
+            </div>
+
+
+            <div class="radar__message">
+
+              <strong data-radar-message-title>
+                CONTACT DÉTECTÉ
+              </strong>
+
+              <p data-radar-message>
+                Transpondeur non identifié dans le secteur d'approche.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="tower-btn tower-btn--primary"
+            data-identify
+          >
+            IDENTIFIER L'APPAREIL
+          </button>
+
+        </section>
+
+
+        <!-- ═══════════════════════════════════════════════
+             CONSOLE DE CONTRÔLE
+        ═══════════════════════════════════════════════ -->
+
+        <section
+          class="control-console"
+          aria-labelledby="control-console-title"
+        >
+
+          <header class="control-console__header">
+
+            <div>
+              <p>
+                ATC DATA / CHANNEL A
+              </p>
+
+              <h3 id="control-console-title">
+                Identification contact
+              </h3>
+            </div>
+
+            <output
+              class="control-console__status"
+              data-contact-status
+            >
+              PENDING
+            </output>
+
+          </header>
+
+
+          <!-- Identité -->
+
+          <dl class="contact-data">
+
+            <div>
+              <dt>CALLSIGN</dt>
+              <dd data-contact-callsign>UNKNOWN</dd>
+            </div>
+
+            <div>
+              <dt>TYPE</dt>
+              <dd data-contact-type>---</dd>
+            </div>
+
+            <div>
+              <dt>ORIGINE</dt>
+              <dd data-contact-origin>---</dd>
+            </div>
+
+            <div>
+              <dt>DESTINATION</dt>
+              <dd data-contact-destination>---</dd>
+            </div>
+
+            <div>
+              <dt>TRANSPONDEUR</dt>
+              <dd data-contact-transponder>---</dd>
+            </div>
+
+            <div>
+              <dt>SIGNAL</dt>
+              <dd data-contact-signal>---</dd>
+            </div>
+
+          </dl>
+
+
+          <!-- Journal identification -->
+
+          <ol
+            class="identification-log"
+            aria-label="Procédure d'identification"
+          >
+
+            <li data-ident-step="0">
+              <span aria-hidden="true">○</span>
+              Acquisition signal radar
+            </li>
+
+            <li data-ident-step="1">
+              <span aria-hidden="true">○</span>
+              Lecture transpondeur
+            </li>
+
+            <li data-ident-step="2">
+              <span aria-hidden="true">○</span>
+              Identification indicatif
+            </li>
+
+            <li data-ident-step="3">
+              <span aria-hidden="true">○</span>
+              Vérification plan de vol
+            </li>
+
+          </ol>
+
+
+          <!-- Radio -->
+
+          <section
+            class="radio"
+            data-radio
+            hidden
+            aria-labelledby="radio-title"
+          >
+
+            <header class="radio__header">
+
+              <div>
+                <p>COM 1 / ACTIVE</p>
+
+                <h4 id="radio-title">
+                  Liaison radio
+                </h4>
+              </div>
+
+              <output data-radio-status>
+                STANDBY
+              </output>
+
+            </header>
+
+
+            <div class="radio__frequencies">
+
+              <div class="radio__frequency radio__frequency--active">
+                <span>ACTIVE</span>
+                <strong>118.700</strong>
+                <small>MHz</small>
+              </div>
+
+              <div class="radio__frequency">
+                <span>STANDBY</span>
+                <strong>121.500</strong>
+                <small>MHz</small>
+              </div>
+
+            </div>
+
+
+            <div class="radio__signal">
+
+              <span>SIGNAL</span>
+
+              <meter
+                min="0"
+                max="100"
+                value="92"
+                low="35"
+                high="75"
+                optimum="100"
+              >
+                92 %
+              </meter>
+
+              <strong>92 %</strong>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="tower-btn tower-btn--radio"
+              data-establish-contact
+            >
+              ÉTABLIR LA LIAISON
+            </button>
+
+          </section>
+
+        </section>
+
+      </div>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           COMMUNICATION ÉTABLIE
+      ═══════════════════════════════════════════════════ -->
+
+      <section
+        class="atc-message"
+        data-atc-message
+        hidden
+        aria-live="polite"
+      >
+
+        <p class="atc-message__source">
+          TWR 118.700 → VISITOR-01
+        </p>
+
+        <strong>
+          CONTACT ÉTABLI
+        </strong>
+
+        <p>
+          VISITOR-01, ici Tour CH. Vous êtes identifié.
+          Transmettez votre demande de clearance.
+        </p>
+
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           FORMULAIRE / CLEARANCE REQUEST
+      ═══════════════════════════════════════════════════ -->
+
+      <section
+        class="clearance"
+        data-clearance
+        hidden
+        aria-labelledby="clearance-title"
+      >
+
+        <header class="clearance__header">
+
+          <div>
+            <p>
+              CLEARANCE DELIVERY / REQUEST
+            </p>
+
+            <h2 id="clearance-title">
+              Demande de clearance
+            </h2>
+          </div>
+
+          <span>
+            CHANNEL OPEN
+          </span>
+
+        </header>
+
+
+        <form
+          class="clearance-form"
+          data-clearance-form
+          novalidate
+        >
+
+          <!-- Nom -->
+
+          <div class="clearance-form__field">
+
+            <label for="contact-name">
+              INDICATIF / NOM
+            </label>
+
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              minlength="2"
+              maxlength="80"
+              placeholder="Votre nom"
+            >
+
+            <small data-error-for="contact-name"></small>
+
+          </div>
+
+
+          <!-- Mail -->
+
+          <div class="clearance-form__field">
+
+            <label for="contact-email">
+              ADRESSE DE RETOUR / E-MAIL
+            </label>
+
+            <input
+              id="contact-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="160"
+              placeholder="nom@entreprise.com"
+            >
+
+            <small data-error-for="contact-email"></small>
+
+          </div>
+
+
+          <!-- Société -->
+
+          <div class="clearance-form__field">
+
+            <label for="contact-company">
+              COMPAGNIE / ORGANISATION
+            </label>
+
+            <input
+              id="contact-company"
+              name="company"
+              type="text"
+              autocomplete="organization"
+              maxlength="100"
+              placeholder="Optionnel"
+            >
+
+          </div>
+
+
+          <!-- Mission -->
+
+          <fieldset class="clearance-form__mission">
+
+            <legend>
+              TYPE DE MISSION
+            </legend>
+
+            <label>
+              <input
+                type="radio"
+                name="mission"
+                value="Recrutement"
+                required
+              >
+              <span>RECRUTEMENT</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="mission"
+                value="Collaboration"
+              >
+              <span>COLLABORATION</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="mission"
+                value="Freelance"
+              >
+              <span>FREELANCE</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="mission"
+                value="Autre"
+              >
+              <span>AUTRE</span>
+            </label>
+
+          </fieldset>
+
+
+          <!-- Objet -->
+
+          <div class="clearance-form__field clearance-form__field--wide">
+
+            <label for="contact-subject">
+              OBJET / DESTINATION
+            </label>
+
+            <input
+              id="contact-subject"
+              name="subject"
+              type="text"
+              required
+              minlength="3"
+              maxlength="120"
+              placeholder="Objet de votre demande"
+            >
+
+            <small data-error-for="contact-subject"></small>
+
+          </div>
+
+
+          <!-- Message -->
+
+          <div class="clearance-form__field clearance-form__field--wide">
+
+            <label for="contact-message">
+              TRANSMISSION
+            </label>
+
+            <textarea
+              id="contact-message"
+              name="message"
+              required
+              minlength="10"
+              maxlength="1500"
+              rows="6"
+              placeholder="Votre message..."
+            ></textarea>
+
+            <div class="clearance-form__meta">
+              <small data-error-for="contact-message"></small>
+
+              <output data-message-counter>
+                0 / 1500
+              </output>
+            </div>
+
+          </div>
+
+
+          <!-- Priorité -->
+
+          <fieldset class="clearance-form__priority">
+
+            <legend>
+              PRIORITÉ
+            </legend>
+
+            <label>
+              <input
+                type="radio"
+                name="priority"
+                value="Standard"
+                checked
+              >
+              STANDARD
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="priority"
+                value="Prioritaire"
+              >
+              PRIORITAIRE
+            </label>
+
+          </fieldset>
+
+
+          <button
+            type="submit"
+            class="tower-btn tower-btn--primary clearance-form__submit"
+          >
+            PRÉPARER LA TRANSMISSION
+          </button>
+
+        </form>
+
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           REVIEW
+      ═══════════════════════════════════════════════════ -->
+
+      <section
+        class="clearance-review"
+        data-clearance-review
+        hidden
+        aria-labelledby="review-title"
+      >
+
+        <header class="clearance-review__header">
+
+          <div>
+            <p>
+              CLEARANCE REVIEW / TWR
+            </p>
+
+            <h2 id="review-title">
+              Vérification avant transmission
+            </h2>
+          </div>
+
+          <strong>
+            READY FOR TRANSMISSION
+          </strong>
+
+        </header>
+
+
+        <dl class="clearance-review__data">
+
+          <div>
+            <dt>CALLSIGN</dt>
+            <dd data-review-name>---</dd>
+          </div>
+
+          <div>
+            <dt>CHANNEL</dt>
+            <dd data-review-email>---</dd>
+          </div>
+
+          <div>
+            <dt>COMPAGNIE</dt>
+            <dd data-review-company>---</dd>
+          </div>
+
+          <div>
+            <dt>MISSION</dt>
+            <dd data-review-mission>---</dd>
+          </div>
+
+          <div>
+            <dt>DESTINATION</dt>
+            <dd data-review-subject>---</dd>
+          </div>
+
+          <div>
+            <dt>PRIORITÉ</dt>
+            <dd data-review-priority>---</dd>
+          </div>
+
+        </dl>
+
+
+        <article class="clearance-review__message">
+
+          <h3>
+            TRANSMISSION
+          </h3>
+
+          <p data-review-message></p>
+
+        </article>
+
+
+        <ul class="clearance-review__check">
+          <li>✓ Indicatif renseigné</li>
+          <li>✓ Canal de retour valide</li>
+          <li>✓ Mission sélectionnée</li>
+          <li>✓ Transmission prête</li>
+        </ul>
+
+
+        <div class="clearance-review__actions">
+
+          <button
+            type="button"
+            class="tower-btn"
+            data-edit-clearance
+          >
+            ← MODIFIER
+          </button>
+
+          <button
+            type="button"
+            class="tower-btn tower-btn--clearance"
+            data-authorize
+          >
+            AUTORISER LA TRANSMISSION
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           TRANSMISSION
+      ═══════════════════════════════════════════════════ -->
+
+      <section
+        class="transmission"
+        data-transmission
+        hidden
+        aria-labelledby="transmission-title"
+      >
+
+        <header>
+
+          <p>
+            TWR 118.700 / OUTBOUND
+          </p>
+
+          <h2 id="transmission-title">
+            Transmission en cours
+          </h2>
+
+          <strong data-transmission-percent>
+            0 %
+          </strong>
+
+        </header>
+
+
+        <div
+          class="transmission__progress"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          data-transmission-progress
+        >
+          <span data-transmission-bar></span>
+        </div>
+
+
+        <ol class="transmission__steps">
+
+          <li data-transmission-step="0">
+            <span>○</span>
+            Encodage du message
+          </li>
+
+          <li data-transmission-step="1">
+            <span>○</span>
+            Ouverture du canal
+          </li>
+
+          <li data-transmission-step="2">
+            <span>○</span>
+            Transmission
+          </li>
+
+          <li data-transmission-step="3">
+            <span>○</span>
+            Vérification réception
+          </li>
+
+        </ol>
+
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           FINAL
+      ═══════════════════════════════════════════════════ -->
+
+      <section
+        class="clearance-granted"
+        data-clearance-granted
+        hidden
+        aria-labelledby="clearance-granted-title"
+      >
+
+        <p class="clearance-granted__code">
+          TWR / CLEARANCE
+        </p>
+
+
+        <span
+          class="clearance-granted__icon"
+          aria-hidden="true"
+        >
+          ✓
+        </span>
+
+
+        <h2 id="clearance-granted-title">
+          CLEARANCE GRANTED
+        </h2>
+
+
+        <p class="clearance-granted__lead">
+          Transmission reçue. La demande a été remise au pilote.
+        </p>
+
+
+        <dl class="clearance-granted__data">
+
+          <div>
+            <dt>TRANSMISSION</dt>
+            <dd data-final-id>TWR-0000</dd>
+          </div>
+
+          <div>
+            <dt>FRÉQUENCE</dt>
+            <dd>118.700 MHz</dd>
+          </div>
+
+          <div>
+            <dt>SIGNAL</dt>
+            <dd>100 %</dd>
+          </div>
+
+          <div>
+            <dt>STATUT</dt>
+            <dd>CONTACT ÉTABLI</dd>
+          </div>
+
+        </dl>
+
+
+        <div class="clearance-granted__actions">
+
+          <button
+            type="button"
+            class="tower-btn"
+            data-new-transmission
+          >
+            NOUVELLE TRANSMISSION
+          </button>
+
+          <a
+            href="index.html"
+            class="tower-btn tower-btn--clearance"
+          >
+            RETOUR AU TERMINAL
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           LIVE REGION
+      ═══════════════════════════════════════════════════ -->
+
+      <p
+        class="sr-only"
+        role="status"
+        aria-live="polite"
+        data-tower-live
+      ></p>
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════
+         FRÉQUENCES SECONDAIRES
+    ═══════════════════════════════════════════════════ -->
+
+    <aside
+      class="tower-channels"
+      aria-labelledby="channels-title"
+    >
+
+      <header>
+        <p>SECONDARY FREQUENCIES</p>
+
+        <h2 id="channels-title">
+          Canaux secondaires
+        </h2>
+      </header>
+
+
+      <nav aria-label="Liens de communication secondaires">
+
+        <a
+          href="https://www.linkedin.com/in/ton-profil"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>LINKEDIN</span>
+          <strong>CH-LINK</strong>
+          <small>ONLINE</small>
+        </a>
+
+        <a
+          href="https://github.com/ton-profil"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>GITHUB</span>
+          <strong>CH-GIT</strong>
+          <small>ONLINE</small>
+        </a>
+
+        <a href="mailto:contact@tonsite.com">
+          <span>EMAIL</span>
+          <strong>CH-MAIL</strong>
+          <small>OPEN</small>
+        </a>
+
+        <a href="./docs/cv.pdf" download>
+          <span>CV</span>
+          <strong>CH-DOC</strong>
+          <small>AVAILABLE</small>
+        </a>
+
+      </nav>
+
+    </aside>
+
+  </section>
+
+</main>
 
 
     <footer class="claim-footer" role="contentinfo">
@@ -316,7 +1280,8 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-     <script src="./asset/js/main.js"></script>
+    <script src="./asset/js/main.js"></script>
+    <script src="./asset/js/control-tower.js"></script>
 </body>
 
 </html>

@@ -2,8 +2,10 @@
 
 @layer reset, base, layout, components, animations, responsive, a11y;
 
+/* ═══════════════════════════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════════════════════════ */
 @layer reset {
-
   *,
   *::before,
   *::after {
@@ -45,18 +47,17 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   BASE — VARIABLES + UTILITAIRES GLOBAUX
+═══════════════════════════════════════════════════════════════ */
 @layer base {
   :root {
-    /* ═══════════════════════════════════════════════════════════
-       FONTS
-    ═══════════════════════════════════════════════════════════ */
+    /* ── FONTS ─────────────────────────────────────────────── */
     --font-sans: "Rajdhani", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
     --font-digital: "DS-Digital", sans-serif;
 
-    /* ═══════════════════════════════════════════════════════════
-       COLORS - MAIN PALETTE
-    ═══════════════════════════════════════════════════════════ */
+    /* ── COLORS · MAIN PALETTE ─────────────────────────────── */
     --color-bg-page: #05080f;
     --color-bg-panel: #111820;
     --color-bg-card: #101e38;
@@ -72,10 +73,7 @@
     --color-muted: #909aa7;
     --hud-green: #00ff9c;
 
-    /* ═══════════════════════════════════════════════════════════
-       COLORS - WITH ALPHA (réutilisables partout)
-    ═══════════════════════════════════════════════════════════ */
-    /* Accent variations */
+    /* ── COLORS · ACCENT ALPHA ─────────────────────────────── */
     --color-accent-90: rgba(0, 210, 255, 0.9);
     --color-accent-82: rgba(0, 210, 255, 0.82);
     --color-accent-80: rgba(0, 210, 255, 0.8);
@@ -85,28 +83,30 @@
     --color-accent-15: rgba(0, 210, 255, 0.15);
     --color-accent-14: rgba(0, 210, 255, 0.14);
     --color-accent-12: rgba(0, 210, 255, 0.12);
-    --color-accent-10: rgba(0, 210, 255, 0.10);
+    --color-accent-10: rgba(0, 210, 255, 0.1);
     --color-accent-08: rgba(0, 210, 255, 0.08);
     --color-accent-06: rgba(0, 210, 255, 0.06);
 
-    /* Green variations */
+    /* ── COLORS · GREEN ALPHA ──────────────────────────────── */
     --color-green-80: rgba(0, 255, 150, 0.8);
     --color-green-30: rgba(0, 255, 150, 0.3);
     --color-green-08: rgba(0, 255, 150, 0.08);
     --color-green-26: rgba(63, 185, 80, 0.26);
     --color-green-065: rgba(63, 185, 80, 0.065);
 
-    /* White variations */
+    /* ── COLORS · WHITE ALPHA ──────────────────────────────── */
     --color-white-22: rgba(255, 255, 255, 0.22);
-    --color-white-20: rgba(255, 255, 255, 0.20);
+    --color-white-20: rgba(255, 255, 255, 0.2);
     --color-white-18: rgba(255, 255, 255, 0.18);
+    --color-white-14: rgba(255, 255, 255, 0.14);
     --color-white-12: rgba(255, 255, 255, 0.12);
     --color-white-08: rgba(255, 255, 255, 0.08);
     --color-white-06: rgba(255, 255, 255, 0.06);
     --color-white-05: rgba(255, 255, 255, 0.05);
     --color-white-04: rgba(255, 255, 255, 0.04);
+    --color-white-01: rgba(255, 255, 255, 0.01);
 
-    /* Black variations */
+    /* ── COLORS · BLACK ALPHA ──────────────────────────────── */
     --color-black-90: rgba(0, 0, 0, 0.9);
     --color-black-85: rgba(0, 0, 0, 0.85);
     --color-black-80: rgba(0, 0, 0, 0.8);
@@ -116,13 +116,8 @@
     --color-black-50: rgba(0, 0, 0, 0.5);
     --color-black-45: rgba(0, 0, 0, 0.45);
     --color-black-35: rgba(0, 0, 0, 0.35);
-    --color-white-14: rgba(255, 255, 255, 0.14);
-    --color-white-01: rgba(255, 255, 255, 0.01);
-    --color-green-065: rgba(63, 185, 80, 0.065);
 
-    /* ═══════════════════════════════════════════════════════════
-       COLORS - STATUS (pour les flaps)
-    ═══════════════════════════════════════════════════════════ */
+    /* ── COLORS · STATUS (flaps) ───────────────────────────── */
     --color-status-archived: var(--color-tech);
     --color-status-authorized: var(--color-cockpit);
     --color-status-clearance: var(--color-tower);
@@ -134,121 +129,89 @@
     --color-status-gate-open: var(--color-green);
     --color-status-final: var(--color-amber);
 
-    /* ═══════════════════════════════════════════════════════════
-       TEXT SIZES
-    ═══════════════════════════════════════════════════════════ */
+    /* ── TEXT SIZES ────────────────────────────────────────── */
     --text-xs: clamp(0.55rem, 0.9vw, 0.65rem);
     --text-sm: clamp(0.62rem, 1.1vw, 0.72rem);
     --text-md: clamp(0.72rem, 1.4vw, 0.85rem);
     --text-base: clamp(0.82rem, 1.7vw, 1rem);
     --text-lg: clamp(0.92rem, 2vw, 1.1rem);
     --text-xl: clamp(1.15rem, 2.5vw, 1.5rem);
-    --text-hero: clamp(1.8rem, 4.5vw, 2.8rem);
     --text-2xl: clamp(1.35rem, 3vw, 2rem);
+    --text-hero: clamp(1.8rem, 4.5vw, 2.8rem);
 
-    /* ═══════════════════════════════════════════════════════════
-       SPACING
-    ═══════════════════════════════════════════════════════════ */
+    /* ── SPACING ───────────────────────────────────────────── */
     --space-1: 0.5rem;
     --space-2: 1rem;
     --space-3: 1.5rem;
     --space-4: 2rem;
 
-    /* ═══════════════════════════════════════════════════════════
-       LAYOUT
-    ═══════════════════════════════════════════════════════════ */
+    /* ── LAYOUT ────────────────────────────────────────────── */
     --container: 1200px;
     --cut: 14px;
     --pad-x: clamp(0.75rem, 2vw, 1.5rem);
 
-    /* ═══════════════════════════════════════════════════════════
-       CLIP-PATH - HUD SHAPE (utilisé partout!)
-    ═══════════════════════════════════════════════════════════ */
-    --clip-hud: polygon(0 var(--cut),
-        var(--cut) 0,
-        calc(100% - var(--cut)) 0,
-        100% var(--cut),
-        100% calc(100% - var(--cut)),
-        calc(100% - var(--cut)) 100%,
-        var(--cut) 100%,
-        0 calc(100% - var(--cut)));
+    /* ── CLIP-PATH · HUD SHAPE ─────────────────────────────── */
+    --clip-hud: polygon(
+      0 var(--cut),
+      var(--cut) 0,
+      calc(100% - var(--cut)) 0,
+      100% var(--cut),
+      100% calc(100% - var(--cut)),
+      calc(100% - var(--cut)) 100%,
+      var(--cut) 100%,
+      0 calc(100% - var(--cut))
+    );
 
-    /* ═══════════════════════════════════════════════════════════
-       BACKGROUNDS - MAIN
-    ═══════════════════════════════════════════════════════════ */
+    /* ── BACKGROUNDS · MAIN ────────────────────────────────── */
     --bg-main: radial-gradient(circle at top, #1b3957, #050b10 60%);
-
-    /* Glass card background (utilisé par pilot-card, flight-board, casio) */
     --bg-glass: linear-gradient(180deg, rgba(10, 25, 40, 0.92), rgba(3, 10, 18, 0.98));
     --bg-glass-top: radial-gradient(circle at top, var(--color-accent-12), transparent 55%);
-
-    /* Footer background */
     --bg-footer: linear-gradient(180deg, rgba(10, 18, 28, 0.96), rgba(3, 8, 14, 0.98));
-
-    /* Row backgrounds (tableau) */
     --bg-row: linear-gradient(180deg, #0a0f16, #04080e);
     --bg-row-word: linear-gradient(180deg, #0c1118, #050a12);
     --bg-flap: linear-gradient(180deg, #1b2230 0%, #0a0d14 50%, #05070d 100%);
 
-    /* ═══════════════════════════════════════════════════════════
-       BACKGROUNDS - DECORATIVE
-    ═══════════════════════════════════════════════════════════ */
-    /* Neon line gradient (ligne du haut des cards) */
-    --gradient-neon-line: linear-gradient(90deg,
-        transparent,
-        var(--color-accent-80),
-        var(--color-green-80),
-        transparent);
+    /* ── BACKGROUNDS · DECORATIVE ──────────────────────────── */
+    --gradient-neon-line: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-accent-80),
+      var(--color-green-80),
+      transparent
+    );
+    --gradient-glass-overlay: linear-gradient(180deg, var(--color-accent-18), transparent 40%);
+    --gradient-title: linear-gradient(
+      135deg,
+      var(--color-accent),
+      var(--color-primary) 35%,
+      var(--color-green) 65%,
+      var(--color-amber)
+    );
 
-    /* Glass overlay (::after des cards) */
-    --gradient-glass-overlay: linear-gradient(180deg,
-        var(--color-accent-18),
-        transparent 40%);
-
-    /* Title gradient */
-    --gradient-title: linear-gradient(135deg,
-        var(--color-accent),
-        var(--color-primary) 35%,
-        var(--color-green) 65%,
-        var(--color-amber));
-
-    /* ═══════════════════════════════════════════════════════════
-       SHADOWS
-    ═══════════════════════════════════════════════════════════ */
-    /* Card shadow (header, pilot-card) */
+    /* ── SHADOWS ───────────────────────────────────────────── */
     --shadow-card:
       0 10px 22px var(--color-black-90),
       inset 0 2px 6px var(--color-white-05);
-
-    /* Board shadow (flight-board, casio, panels) */
     --shadow-board:
       0 10px 24px var(--color-black-45),
       0 4px 10px var(--color-accent-10),
       inset 0 1px 0 var(--color-white-06),
       inset 0 -2px 6px var(--color-black-55);
-
-    /* Flap inset shadow (::after overlay des cards) */
     --shadow-flap-inset:
       inset 0 1px 0 var(--color-white-06),
       inset 0 -2px 5px var(--color-black-45);
-
-    /* Row shadow (lignes de tableau) */
     --shadow-row:
       inset 0 1px 0 var(--color-white-04),
       inset 0 -1px 0 var(--color-black-90);
-
-    /* Word shadow */
     --shadow-word:
       inset 0 1px 0 var(--color-white-05),
       inset 0 -1px 0 var(--color-black-90);
 
-    /* Variables d'effet Inset (Creusé sombre) pour les cartes */
+    /* Effet Inset (creusé sombre) pour les cartes */
     --inset-bg: rgba(0, 4, 10, 0.45) radial-gradient(circle at top, #1b3957, #050b10 60%);
     --inset-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.05);
 
-    /* ═══════════════════════════════════════════════════════════
-       BORDERS
-    ═══════════════════════════════════════════════════════════ */
+    /* ── BORDERS ───────────────────────────────────────────── */
     --border-card: 5px solid var(--color-bg-card);
     --border-panel: 2px solid var(--color-bg-page);
     --border-glass: 1px solid var(--color-accent-22);
@@ -259,9 +222,7 @@
     --border-green-30: 1px solid var(--color-green-30);
     --border-green-26: 1px solid var(--color-green-26);
 
-    /* ═══════════════════════════════════════════════════════════
-       BORDER RADIUS
-    ═══════════════════════════════════════════════════════════ */
+    /* ── BORDER RADIUS ─────────────────────────────────────── */
     --radius-xs: 2px;
     --radius-sm: 12px;
     --radius-card: 14px;
@@ -269,9 +230,7 @@
     --radius-md: 20px;
     --radius-pill: 999px;
 
-    /* ═══════════════════════════════════════════════════════════
-       TABLE VARIABLES
-    ═══════════════════════════════════════════════════════════ */
+    /* ── TABLE VARIABLES ───────────────────────────────────── */
     --board-padding: 1rem 1.2rem;
     --table-gap: 3px;
     --th-padding: 0 4px 6px;
@@ -279,13 +238,9 @@
     --flap-size: 0.6rem;
     --word-padding: 2px 2px;
 
-    /* ═══════════════════════════════════════════════════════════
-       TRANSITIONS
-    ═══════════════════════════════════════════════════════════ */
+    /* ── TRANSITIONS ───────────────────────────────────────── */
     --transition-fast: 0.25s ease;
     --transition-medium: 0.3s ease;
-
-
   }
 
   :focus-visible {
@@ -331,11 +286,13 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT — HEADER / MAIN / FOOTER
+═══════════════════════════════════════════════════════════════ */
 @layer layout {
   .header {
     background: var(--color-bg-panel);
     box-shadow: var(--shadow-card);
-    /* padding-block: var(--space-2); */
     padding-block: 0.6rem 0.8rem;
     position: relative;
     z-index: 1;
@@ -345,7 +302,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* gap: var(--space-3); */
     gap: 1rem;
     position: relative;
     flex-wrap: wrap;
@@ -372,9 +328,11 @@
     inset: 0;
     pointer-events: none;
     opacity: 0.22;
-    background: repeating-linear-gradient(180deg,
-        rgba(255, 255, 255, 0.012) 0 1px,
-        transparent 1px 30px);
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.012) 0 1px,
+      transparent 1px 30px
+    );
   }
 
   .claim-footer__layout {
@@ -383,11 +341,11 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENTS — PILOT CARD / FLIGHT BOARD / CASIO
+═══════════════════════════════════════════════════════════════ */
 @layer components {
-
-  /* ═══════════════════════════════════════════════════════════
-     PILOT CARD
-  ═══════════════════════════════════════════════════════════ */
+  /* ─── PILOT CARD ─────────────────────────────────────────── */
   .pilot-card {
     display: grid;
     grid-template-rows: auto 1fr;
@@ -429,7 +387,6 @@
     clip-path: inherit;
   }
 
-  /* Badge rôle */
   .pilot-card__role {
     display: inline-flex;
     align-items: center;
@@ -458,21 +415,6 @@
     animation: hudPulse 1.8s infinite;
   }
 
-  @keyframes hudPulse {
-
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    50% {
-      opacity: 0.4;
-      transform: scale(1.6);
-    }
-  }
-
-  /* Bloc principal */
   .pilot-card__main {
     display: flex;
     align-items: center;
@@ -482,7 +424,6 @@
     z-index: 2;
   }
 
-  /* Avatar */
   .pilot-card__avatar {
     width: 64px;
     height: 64px;
@@ -495,7 +436,6 @@
     filter: saturate(1.05) contrast(1.03);
   }
 
-  /* Logo de fond */
   .pilot-card__logo {
     position: absolute;
     bottom: 44px;
@@ -509,7 +449,6 @@
     transform: translateY(10px);
   }
 
-  /* Infos */
   .pilot-card__info {
     max-width: 160px;
     display: flex;
@@ -528,7 +467,7 @@
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    font-family: var(--font-sans);
+    font-family: var(--font-mono);
     letter-spacing: 0.08em;
   }
 
@@ -539,7 +478,6 @@
     margin-top: 0.25rem;
   }
 
-  /* ID */
   .pilot-card__id {
     font-size: 10px;
     padding: 0.1rem 0.35rem;
@@ -554,7 +492,6 @@
     font-family: var(--font-mono);
   }
 
-  /* Status */
   .pilot-card__status {
     display: inline-flex;
     align-items: center;
@@ -570,18 +507,6 @@
     animation: system-pulse 2.5s infinite;
   }
 
-  @keyframes system-pulse {
-
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    50% {
-      opacity: 0.6;
-    }
-  }
-
   .pilot-card__dot {
     width: 5px;
     height: 5px;
@@ -593,9 +518,7 @@
       0 0 12px rgba(63, 185, 80, 0.6);
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     FLIGHT BOARD (TABLEAU)
-  ═══════════════════════════════════════════════════════════ */
+  /* ─── FLIGHT BOARD (TABLEAU) ─────────────────────────────── */
   .flight-board {
     background: var(--bg-glass-top), var(--bg-glass);
     border: var(--border-glass);
@@ -676,6 +599,37 @@
   .flight-table tbody tr:hover {
     background: rgba(31, 111, 234, 0.12);
     transform: translateX(2px);
+  }
+
+  /* Colonnes du tableau (desktop) */
+  .flight-table th:nth-child(1),
+  .flight-table td:nth-child(1) {
+    width: 10%;
+    min-width: 55px;
+  }
+
+  .flight-table th:nth-child(2),
+  .flight-table td:nth-child(2) {
+    width: 36%;
+    min-width: 110px;
+  }
+
+  .flight-table th:nth-child(3),
+  .flight-table td:nth-child(3) {
+    width: 15%;
+    min-width: 65px;
+  }
+
+  .flight-table th:nth-child(4),
+  .flight-table td:nth-child(4) {
+    width: 12%;
+    min-width: 55px;
+  }
+
+  .flight-table th:nth-child(5),
+  .flight-table td:nth-child(5) {
+    width: 27%;
+    min-width: 115px;
   }
 
   /* Structure du mot */
@@ -770,77 +724,7 @@
     animation: flashFinal 0.8s infinite;
   }
 
-  @keyframes pulseBoarding {
-
-    0%,
-    100% {
-      filter: brightness(1);
-    }
-
-    50% {
-      filter: brightness(1.4);
-    }
-  }
-
-  @keyframes flashFinal {
-
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    50% {
-      opacity: 0.3;
-    }
-  }
-
-  @keyframes blinkDelay {
-
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    50% {
-      opacity: 0.6;
-    }
-  }
-
-  /* Mise en page des colonnes */
-  /* Mise en page des colonnes - CORRIGÉ */
-  .flight-table th:nth-child(1),
-  .flight-table td:nth-child(1) {
-    width: 10%;
-    min-width: 55px;
-  }
-
-  .flight-table th:nth-child(2),
-  .flight-table td:nth-child(2) {
-    width: 36%;
-    min-width: 110px;
-  }
-
-  .flight-table th:nth-child(3),
-  .flight-table td:nth-child(3) {
-    width: 15%;
-    min-width: 65px;
-  }
-
-  .flight-table th:nth-child(4),
-  .flight-table td:nth-child(4) {
-    width: 12%;
-    min-width: 55px;
-  }
-
-  .flight-table th:nth-child(5),
-  .flight-table td:nth-child(5) {
-    width: 27%;
-    min-width: 115px;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     CASIO WATCH
-  ═══════════════════════════════════════════════════════════ */
+  /* ─── CASIO WATCH ────────────────────────────────────────── */
   .casio {
     display: flex;
     justify-content: center;
@@ -912,7 +796,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 3px 2px;
+    padding: 0 3px 2px;
     margin-bottom: 2px;
     font-family: var(--font-digital);
     font-size: 8px;
@@ -977,11 +861,13 @@
     pointer-events: none;
     z-index: 0;
     mix-blend-mode: multiply;
-    background-image: repeating-linear-gradient(0deg,
-        rgba(0, 0, 0, 0.045) 0px,
-        rgba(0, 0, 0, 0.045) 1px,
-        transparent 1px,
-        transparent 3px);
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.045) 0px,
+      rgba(0, 0, 0, 0.045) 1px,
+      transparent 1px,
+      transparent 3px
+    );
   }
 
   .casio__top {
@@ -1093,11 +979,13 @@
     width: 6px;
     height: 18px;
     border-radius: var(--radius-xs);
-    background: linear-gradient(180deg,
-        #8b949e 0%,
-        #5f6873 18%,
-        #2d333b 50%,
-        #1c2128 100%);
+    background: linear-gradient(
+      180deg,
+      #8b949e 0%,
+      #5f6873 18%,
+      #2d333b 50%,
+      #1c2128 100%
+    );
     border-left: 1px solid var(--color-white-22);
     border-right: 1px solid var(--color-black-65);
     box-shadow:
@@ -1121,11 +1009,79 @@
     right: 2px;
     bottom: 28%;
   }
-
 }
 
-@layer responsive {
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════════════════ */
+@layer animations {
+  @keyframes hudPulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(1.6);
+    }
+  }
 
+  @keyframes system-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes pulseBoarding {
+    0%,
+    100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.4);
+    }
+  }
+
+  @keyframes flashFinal {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes blinkDelay {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+@layer responsive {
   @media (min-width: 900px) {
     .header__inner {
       flex-direction: row;
@@ -1169,15 +1125,14 @@
       table-layout: fixed;
     }
 
-
-    .flight-table th:nth-child(1),
+    /* .flight-table th:nth-child(1),
     .flight-table td:nth-child(1) {
-      width: 19.5%;
+      width: 21.5%;
     }
 
     .flight-table th:nth-child(2),
     .flight-table td:nth-child(2) {
-      width: 42%;
+      width: 58%;
     }
 
     .flight-table th:nth-child(3),
@@ -1192,8 +1147,23 @@
 
     .flight-table th:nth-child(5),
     .flight-table td:nth-child(5) {
-      width: 39%;
-    }
+      width: 41%;
+    } */
+
+    .flight-table th:nth-child(1),
+  .flight-table td:nth-child(1) { width: 17%; min-width: 0; }
+
+  .flight-table th:nth-child(2),
+  .flight-table td:nth-child(2) { width: 38%; min-width: 0; }
+
+  .flight-table th:nth-child(3),
+  .flight-table td:nth-child(3) { width: 15%; min-width: 0; }
+
+  .flight-table th:nth-child(4),
+  .flight-table td:nth-child(4) { width: 12%; min-width: 0; }
+
+  .flight-table th:nth-child(5),
+  .flight-table td:nth-child(5) { width: 29%; min-width: 0; }
 
     .flight-table th {
       font-size: clamp(0.52rem, 1.8vw, 0.62rem);
@@ -1208,28 +1178,43 @@
       padding: 3px 4px;
     }
 
-
     .flap {
       width: clamp(0.48rem, 1.1vw, 0.58rem);
       height: clamp(0.78rem, 1.6vw, 0.88rem);
-      line-height: clamp(0.80rem, 1.6vw, 0.88rem);
-      font-size: clamp(0.70rem, 1.05vw, 0.69rem);
+      line-height: clamp(0.8rem, 1.6vw, 0.88rem);
+      font-size: clamp(0.7rem, 1.05vw, 0.69rem);
       margin-inline: 0.5px;
     }
 
-
     .flight-table td:nth-child(1) .flap {
       width: clamp(0.44rem, 0.95vw, 0.52rem);
-      font-size: clamp(0.70rem, 0.95vw, 0.69rem);
+      font-size: clamp(0.7rem, 0.95vw, 0.69rem);
+    }
+    .flight-table td:nth-child(2) .flap {
+      width: clamp(0.42rem, 0.95vw, 0.5rem);
+      font-size: clamp(0.68rem, 0.95vw, 0.68rem);
     }
 
-    .flight-table td:nth-child(5) .flap {
+    /* .flight-table td:nth-child(5) .flap {
       width: clamp(0.42rem, 1vw, 0.49rem);
-      font-size: clamp(0.70rem, 0.95vw, 0.69rem);
+      font-size: clamp(0.7rem, 0.95vw, 0.69rem);
+    } */
+    .flight-table td:nth-child(5) .flap {
+      width: clamp(0.36rem, 0.9vw, 0.44rem);
+      font-size: clamp(0.6rem, 0.9vw, 0.6rem);
+    }
+    
+  }
+
+  @media (max-width: 768px) {
+    .header,
+    .header__inner,
+    .flight-board {
+      max-width: 100%;
     }
   }
 
-  @media (max-width: 390px) {
+  /* @media (max-width: 390px) {
     .flight-board {
       padding: 0.75rem 0.45rem;
     }
@@ -1237,8 +1222,8 @@
     .flap {
       width: 0.44rem;
       height: 0.68rem;
-      line-height: 0.90rem;
-      font-size: 0.90rem;
+      line-height: 0.9rem;
+      font-size: 0.9rem;
       font-weight: 900;
     }
 
@@ -1251,16 +1236,47 @@
       width: 0.38rem;
       font-size: 0.39rem;
     }
+  } */
+
+    @media (max-width: 390px) {
+    .flight-board {
+      padding: 0.7rem 0.4rem;
+    }
+
+    .flap {
+      width: 0.4rem;
+      height: 0.66rem;
+      line-height: 0.66rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      margin-inline: 0;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   A11Y — REDUCED MOTION / CONTRAST
+═══════════════════════════════════════════════════════════════ */
+@layer a11y {
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
-
-  @media (max-width: 768px) {
-
-    .header,
-    .header__inner,
-    .flight-board {
-      max-width: 100%;
-      /* overflow-x: hidden; */
+  @media (prefers-contrast: more) {
+    :focus-visible {
+      outline-width: 3px;
+      outline-offset: 4px;
     }
   }
 }
