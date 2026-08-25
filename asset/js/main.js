@@ -378,3 +378,4 @@ window.addEventListener('load', () => {
   // AJOUTE CETTE LIGNE pour activer le système de lien
   initTerminalSystem();
 });
+

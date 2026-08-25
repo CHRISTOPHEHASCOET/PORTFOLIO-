@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christophe Hascoet — Terminal A56</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
@@ -16,7 +16,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
 
 
-
+    <link rel="stylesheet" href="./asset/css/porte.css">
     <link rel="stylesheet" href="./asset/css/style.css">
     <link rel="stylesheet" href="./asset/css/info.css">
     <link rel="stylesheet" href="./asset/css/footer.css">
@@ -24,6 +24,30 @@
 </head>
 
 <body>
+
+    <!-- ========== PORTE D'EMBARQUEMENT ANIMÉE ========== -->
+    <section class="doors-overlay" id="doors-overlay" aria-hidden="true">
+        <div class="door left">
+            <div class="door-inner">
+                <div class="door-window"></div>
+                <p class="door-label">
+                    <span class="door-label-top">TERMINAL CH-2025</span>
+                    <span class="door-label-main">GATE A01</span>
+                    <span class="door-label-bottom">BOARDING</span>
+                </p>
+            </div>
+        </div>
+        <div class="door right">
+            <div class="door-inner">
+                <div class="door-window"></div>
+                <p class="door-label">
+                    <span class="door-label-top">DIGITAL FLIGHT</span>
+                    <span class="door-label-main">DEST. PORTFOLIO</span>
+                    <span class="door-label-bottom">CLEARANCE OK</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
     <!-- ═══ HEADER — Flight Strip ═══ -->
     <header class="header">
@@ -438,6 +462,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="./asset/js/main.js"></script>
     <script src="./asset/js/info.js"></script>
+    <script src="./asset/js/porte.js"></script>
 </body>
 
 </html>

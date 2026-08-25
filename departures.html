@@ -112,7 +112,603 @@
         </div>
     </header>
     <!-- ═══ MAIN  ═══ -->
-   
+  <main id="main" class="ops-main">
+  <section class="container ops-shell" aria-labelledby="ops-title">
+
+    <header class="ops-hero">
+      <p class="ops-kicker">OPS-251 / Skill Traffic Control</p>
+      <h1 id="ops-title">Operation Center</h1>
+      <p class="ops-lead">
+        Centre de coordination des compétences. Les canaux en arrivée indiquent
+        les systèmes déjà opérationnels. Les canaux en départ signalent les axes
+        de progression actuellement en cours de trajectoire.
+      </p>
+    </header>
+
+    <section class="ops-strip" aria-label="État du centre des opérations">
+      <article>
+        <span>Station</span>
+        <strong>OPS-251</strong>
+      </article>
+
+      <article>
+        <span>Système</span>
+        <strong class="ops-online">ONLINE</strong>
+      </article>
+
+      <article>
+        <span>Mode</span>
+        <strong data-ops-current-mode>TOUS CANAUX</strong>
+      </article>
+
+      <article>
+        <span>Clearance</span>
+        <strong class="ops-review">IN REVIEW</strong>
+      </article>
+    </section>
+
+    <section class="ops-console" aria-labelledby="ops-console-title">
+      
+      <header class="ops-console__header">
+        <div>
+          <p class="ops-overline">Channel Inspection / Skills Board</p>
+          <h2 id="ops-console-title">Contrôle des compétences</h2>
+        </div>
+
+        <div class="ops-progress" aria-label="Progression de validation">
+          <progress id="ops-progress" max="7" value="0"></progress>
+          <output id="ops-count" for="ops-progress">0 / 7 canaux validés</output>
+        </div>
+      </header>
+
+      <div class="ops-toolbar">
+        <div class="ops-filters" role="tablist" aria-label="Filtrer les canaux">
+          <button
+            class="ops-filter is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-filter="all"
+            data-label="TOUS CANAUX"
+          >
+            Tous
+          </button>
+
+          <button
+            class="ops-filter"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-filter="arrivals"
+            data-label="ARRIVÉES"
+          >
+            Arrivées
+          </button>
+
+          <button
+            class="ops-filter"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-filter="departures"
+            data-label="DÉPARTS"
+          >
+            Départs
+          </button>
+        </div>
+
+        <button class="ops-fast-track" type="button" id="ops-fast-track">
+          Fast Track — tout analyser
+        </button>
+      </div>
+
+      <p class="ops-help" id="ops-help">
+        Commencez l’analyse en validant le premier canal opérationnel.
+        Chaque validation débloque le contrôle suivant.
+      </p>
+
+      <ol class="ops-grid" role="list">
+
+        <!-- 01 -->
+        <li
+          class="ops-module"
+          data-step="1"
+          data-mode="arrivals"
+          style="--module-color: var(--color-accent)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Arrivals / Canal 01</p>
+                <h3>Structure sémantique</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Construction de pages HTML claires, structurées, accessibles et
+              compréhensibles par les moteurs de recherche.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>HTML5</li>
+              <li>Sémantique</li>
+              <li>SEO</li>
+              <li>Formulaires</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-1" hidden>
+              <p>
+                Capacité à organiser le contenu avec les bonnes balises :
+                header, nav, main, section, article, aside et footer.
+                L’objectif est de produire une base robuste, lisible et durable.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Niveau</dt>
+                  <dd>Opérationnel</dd>
+                </div>
+                <div>
+                  <dt>Usage</dt>
+                  <dd>Structure de pages</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>Ready</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-1"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+        <!-- 02 -->
+        <li
+          class="ops-module"
+          data-step="2"
+          data-mode="arrivals"
+          style="--module-color: var(--color-primary)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Arrivals / Canal 02</p>
+                <h3>Interface responsive</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Création d’interfaces adaptables, cohérentes visuellement et
+              utilisables sur desktop, tablette et mobile.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>CSS3</li>
+              <li>Responsive</li>
+              <li>Variables CSS</li>
+              <li>UI</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-2" hidden>
+              <p>
+                Utilisation de CSS moderne : variables, composants réutilisables,
+                grilles, flexbox, media queries et organisation modulaire.
+                L’objectif est de produire une interface stable et maintenable.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Niveau</dt>
+                  <dd>Opérationnel</dd>
+                </div>
+                <div>
+                  <dt>Usage</dt>
+                  <dd>Design system / responsive</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>Ready</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-2"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+        <!-- 03 -->
+        <li
+          class="ops-module"
+          data-step="3"
+          data-mode="arrivals"
+          style="--module-color: var(--color-amber)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Arrivals / Canal 03</p>
+                <h3>Interactions front-end</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Ajout de comportements interactifs utiles : états d’interface,
+              panneaux dynamiques, validations et micro-interactions.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>JavaScript</li>
+              <li>DOM</li>
+              <li>Events</li>
+              <li>UI states</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-3" hidden>
+              <p>
+                Mise en place d’interactions accessibles et compréhensibles :
+                boutons, panneaux, progression, état actif, gestion des erreurs
+                et respect des préférences de mouvement réduit.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Niveau</dt>
+                  <dd>En service</dd>
+                </div>
+                <div>
+                  <dt>Usage</dt>
+                  <dd>Interfaces interactives</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>Active</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-3"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+        <!-- 04 -->
+        <li
+          class="ops-module"
+          data-step="4"
+          data-mode="arrivals"
+          style="--module-color: var(--color-violet)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Arrivals / Canal 04</p>
+                <h3>Application & données</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Compréhension des bases applicatives : routes, contrôleurs,
+              vues, logique serveur et manipulation de données.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>PHP</li>
+              <li>Laravel</li>
+              <li>MySQL</li>
+              <li>MVC</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-4" hidden>
+              <p>
+                Bases de développement back-end avec Laravel : organisation MVC,
+                routes, contrôleurs, vues Blade, logique métier simple et lien
+                avec une base de données.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Niveau</dt>
+                  <dd>Projet encadré</dd>
+                </div>
+                <div>
+                  <dt>Usage</dt>
+                  <dd>Application web</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>Active</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-4"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+        <!-- 05 -->
+        <li
+          class="ops-module"
+          data-step="5"
+          data-mode="arrivals"
+          style="--module-color: var(--color-green)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Arrivals / Canal 05</p>
+                <h3>Qualité & livraison</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Contrôle de la qualité, versioning, accessibilité, lisibilité du
+              code et préparation des livrables.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>Git</li>
+              <li>GitHub</li>
+              <li>Accessibilité</li>
+              <li>Documentation</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-5" hidden>
+              <p>
+                Utilisation de Git pour suivre l’évolution des projets,
+                structurer les versions et livrer un travail plus fiable.
+                Attention portée à l’accessibilité, aux contrastes, au clavier
+                et à la clarté des parcours.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Niveau</dt>
+                  <dd>Contrôle qualité</dd>
+                </div>
+                <div>
+                  <dt>Usage</dt>
+                  <dd>Suivi / livraison</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>Checked</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-5"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+        <!-- 06 -->
+        <li
+          class="ops-module"
+          data-step="6"
+          data-mode="departures"
+          style="--module-color: var(--color-tower)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Departures / Canal 06</p>
+                <h3>Architecture & typage</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Trajectoire en progression vers des projets front plus robustes,
+              mieux organisés et plus faciles à maintenir.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>TypeScript</li>
+              <li>Architecture front</li>
+              <li>Composants</li>
+              <li>Organisation</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-6" hidden>
+              <p>
+                Montée en compétence sur le typage, la séparation des
+                responsabilités, l’architecture de composants et la structuration
+                de projets front plus évolutifs.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Phase</dt>
+                  <dd>En progression</dd>
+                </div>
+                <div>
+                  <dt>Objectif</dt>
+                  <dd>Maintenabilité</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>Training</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-6"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+        <!-- 07 -->
+        <li
+          class="ops-module"
+          data-step="7"
+          data-mode="departures"
+          style="--module-color: var(--color-cockpit)"
+        >
+          <article class="ops-module__card">
+            <header class="ops-module__header">
+              <div>
+                <p class="ops-module__eyebrow">Departures / Canal 07</p>
+                <h3>Performance & tests</h3>
+              </div>
+
+              <div class="ops-module__status">
+                <span data-state>LOCKED</span>
+                <i class="ops-module__lock" aria-hidden="true"></i>
+              </div>
+            </header>
+
+            <p class="ops-module__summary">
+              Amélioration continue de la performance, de la fiabilité et des
+              animations utiles au service de l’expérience utilisateur.
+            </p>
+
+            <ul class="ops-tags" aria-label="Compétences associées">
+              <li>Performance Web</li>
+              <li>Tests</li>
+              <li>GSAP avancé</li>
+              <li>Core Web Vitals</li>
+            </ul>
+
+            <div class="ops-module__panel" id="ops-report-7" hidden>
+              <p>
+                Exploration des tests, de l’optimisation des performances,
+                de la réduction des coûts d’animation et d’une utilisation plus
+                maîtrisée des animations avancées.
+              </p>
+
+              <dl class="ops-report">
+                <div>
+                  <dt>Phase</dt>
+                  <dd>En consolidation</dd>
+                </div>
+                <div>
+                  <dt>Objectif</dt>
+                  <dd>Fiabilité / rapidité</dd>
+                </div>
+                <div>
+                  <dt>Statut</dt>
+                  <dd>In review</dd>
+                </div>
+              </dl>
+            </div>
+
+            <button
+              class="ops-module__action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="ops-report-7"
+            >
+              Analyser et valider
+            </button>
+          </article>
+        </li>
+
+      </ol>
+    </section>
+
+    <section class="ops-clearance" id="ops-clearance" hidden aria-labelledby="ops-clearance-title">
+      <article class="ops-clearance__card">
+        <p class="ops-overline">Final Clearance / Skills Manifest</p>
+        <h2 id="ops-clearance-title">Autorisation opérationnelle accordée</h2>
+
+        <ul class="ops-clearance__list" role="list">
+          <li>Canal 01 — Structure sémantique validée</li>
+          <li>Canal 02 — Interface responsive validée</li>
+          <li>Canal 03 — Interactions front-end validées</li>
+          <li>Canal 04 — Application & données validées</li>
+          <li>Canal 05 — Qualité & livraison validées</li>
+          <li>Canal 06 — Architecture & typage en trajectoire</li>
+          <li>Canal 07 — Performance & tests en progression</li>
+        </ul>
+
+        <p>
+          Les compétences actuellement opérationnelles sont disponibles pour les
+          prochains vols projet. Les canaux en départ indiquent la trajectoire de
+          progression en cours.
+        </p>
+
+        <p class="ops-clearance__status">
+          STATUT : CENTRE DES OPÉRATIONS SYNCHRONISÉ
+        </p>
+
+        <div class="ops-clearance__actions">
+          <a class="ops-btn" href="boarding-gate.html">Consulter Boarding Gate</a>
+          <a class="ops-btn ops-btn--ghost" href="cockpit.html">Consulter Cockpit</a>
+        </div>
+      </article>
+    </section>
+
+  </section>
+</main>
 
 
     <footer class="claim-footer" role="contentinfo">
@@ -317,6 +913,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
      <script src="./asset/js/main.js"></script>
+     <script src="./asset/js/departures.js"></script>
 </body>
 
 </html>

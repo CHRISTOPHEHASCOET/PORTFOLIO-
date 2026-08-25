@@ -9,10 +9,24 @@
 
   .blackbox-main {
 
-
+   position: relative;
+    overflow: hidden;
+    padding-block: clamp(1.4rem, 3vw, 2.5rem);
     background: var(--bg-main);
   }
-
+ .blackbox-main::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.26;
+    /* background:
+    var(--bg-main); */
+    background:
+      linear-gradient(90deg, transparent 0 10%, rgba(0, 210, 255, 0.025) 10.2% 10.35%, transparent 10.6% 100%),
+      linear-gradient(90deg, transparent 0 32%, rgba(255, 255, 255, 0.014) 32.2% 32.35%, transparent 32.6% 100%),
+      linear-gradient(90deg, transparent 0 70%, rgba(0, 210, 255, 0.02) 70.2% 70.35%, transparent 70.6% 100%);
+  }
   .blackbox {
     display: grid;
     gap: 1rem;
@@ -167,19 +181,12 @@
 
   .recovery-station::before {
     content: "";
-
     position: absolute;
-
-    top: 0;
-    left: 18px;
-    right: 18px;
-
-    z-index: 5;
-
-    height: 2px;
-
-    pointer-events: none;
-
+    inset: 0 18px auto;
+    height: 4px;
+    z-index: 10;
+    border-radius: 20px;
+    pointer-events: none; 
     background:
       linear-gradient(90deg,
         transparent,

@@ -1,0 +1,136 @@
+     :root {
+            --clr-bg: #0a0d14;
+            --clr-bg-gradient: radial-gradient(circle at top, #1b3957, #050b10 60%);
+            --clr-panel-bg: #10141c;
+            --clr-accent: #3b82f6;
+            --clr-text: #e5e7eb;
+            --clr-muted: #9ca3af;
+            --clr-green: #22c55e;
+            --clr-warning: #f59e0b;
+            --clr-char-bg: rgba(0, 0, 0, 0.25);
+            --clr-border-green: rgba(63, 185, 80, 0.9);
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Rajdhani', sans-serif;
+        }
+
+    
+/* =========================================================
+           PORTE D'EMBARQUEMENT PLEIN ÉCRAN (INTRO)
+           ========================================================= */
+        .doors-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            pointer-events: none;
+            background: var(--clr-bg-gradient);
+        }
+
+        .door {
+            flex: 1;
+            height: 100%;
+            background: var(--clr-bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+            0 10px 22px rgba(0, 0, 0, 0.9),
+            inset 0 2px 6px rgba(255, 255, 255, 0.05);
+            z-index: 1;
+        }
+
+        /* Bandes de sécurité */
+        .door::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 18px;
+            height: 100%;
+            background: repeating-linear-gradient(135deg,
+                    var(--clr-green) 0px,
+                    var(--clr-green) 6px,
+                    #3b82f6 6px,
+                    #020617 12px);
+            opacity: 0.8;
+        }
+
+        .door.left::after {
+            right: 0;
+        }
+
+        .door.right::after {
+            left: 0;
+        }
+
+        .door-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        /* Hublot */
+        .door-window {
+            width: 180px;
+            height: 54px;
+            border-radius: 999px;
+            background:var(--clr-bg-gradient);
+            border: 5px solid var(--clr-bg-gradient);
+             box-shadow:
+            0 10px 22px rgba(0, 0, 0, 0.9),
+            inset 0 2px 6px rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .door-window::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius: inherit;
+            border: 5px dashed var(--clr-bg-gradient);
+        }
+
+        .door-label {
+            text-align: center;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--clr-text);
+            font-size: 0.65rem;
+        }
+
+        .door-label-top {
+            display: block;
+            color: var(--clr-muted);
+            margin-bottom: 6px;
+        }
+
+        .door-label-main {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: 0.25em;
+            color: var(--clr-accent);
+        }
+
+        .door-label-bottom {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.6rem;
+            color: var(--clr-bg-gradient);
+            animation: doorBlink 1s infinite;
+        }
+
+        @keyframes doorBlink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }

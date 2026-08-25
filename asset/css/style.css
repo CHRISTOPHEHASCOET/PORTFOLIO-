@@ -6,6 +6,7 @@
    RESET
 ═══════════════════════════════════════════════════════════════ */
 @layer reset {
+
   *,
   *::before,
   *::after {
@@ -70,6 +71,7 @@
     --color-cockpit: #caa24f;
     --color-tower: #4f7cff;
     --color-text: #e6edf3;
+    --crew-readable: #f1f7ff;
     --color-muted: #909aa7;
     --hud-green: #00ff9c;
 
@@ -151,16 +153,14 @@
     --pad-x: clamp(0.75rem, 2vw, 1.5rem);
 
     /* ── CLIP-PATH · HUD SHAPE ─────────────────────────────── */
-    --clip-hud: polygon(
-      0 var(--cut),
-      var(--cut) 0,
-      calc(100% - var(--cut)) 0,
-      100% var(--cut),
-      100% calc(100% - var(--cut)),
-      calc(100% - var(--cut)) 100%,
-      var(--cut) 100%,
-      0 calc(100% - var(--cut))
-    );
+    --clip-hud: polygon(0 var(--cut),
+        var(--cut) 0,
+        calc(100% - var(--cut)) 0,
+        100% var(--cut),
+        100% calc(100% - var(--cut)),
+        calc(100% - var(--cut)) 100%,
+        var(--cut) 100%,
+        0 calc(100% - var(--cut)));
 
     /* ── BACKGROUNDS · MAIN ────────────────────────────────── */
     --bg-main: radial-gradient(circle at top, #1b3957, #050b10 60%);
@@ -172,26 +172,21 @@
     --bg-flap: linear-gradient(180deg, #1b2230 0%, #0a0d14 50%, #05070d 100%);
 
     /* ── BACKGROUNDS · DECORATIVE ──────────────────────────── */
-    --gradient-neon-line: linear-gradient(
-      90deg,
-      transparent,
-      var(--color-accent-80),
-      var(--color-green-80),
-      transparent
-    );
+    --gradient-neon-line: linear-gradient(90deg,
+        transparent,
+        var(--color-accent-80),
+        var(--color-green-80),
+        transparent);
     --gradient-glass-overlay: linear-gradient(180deg, var(--color-accent-18), transparent 40%);
-    --gradient-title: linear-gradient(
-      135deg,
-      var(--color-accent),
-      var(--color-primary) 35%,
-      var(--color-green) 65%,
-      var(--color-amber)
-    );
+    --gradient-title: linear-gradient(135deg,
+        var(--color-accent),
+        var(--color-primary) 35%,
+        var(--color-green) 65%,
+        var(--color-amber));
+
 
     /* ── SHADOWS ───────────────────────────────────────────── */
-    --shadow-card:
-      0 10px 22px var(--color-black-90),
-      inset 0 2px 6px var(--color-white-05);
+    --shadow-card: 0 10px 22px rgba(0, 0, 0, 0.9), inset 0 2px 6px rgba(255, 255, 255, 0.05);
     --shadow-board:
       0 10px 24px var(--color-black-45),
       0 4px 10px var(--color-accent-10),
@@ -229,6 +224,7 @@
     --radius-lg: 16px;
     --radius-md: 20px;
     --radius-pill: 999px;
+      --crew-radius: 1.15rem;
 
     /* ── TABLE VARIABLES ───────────────────────────────────── */
     --board-padding: 1rem 1.2rem;
@@ -328,11 +324,9 @@
     inset: 0;
     pointer-events: none;
     opacity: 0.22;
-    background: repeating-linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.012) 0 1px,
-      transparent 1px 30px
-    );
+    background: repeating-linear-gradient(180deg,
+        rgba(255, 255, 255, 0.012) 0 1px,
+        transparent 1px 30px);
   }
 
   .claim-footer__layout {
@@ -345,6 +339,7 @@
    COMPONENTS — PILOT CARD / FLIGHT BOARD / CASIO
 ═══════════════════════════════════════════════════════════════ */
 @layer components {
+
   /* ─── PILOT CARD ─────────────────────────────────────────── */
   .pilot-card {
     display: grid;
@@ -861,13 +856,11 @@
     pointer-events: none;
     z-index: 0;
     mix-blend-mode: multiply;
-    background-image: repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.045) 0px,
-      rgba(0, 0, 0, 0.045) 1px,
-      transparent 1px,
-      transparent 3px
-    );
+    background-image: repeating-linear-gradient(0deg,
+        rgba(0, 0, 0, 0.045) 0px,
+        rgba(0, 0, 0, 0.045) 1px,
+        transparent 1px,
+        transparent 3px);
   }
 
   .casio__top {
@@ -979,13 +972,11 @@
     width: 6px;
     height: 18px;
     border-radius: var(--radius-xs);
-    background: linear-gradient(
-      180deg,
-      #8b949e 0%,
-      #5f6873 18%,
-      #2d333b 50%,
-      #1c2128 100%
-    );
+    background: linear-gradient(180deg,
+        #8b949e 0%,
+        #5f6873 18%,
+        #2d333b 50%,
+        #1c2128 100%);
     border-left: 1px solid var(--color-white-22);
     border-right: 1px solid var(--color-black-65);
     box-shadow:
@@ -1016,11 +1007,13 @@
 ═══════════════════════════════════════════════════════════════ */
 @layer animations {
   @keyframes hudPulse {
+
     0%,
     100% {
       opacity: 1;
       transform: scale(1);
     }
+
     50% {
       opacity: 0.4;
       transform: scale(1.6);
@@ -1028,50 +1021,60 @@
   }
 
   @keyframes system-pulse {
+
     0%,
     100% {
       opacity: 1;
     }
+
     50% {
       opacity: 0.6;
     }
   }
 
   @keyframes dot-pulse {
+
     0%,
     100% {
       opacity: 1;
     }
+
     50% {
       opacity: 0.5;
     }
   }
 
   @keyframes pulseBoarding {
+
     0%,
     100% {
       filter: brightness(1);
     }
+
     50% {
       filter: brightness(1.4);
     }
   }
 
   @keyframes flashFinal {
+
     0%,
     100% {
       opacity: 1;
     }
+
     50% {
       opacity: 0.3;
     }
   }
 
   @keyframes blinkDelay {
+
     0%,
     100% {
       opacity: 1;
     }
+
     50% {
       opacity: 0.6;
     }
@@ -1151,19 +1154,34 @@
     } */
 
     .flight-table th:nth-child(1),
-  .flight-table td:nth-child(1) { width: 17%; min-width: 0; }
+    .flight-table td:nth-child(1) {
+      width: 17%;
+      min-width: 0;
+    }
 
-  .flight-table th:nth-child(2),
-  .flight-table td:nth-child(2) { width: 38%; min-width: 0; }
+    .flight-table th:nth-child(2),
+    .flight-table td:nth-child(2) {
+      width: 38%;
+      min-width: 0;
+    }
 
-  .flight-table th:nth-child(3),
-  .flight-table td:nth-child(3) { width: 15%; min-width: 0; }
+    .flight-table th:nth-child(3),
+    .flight-table td:nth-child(3) {
+      width: 15%;
+      min-width: 0;
+    }
 
-  .flight-table th:nth-child(4),
-  .flight-table td:nth-child(4) { width: 12%; min-width: 0; }
+    .flight-table th:nth-child(4),
+    .flight-table td:nth-child(4) {
+      width: 12%;
+      min-width: 0;
+    }
 
-  .flight-table th:nth-child(5),
-  .flight-table td:nth-child(5) { width: 29%; min-width: 0; }
+    .flight-table th:nth-child(5),
+    .flight-table td:nth-child(5) {
+      width: 29%;
+      min-width: 0;
+    }
 
     .flight-table th {
       font-size: clamp(0.52rem, 1.8vw, 0.62rem);
@@ -1190,6 +1208,7 @@
       width: clamp(0.44rem, 0.95vw, 0.52rem);
       font-size: clamp(0.7rem, 0.95vw, 0.69rem);
     }
+
     .flight-table td:nth-child(2) .flap {
       width: clamp(0.42rem, 0.95vw, 0.5rem);
       font-size: clamp(0.68rem, 0.95vw, 0.68rem);
@@ -1203,10 +1222,11 @@
       width: clamp(0.36rem, 0.9vw, 0.44rem);
       font-size: clamp(0.6rem, 0.9vw, 0.6rem);
     }
-    
+
   }
 
   @media (max-width: 768px) {
+
     .header,
     .header__inner,
     .flight-board {
@@ -1238,7 +1258,7 @@
     }
   } */
 
-    @media (max-width: 390px) {
+  @media (max-width: 390px) {
     .flight-board {
       padding: 0.7rem 0.4rem;
     }
