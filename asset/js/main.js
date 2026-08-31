@@ -1,4 +1,6 @@
-const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.''-";
+// const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.''-";
+const CHARS = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.:'-";
+const NBSP = "\u00A0";
 const DATA = [
   { v: 'PT-987', d: 'TERMINAL', t: '06:45', g: 'A56', s: 'READY', nextStatus: "FINAL CALL", delay: 7000, c: '', href: 'index.html' },
 

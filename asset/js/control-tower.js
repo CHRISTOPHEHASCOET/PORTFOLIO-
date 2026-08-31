@@ -90,6 +90,9 @@
     clearance:
       $("[data-clearance]"),
 
+    formHoney:
+      $('[name="_honey"]'),
+
     form:
       $("[data-clearance-form]"),
 
@@ -853,7 +856,7 @@
     for (
       let index = 0;
       index <
-        DOM.identificationSteps.length;
+      DOM.identificationSteps.length;
       index++
     ) {
       const step =
@@ -1358,103 +1361,102 @@
 
   /* =========================================================
      TRANSMISSION
-     ========================================================= */
-
-  async function transmit() {
-    if (
-      state.transmitting
-    ) {
-      return;
-    }
-
-
-    state.transmitting =
-      true;
+    //  ========================================================= */
+    //   async function transmit() {
+    // if (
+    //   state.transmitting
+    // ) {
+    //   return;
+    // }
 
 
-    DOM.authorize.disabled =
-      true;
+    // state.transmitting =
+    //   true;
 
 
-    hide(
-      DOM.review
-    );
+    // DOM.authorize.disabled =
+    //   true;
 
 
-    show(
-      DOM.transmission
-    );
+    // hide(
+    //   DOM.review
+    // );
 
 
-    DOM.globalStatus.value =
-      "TRANSMITTING";
+    // show(
+    //   DOM.transmission
+    // );
 
 
-    const duration =
-      reducedMotion.matches
-        ? 80
-        : 2200;
+    // DOM.globalStatus.value =
+    //   "TRANSMITTING";
 
 
-    const started =
-      performance.now();
+    // const duration =
+    //   reducedMotion.matches
+    //     ? 80
+    //     : 2200;
 
 
-    await new Promise(resolve => {
-
-      const frame =
-        now => {
-
-          const ratio =
-            Math.min(
-              (now - started) /
-              duration,
-              1
-            );
+    // const started =
+    //   performance.now();
 
 
-          const percentage =
-            Math.round(
-              ratio * 100
-            );
+    // await new Promise(resolve => {
+
+    //   const frame =
+    //     now => {
+
+    //       const ratio =
+    //         Math.min(
+    //           (now - started) /
+    //           duration,
+    //           1
+    //         );
 
 
-          DOM.transmissionPercent.textContent =
-            `${percentage} %`;
+    //       const percentage =
+    //         Math.round(
+    //           ratio * 100
+    //         );
 
 
-          DOM.transmissionBar.style.width =
-            `${percentage}%`;
+    //       DOM.transmissionPercent.textContent =
+    //         `${percentage} %`;
 
 
-          DOM.transmissionProgress.setAttribute(
-            "aria-valuenow",
-            String(percentage)
-          );
+    //       DOM.transmissionBar.style.width =
+    //         `${percentage}%`;
 
 
-          updateTransmissionSteps(
-            percentage
-          );
+    //       DOM.transmissionProgress.setAttribute(
+    //         "aria-valuenow",
+    //         String(percentage)
+    //       );
 
 
-          if (ratio < 1) {
-            requestAnimationFrame(
-              frame
-            );
-
-            return;
-          }
+    //       updateTransmissionSteps(
+    //         percentage
+    //       );
 
 
-          resolve();
-        };
+    //       if (ratio < 1) {
+    //         requestAnimationFrame(
+    //           frame
+    //         );
+
+    //         return;
+    //       }
 
 
-      requestAnimationFrame(
-        frame
-      );
-    });
+    //       resolve();
+    //     };
+
+
+    //   requestAnimationFrame(
+    //     frame
+    //   );
+    // });
 
 
     /*
@@ -1464,79 +1466,339 @@
      */
 
 
+  //   await delay(250);
+
+
+  //   state.transmitting =
+  //     false;
+
+
+  //   DOM.authorize.disabled =
+  //     false;
+
+
+  //   completeTransmission();
+  // }
+
+
+  // function updateTransmissionSteps(
+  //   percentage
+  // ) {
+  //   const size =
+  //     100 /
+  //     DOM.transmissionSteps.length;
+
+
+  //   DOM.transmissionSteps.forEach(
+  //     (step, index) => {
+  //       const start =
+  //         index * size;
+
+  //       const end =
+  //         (index + 1) * size;
+
+  //       const icon =
+  //         step.querySelector("span");
+
+
+  //       const complete =
+  //         percentage >= end;
+
+  //       const running =
+  //         percentage >= start &&
+  //         percentage < end;
+
+
+  //       step.classList.toggle(
+  //         "is-complete",
+  //         complete
+  //       );
+
+  //       step.classList.toggle(
+  //         "is-running",
+  //         running
+  //       );
+
+
+  //       if (!icon) return;
+
+
+  //       icon.textContent =
+  //         complete
+  //           ? "✓"
+  //           : running
+  //             ? "›"
+  //             : "○";
+  //     }
+  //   );
+  // }
+
+
+  // DOM.authorize?.addEventListener(
+  //   "click",
+  //   transmit
+  // );
+
+ 
+/* =========================================================
+   TRANSMISSION — Cloudflare Worker
+   ========================================================= */
+
+const CONTACT_WORKER_URL =
+  "https://control-tower-contact.chryseb.workers.dev";
+
+
+async function transmit() {
+  if (state.transmitting) return;
+
+
+  /* ── Vérification honeypot ── */
+
+  const honey =
+    document.getElementById("formHoney");
+
+  if (honey && honey.value !== "") {
+    announce("Requête rejetée.");
+    return;
+  }
+
+
+  /* ── Vérification du formulaire ── */
+
+  if (!validateForm()) {
+    hide(DOM.transmission);
+    show(DOM.review);
+    return;
+  }
+
+
+  state.transmitting = true;
+
+  DOM.authorize.disabled = true;
+
+  hide(DOM.review);
+  show(DOM.transmission);
+
+  DOM.globalStatus.value =
+    "TRANSMITTING";
+
+
+  /* ── Animation de transmission ── */
+
+  const duration =
+    reducedMotion.matches
+      ? 80
+      : 2200;
+
+  const started =
+    performance.now();
+
+
+  await new Promise(resolve => {
+
+    const frame = now => {
+
+      const ratio =
+        Math.min(
+          (now - started) / duration,
+          1
+        );
+
+
+      const percentage =
+        Math.round(ratio * 100);
+
+
+      DOM.transmissionPercent.textContent =
+        `${percentage} %`;
+
+
+      DOM.transmissionBar.style.width =
+        `${percentage}%`;
+
+
+      DOM.transmissionProgress.setAttribute(
+        "aria-valuenow",
+        String(percentage)
+      );
+
+
+      updateTransmissionSteps(
+        percentage
+      );
+
+
+      if (ratio < 1) {
+        requestAnimationFrame(frame);
+        return;
+      }
+
+
+      resolve();
+    };
+
+
+    requestAnimationFrame(frame);
+  });
+
+
+  /* ── Envoi réel vers Cloudflare Worker ── */
+
+  try {
+
+    const formData =
+      new FormData(DOM.form);
+
+
+    const response =
+      await fetch(
+        CONTACT_WORKER_URL,
+        {
+          method: "POST",
+
+          body: formData,
+
+          headers: {
+            "Accept": "application/json"
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+    }
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.error ||
+        "Transmission refusée par le serveur."
+      );
+    }
+
+
+    /* ── Transmission acceptée ── */
+
     await delay(250);
 
 
-    state.transmitting =
-      false;
+    state.transmitting = false;
 
-
-    DOM.authorize.disabled =
-      false;
+    DOM.authorize.disabled = false;
 
 
     completeTransmission();
-  }
 
 
-  function updateTransmissionSteps(
-    percentage
-  ) {
-    const size =
-      100 /
-      DOM.transmissionSteps.length;
+  } catch (err) {
+
+    /* ── Transmission échouée ── */
+
+    state.transmitting = false;
+
+    DOM.authorize.disabled = false;
 
 
-    DOM.transmissionSteps.forEach(
-      (step, index) => {
-        const start =
-          index * size;
+    hide(DOM.transmission);
 
-        const end =
-          (index + 1) * size;
-
-        const icon =
-          step.querySelector("span");
+    show(DOM.review);
 
 
-        const complete =
-          percentage >= end;
-
-        const running =
-          percentage >= start &&
-          percentage < end;
+    DOM.globalStatus.value =
+      "TRANSMISSION FAILED";
 
 
-        step.classList.toggle(
-          "is-complete",
-          complete
-        );
-
-        step.classList.toggle(
-          "is-running",
-          running
-        );
+    announce(
+      "Erreur de transmission. Réessayez."
+    );
 
 
-        if (!icon) return;
-
-
-        icon.textContent =
-          complete
-            ? "✓"
-            : running
-              ? "›"
-              : "○";
-      }
+    console.error(
+      "Cloudflare Worker:",
+      err
     );
   }
+}
 
 
-  DOM.authorize?.addEventListener(
-    "click",
-    transmit
+/* =========================================================
+   TRANSMISSION STEPS
+   ========================================================= */
+
+function updateTransmissionSteps(
+  percentage
+) {
+
+  const size =
+    100 /
+    DOM.transmissionSteps.length;
+
+
+  DOM.transmissionSteps.forEach(
+    (step, index) => {
+
+      const start =
+        index * size;
+
+
+      const end =
+        (index + 1) * size;
+
+
+      const icon =
+        step.querySelector("span");
+
+
+      const complete =
+        percentage >= end;
+
+
+      const running =
+        percentage >= start &&
+        percentage < end;
+
+
+      step.classList.toggle(
+        "is-complete",
+        complete
+      );
+
+
+      step.classList.toggle(
+        "is-running",
+        running
+      );
+
+
+      if (!icon) return;
+
+
+      icon.textContent =
+        complete
+          ? "✓"
+          : running
+            ? "›"
+            : "○";
+    }
   );
+}
 
+
+/* =========================================================
+   AUTHORIZE
+   ========================================================= */
+
+DOM.authorize?.addEventListener(
+  "click",
+  transmit
+);
 
   /* =========================================================
      COMPLETE

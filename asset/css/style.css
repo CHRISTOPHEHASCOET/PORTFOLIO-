@@ -224,7 +224,7 @@
     --radius-lg: 16px;
     --radius-md: 20px;
     --radius-pill: 999px;
-      --crew-radius: 1.15rem;
+    --crew-radius: 1.15rem;
 
     /* ── TABLE VARIABLES ───────────────────────────────────── */
     --board-padding: 1rem 1.2rem;
@@ -556,7 +556,6 @@
   .flight-table {
     border-collapse: separate;
     border-spacing: 0 var(--table-gap);
-    perspective: 900px;
     width: 100%;
   }
 
@@ -637,6 +636,8 @@
     border-radius: 4px;
     border: var(--border-white-06);
     box-shadow: var(--shadow-word);
+    /* perspective: 900px; */
+      perspective: 400px;
     transform-style: preserve-3d;
   }
 

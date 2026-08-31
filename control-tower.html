@@ -113,7 +113,7 @@
       </aside>
     </div>
   </header>
-  
+
   <!-- ═══ MAIN  ═══ -->
   <main id="main-content" class="tower-main">
 
@@ -214,84 +214,80 @@
              RADAR
         ═══════════════════════════════════════════════ -->
 
-   <section class="radar" aria-labelledby="radar-title">
+          <section class="radar" aria-labelledby="radar-title">
 
-  <header class="radar__header">
+            <header class="radar__header">
 
-    <div>
-      <p>RADAR / APPROACH</p>
+              <div>
+                <p>RADAR / APPROACH</p>
 
-      <h3 id="radar-title">
-        Secteur d'approche
-      </h3>
-    </div>
+                <h3 id="radar-title">
+                  Secteur d'approche
+                </h3>
+              </div>
 
-    <span class="radar__status">
-      SCANNING
-    </span>
+              <span class="radar__status">
+                SCANNING
+              </span>
 
-  </header>
-
-
-  <div class="radar__screen" data-radar-screen>
-
-    <div class="radar__scope" data-radar-scope>
-
-      <span class="radar__trail"></span>
-      <span class="radar__sweep"></span>
-
-      <span class="radar__ring radar__ring--1"></span>
-      <span class="radar__ring radar__ring--2"></span>
-      <span class="radar__ring radar__ring--3"></span>
-
-      <span class="radar__axis radar__axis--x"></span>
-      <span class="radar__axis radar__axis--y"></span>
-
-      <button
-        type="button"
-        class="radar__target"
-        data-radar-target
-        aria-label="Contact radar détecté dans le secteur d'approche"
-      >
-        <span class="radar__plot" aria-hidden="true"></span>
-
-        <span class="radar__taildot radar__taildot--1" aria-hidden="true"></span>
-        <span class="radar__taildot radar__taildot--2" aria-hidden="true"></span>
-        <span class="radar__taildot radar__taildot--3" aria-hidden="true"></span>
-        <span class="radar__taildot radar__taildot--4" aria-hidden="true"></span>
-
-        <span class="radar__leader" aria-hidden="true"></span>
-        <span class="radar__vector" aria-hidden="true"></span>
-
-        <span class="radar__target-data">
-          <strong data-radar-callsign>UNKNOWN</strong>
-          <small data-radar-flight>TRK ----</small>
-        </span>
-      </button>
-
-    </div>
+            </header>
 
 
-    <div class="radar__message">
+            <div class="radar__screen" data-radar-screen>
 
-      <strong data-radar-message-title>
-        CONTACT DÉTECTÉ
-      </strong>
+              <div class="radar__scope" data-radar-scope>
 
-      <p data-radar-message>
-        Transpondeur non identifié dans le secteur d'approche.
-      </p>
+                <span class="radar__trail"></span>
+                <span class="radar__sweep"></span>
 
-    </div>
+                <span class="radar__ring radar__ring--1"></span>
+                <span class="radar__ring radar__ring--2"></span>
+                <span class="radar__ring radar__ring--3"></span>
 
-  </div>
+                <span class="radar__axis radar__axis--x"></span>
+                <span class="radar__axis radar__axis--y"></span>
+
+                <button type="button" class="radar__target" data-radar-target
+                  aria-label="Contact radar détecté dans le secteur d'approche">
+                  <span class="radar__plot" aria-hidden="true"></span>
+
+                  <span class="radar__taildot radar__taildot--1" aria-hidden="true"></span>
+                  <span class="radar__taildot radar__taildot--2" aria-hidden="true"></span>
+                  <span class="radar__taildot radar__taildot--3" aria-hidden="true"></span>
+                  <span class="radar__taildot radar__taildot--4" aria-hidden="true"></span>
+
+                  <span class="radar__leader" aria-hidden="true"></span>
+                  <span class="radar__vector" aria-hidden="true"></span>
+
+                  <span class="radar__target-data">
+                    <strong data-radar-callsign>UNKNOWN</strong>
+                    <small data-radar-flight>TRK ----</small>
+                  </span>
+                </button>
+
+              </div>
 
 
-  <button type="button" class="tower-btn tower-btn--primary" data-identify>
-    IDENTIFIER L'APPAREIL
-  </button>
+              <div class="radar__message">
 
-</section>
+                <strong data-radar-message-title>
+                  CONTACT DÉTECTÉ
+                </strong>
+
+                <p data-radar-message>
+                  Transpondeur non identifié dans le secteur d'approche.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <button type="button" class="tower-btn tower-btn--primary" data-identify>
+              IDENTIFIER L'APPAREIL
+            </button>
+
+          </section>
 
 
           <!-- ═══════════════════════════════════════════════
@@ -492,7 +488,15 @@
           </header>
 
 
-          <form class="clearance-form" data-clearance-form novalidate>
+          <form class="clearance-form" data-clearance-form action="https://control-tower-contact.chryseb.workers.dev"
+            method="POST">
+
+            <!-- META FORM SUBMIT -->
+            <!-- <input type="hidden" name="_subject" value="CONTROL TOWER — Nouvelle transmission">
+            <input type="hidden" name="_template" value="table"> -->
+
+            <!-- HONEYPOT -->
+            <input type="text" name="_honey" class="form-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <!-- Nom -->
 
@@ -630,7 +634,7 @@
             </fieldset>
 
 
-            <button type="submit" class="tower-btn tower-btn--primary clearance-form__submit">
+            <button type="submit" class="tower-btn tower-btn--clearance clearance-form__submit">
               PRÉPARER LA TRANSMISSION
             </button>
 

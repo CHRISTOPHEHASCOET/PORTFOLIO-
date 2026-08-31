@@ -2,918 +2,1039 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christophe Hascoet — Terminal A56</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christophe Hascoet — Terminal A56</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
 
 
 
-     <link rel="stylesheet" href="./asset/css/style.css">
-    <link rel="stylesheet" href="./asset/css/departures.css">
-    <link rel="stylesheet" href="./asset/css/footer.css">
+  <link rel="stylesheet" href="./asset/css/style.css">
+  <link rel="stylesheet" href="./asset/css/departures.css">
+  <link rel="stylesheet" href="./asset/css/footer.css">
 
 </head>
 
 <body>
 
-    <!-- ═══ HEADER — Flight Strip ═══ -->
-    <header class="header">
-        <div class="header__inner container">
-            <!-- PILOTE -->
-            <article class="pilot-card" aria-labelledby="pilot-heading">
-                <span class="pilot-card__role">Commandant de bord</span>
+  <!-- ═══ HEADER — Flight Strip ═══ -->
+  <header class="header">
+    <div class="header__inner container">
+      <!-- PILOTE -->
+      <article class="pilot-card" aria-labelledby="pilot-heading">
+        <span class="pilot-card__role">Commandant de bord</span>
 
-                <div class="pilot-card__main">
-                    <img src="./asset/images/pilote christophehascoet3.png"
-                        alt="Portrait professionnel de Christophe Hascoet" class="pilot-card__avatar">
+        <div class="pilot-card__main">
+          <img src="./asset/images/pilote christophehascoet3.png" alt="Portrait professionnel de Christophe Hascoet"
+            class="pilot-card__avatar">
 
-                    <div class="pilot-card__info">
-                        <h2 id="pilot-heading" class="pilot-card__name">Christophe Hascoet</h2>
-                        <div class="pilot-card__meta">
-                            <span class="pilot-card__id">CPT-001</span>
-                            <span class="pilot-card__status">
-                                <span class="pilot-card__dot" aria-hidden="true"></span>ACTIF
-                            </span>
-                        </div>
-                    </div>
+          <div class="pilot-card__info">
+            <h2 id="pilot-heading" class="pilot-card__name">Christophe Hascoet</h2>
+            <div class="pilot-card__meta">
+              <span class="pilot-card__id">CPT-001</span>
+              <span class="pilot-card__status">
+                <span class="pilot-card__dot" aria-hidden="true"></span>ACTIF
+              </span>
+            </div>
+          </div>
+        </div>
+        <figure class="pilot-card__logo">
+          <img src="./asset/images/logo5.PNG" alt="Logo">
+        </figure>
+      </article>
+
+      <!-- TABLEAU -->
+      <section class="flight-board" aria-label="Tableau des vols en temps réel">
+        <table class="flight-table">
+          <caption>Vols en temps réel</caption>
+          <thead>
+            <tr>
+              <th scope="col">VOL</th>
+              <th scope="col">DESTINATION</th>
+              <th scope="col">HEURE</th>
+              <th scope="col">PORTE</th>
+              <th scope="col">STATUT</th>
+            </tr>
+          </thead>
+          <tbody id="flight-body"></tbody>
+        </table>
+      </section>
+
+      <!-- CASIO -->
+      <aside class="casio" aria-label="Horloge de bord">
+        <div class="casio__body">
+          <div class="casio__header">
+            <span class="casio__brand">CASIO</span>
+            <span class="casio__model">F-91W</span>
+          </div>
+          <div class="casio__function-bar">
+            <span class="casio__light">LIGHT</span>
+            <span class="casio__alarm">ALARM CHRONOGRAPH</span>
+          </div>
+          <div class="casio__screen-border">
+            <div class="casio__screen">
+              <div class="casio__top">
+                <div class="casio__icons" aria-hidden="true">
+                  <span class="fa-solid fa-signal casio__icon-bars"></span>
+                  <span class="fa-solid fa-bell casio__icon-bell"></span>
+                  <span id="casio-ampm" class="casio__ampm">PM</span>
                 </div>
-                <figure class="pilot-card__logo">
-                    <img src="./asset/images/logo5.PNG" alt="Logo">
-                </figure>
-            </article>
-
-            <!-- TABLEAU -->
-            <section class="flight-board" aria-label="Tableau des vols en temps réel">
-                <table class="flight-table">
-                    <caption>Vols en temps réel</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">VOL</th>
-                            <th scope="col">DESTINATION</th>
-                            <th scope="col">HEURE</th>
-                            <th scope="col">PORTE</th>
-                            <th scope="col">STATUT</th>
-                        </tr>
-                    </thead>
-                    <tbody id="flight-body"></tbody>
-                </table>
-            </section>
-
-            <!-- CASIO -->
-            <aside class="casio" aria-label="Horloge de bord">
-                <div class="casio__body">
-                    <div class="casio__header">
-                        <span class="casio__brand">CASIO</span>
-                        <span class="casio__model">F-91W</span>
-                    </div>
-                    <div class="casio__function-bar">
-                        <span class="casio__light">LIGHT</span>
-                        <span class="casio__alarm">ALARM CHRONOGRAPH</span>
-                    </div>
-                    <div class="casio__screen-border">
-                        <div class="casio__screen">
-                            <div class="casio__top">
-                                <div class="casio__icons" aria-hidden="true">
-                                    <span class="fa-solid fa-signal casio__icon-bars"></span>
-                                    <span class="fa-solid fa-bell casio__icon-bell"></span>
-                                    <span id="casio-ampm" class="casio__ampm">PM</span>
-                                </div>
-                                <p class="casio__date" aria-hidden="true">
-                                    <span id="casio-day">SA</span>
-                                    <span id="casio-date">31</span>
-                                </p>
-                            </div>
-                            <p class="casio__time" aria-hidden="true">
-                                <time id="casio-time" datetime="00:00">11:04</time>
-                                <span id="casio-seconds" class="casio__seconds">33</span>
-                            </p>
-                            <span id="casio-sr-time" class="casio__sr-time" aria-live="polite"></span>
-                        </div>
-                    </div>
-                    <p class="casio__footer" aria-hidden="true">
-                        <span>WATER</span>
-                        <span class="casio__wr">WR</span>
-                        <span>RESIST</span>
-                    </p>
-                    <span class="casio__btn casio__btn--lt" aria-hidden="true"></span>
-                    <span class="casio__btn casio__btn--lb" aria-hidden="true"></span>
-                    <span class="casio__btn casio__btn--rb" aria-hidden="true"></span>
-                </div>
-            </aside>
+                <p class="casio__date" aria-hidden="true">
+                  <span id="casio-day">SA</span>
+                  <span id="casio-date">31</span>
+                </p>
+              </div>
+              <p class="casio__time" aria-hidden="true">
+                <time id="casio-time" datetime="00:00">11:04</time>
+                <span id="casio-seconds" class="casio__seconds">33</span>
+              </p>
+              <span id="casio-sr-time" class="casio__sr-time" aria-live="polite"></span>
+            </div>
+          </div>
+          <p class="casio__footer" aria-hidden="true">
+            <span>WATER</span>
+            <span class="casio__wr">WR</span>
+            <span>RESIST</span>
+          </p>
+          <span class="casio__btn casio__btn--lt" aria-hidden="true"></span>
+          <span class="casio__btn casio__btn--lb" aria-hidden="true"></span>
+          <span class="casio__btn casio__btn--rb" aria-hidden="true"></span>
         </div>
-    </header>
-    <!-- ═══ MAIN  ═══ -->
-  <main id="main" class="ops-main">
-  <section class="container ops-shell" aria-labelledby="ops-title">
+      </aside>
+    </div>
+  </header>
+  <!-- ═══ MAIN  ═══ -->
 
-    <header class="ops-hero">
-      <p class="ops-kicker">OPS-251 / Skill Traffic Control</p>
-      <h1 id="ops-title">Operation Center</h1>
-      <p class="ops-lead">
-        Centre de coordination des compétences. Les canaux en arrivée indiquent
-        les systèmes déjà opérationnels. Les canaux en départ signalent les axes
-        de progression actuellement en cours de trajectoire.
-      </p>
-    </header>
+  <main id="main" class="ops" data-ops-root>
+    <section class="container ops__inner" aria-labelledby="ops-title">
 
-    <section class="ops-strip" aria-label="État du centre des opérations">
-      <article>
-        <span>Station</span>
-        <strong>OPS-251</strong>
-      </article>
+      <header class="ops__hero">
+        <p class="ops__kicker">OPS-251 / Centre opérationnel des compétences</p>
 
-      <article>
-        <span>Système</span>
-        <strong class="ops-online">ONLINE</strong>
-      </article>
+        <h1 id="ops-title">Operation Center</h1>
 
-      <article>
-        <span>Mode</span>
-        <strong data-ops-current-mode>TOUS CANAUX</strong>
-      </article>
-
-      <article>
-        <span>Clearance</span>
-        <strong class="ops-review">IN REVIEW</strong>
-      </article>
-    </section>
-
-    <section class="ops-console" aria-labelledby="ops-console-title">
-      
-      <header class="ops-console__header">
-        <div>
-          <p class="ops-overline">Channel Inspection / Skills Board</p>
-          <h2 id="ops-console-title">Contrôle des compétences</h2>
-        </div>
-
-        <div class="ops-progress" aria-label="Progression de validation">
-          <progress id="ops-progress" max="7" value="0"></progress>
-          <output id="ops-count" for="ops-progress">0 / 7 canaux validés</output>
-        </div>
+        <p class="ops__lead">
+          Inspection des compétences numériques, opérationnelles et humaines.
+          Un canal correspond à un groupe de compétences. Ouvrez le rapport,
+          lisez le contenu, validez les contrôles, puis passez au canal suivant.
+        </p>
       </header>
 
-      <div class="ops-toolbar">
-        <div class="ops-filters" role="tablist" aria-label="Filtrer les canaux">
-          <button
-            class="ops-filter is-active"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            data-filter="all"
-            data-label="TOUS CANAUX"
-          >
-            Tous
-          </button>
+      <section class="ops-status" aria-label="État du centre opérationnel">
+        <article class="ops-status__item">
+          <span>Station</span>
+          <strong>OPS-251</strong>
+        </article>
 
-          <button
-            class="ops-filter"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            data-filter="arrivals"
-            data-label="ARRIVÉES"
-          >
-            Arrivées
-          </button>
+        <article class="ops-status__item">
+          <span>Système</span>
+          <strong class="ops-status__online">Disponible</strong>
+        </article>
 
-          <button
-            class="ops-filter"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            data-filter="departures"
-            data-label="DÉPARTS"
-          >
-            Départs
-          </button>
-        </div>
+        <article class="ops-status__item">
+          <span>Inspection</span>
+          <strong data-ops-count>0 / 7 canaux</strong>
+        </article>
 
-        <button class="ops-fast-track" type="button" id="ops-fast-track">
-          Fast Track — tout analyser
-        </button>
-      </div>
+        <article class="ops-status__item">
+          <span>Autorisation</span>
+          <strong class="ops-status__clearance" data-ops-status>En cours</strong>
+        </article>
+      </section>
 
-      <p class="ops-help" id="ops-help">
-        Commencez l’analyse en validant le premier canal opérationnel.
-        Chaque validation débloque le contrôle suivant.
-      </p>
+      <section class="ops-panel" aria-labelledby="ops-panel-title">
+        <header class="ops-panel__header">
+          <div>
+            <p class="ops__overline">Skill Storage / Sector 02</p>
+            <h2 id="ops-panel-title">Canaux de compétences récupérés</h2>
+          </div>
 
-      <ol class="ops-grid" role="list">
+          <div class="ops-panel__right">
+            <ol class="ops-sequence" role="list" aria-label="Progression des canaux inspectés">
+              <li data-ops-sequence="1" style="--accent: var(--color-accent)"><span>01</span></li>
+              <li data-ops-sequence="2" style="--accent: var(--color-violet)"><span>02</span></li>
+              <li data-ops-sequence="3" style="--accent: var(--color-green)"><span>03</span></li>
+              <li data-ops-sequence="4" style="--accent: var(--color-cockpit)"><span>04</span></li>
+              <li data-ops-sequence="5" style="--accent: var(--color-primary)"><span>05</span></li>
+              <li data-ops-sequence="6" style="--accent: var(--color-amber)"><span>06</span></li>
+              <li data-ops-sequence="7" style="--accent: var(--color-tower)"><span>07</span></li>
+            </ol>
 
-        <!-- 01 -->
-        <li
-          class="ops-module"
-          data-step="1"
-          data-mode="arrivals"
-          style="--module-color: var(--color-accent)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Arrivals / Canal 01</p>
-                <h3>Structure sémantique</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Construction de pages HTML claires, structurées, accessibles et
-              compréhensibles par les moteurs de recherche.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>HTML5</li>
-              <li>Sémantique</li>
-              <li>SEO</li>
-              <li>Formulaires</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-1" hidden>
-              <p>
-                Capacité à organiser le contenu avec les bonnes balises :
-                header, nav, main, section, article, aside et footer.
-                L’objectif est de produire une base robuste, lisible et durable.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Niveau</dt>
-                  <dd>Opérationnel</dd>
-                </div>
-                <div>
-                  <dt>Usage</dt>
-                  <dd>Structure de pages</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>Ready</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-1"
-            >
-              Analyser et valider
+            <button class="ops-panel__fast" type="button" data-ops-fast>
+              Mode recruteur
             </button>
-          </article>
-        </li>
+          </div>
+        </header>
 
-        <!-- 02 -->
-        <li
-          class="ops-module"
-          data-step="2"
-          data-mode="arrivals"
-          style="--module-color: var(--color-primary)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Arrivals / Canal 02</p>
-                <h3>Interface responsive</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Création d’interfaces adaptables, cohérentes visuellement et
-              utilisables sur desktop, tablette et mobile.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>CSS3</li>
-              <li>Responsive</li>
-              <li>Variables CSS</li>
-              <li>UI</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-2" hidden>
-              <p>
-                Utilisation de CSS moderne : variables, composants réutilisables,
-                grilles, flexbox, media queries et organisation modulaire.
-                L’objectif est de produire une interface stable et maintenable.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Niveau</dt>
-                  <dd>Opérationnel</dd>
-                </div>
-                <div>
-                  <dt>Usage</dt>
-                  <dd>Design system / responsive</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>Ready</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-2"
-            >
-              Analyser et valider
-            </button>
-          </article>
-        </li>
-
-        <!-- 03 -->
-        <li
-          class="ops-module"
-          data-step="3"
-          data-mode="arrivals"
-          style="--module-color: var(--color-amber)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Arrivals / Canal 03</p>
-                <h3>Interactions front-end</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Ajout de comportements interactifs utiles : états d’interface,
-              panneaux dynamiques, validations et micro-interactions.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>JavaScript</li>
-              <li>DOM</li>
-              <li>Events</li>
-              <li>UI states</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-3" hidden>
-              <p>
-                Mise en place d’interactions accessibles et compréhensibles :
-                boutons, panneaux, progression, état actif, gestion des erreurs
-                et respect des préférences de mouvement réduit.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Niveau</dt>
-                  <dd>En service</dd>
-                </div>
-                <div>
-                  <dt>Usage</dt>
-                  <dd>Interfaces interactives</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>Active</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-3"
-            >
-              Analyser et valider
-            </button>
-          </article>
-        </li>
-
-        <!-- 04 -->
-        <li
-          class="ops-module"
-          data-step="4"
-          data-mode="arrivals"
-          style="--module-color: var(--color-violet)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Arrivals / Canal 04</p>
-                <h3>Application & données</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Compréhension des bases applicatives : routes, contrôleurs,
-              vues, logique serveur et manipulation de données.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>PHP</li>
-              <li>Laravel</li>
-              <li>MySQL</li>
-              <li>MVC</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-4" hidden>
-              <p>
-                Bases de développement back-end avec Laravel : organisation MVC,
-                routes, contrôleurs, vues Blade, logique métier simple et lien
-                avec une base de données.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Niveau</dt>
-                  <dd>Projet encadré</dd>
-                </div>
-                <div>
-                  <dt>Usage</dt>
-                  <dd>Application web</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>Active</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-4"
-            >
-              Analyser et valider
-            </button>
-          </article>
-        </li>
-
-        <!-- 05 -->
-        <li
-          class="ops-module"
-          data-step="5"
-          data-mode="arrivals"
-          style="--module-color: var(--color-green)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Arrivals / Canal 05</p>
-                <h3>Qualité & livraison</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Contrôle de la qualité, versioning, accessibilité, lisibilité du
-              code et préparation des livrables.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>Git</li>
-              <li>GitHub</li>
-              <li>Accessibilité</li>
-              <li>Documentation</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-5" hidden>
-              <p>
-                Utilisation de Git pour suivre l’évolution des projets,
-                structurer les versions et livrer un travail plus fiable.
-                Attention portée à l’accessibilité, aux contrastes, au clavier
-                et à la clarté des parcours.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Niveau</dt>
-                  <dd>Contrôle qualité</dd>
-                </div>
-                <div>
-                  <dt>Usage</dt>
-                  <dd>Suivi / livraison</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>Checked</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-5"
-            >
-              Analyser et valider
-            </button>
-          </article>
-        </li>
-
-        <!-- 06 -->
-        <li
-          class="ops-module"
-          data-step="6"
-          data-mode="departures"
-          style="--module-color: var(--color-tower)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Departures / Canal 06</p>
-                <h3>Architecture & typage</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Trajectoire en progression vers des projets front plus robustes,
-              mieux organisés et plus faciles à maintenir.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>TypeScript</li>
-              <li>Architecture front</li>
-              <li>Composants</li>
-              <li>Organisation</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-6" hidden>
-              <p>
-                Montée en compétence sur le typage, la séparation des
-                responsabilités, l’architecture de composants et la structuration
-                de projets front plus évolutifs.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Phase</dt>
-                  <dd>En progression</dd>
-                </div>
-                <div>
-                  <dt>Objectif</dt>
-                  <dd>Maintenabilité</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>Training</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-6"
-            >
-              Analyser et valider
-            </button>
-          </article>
-        </li>
-
-        <!-- 07 -->
-        <li
-          class="ops-module"
-          data-step="7"
-          data-mode="departures"
-          style="--module-color: var(--color-cockpit)"
-        >
-          <article class="ops-module__card">
-            <header class="ops-module__header">
-              <div>
-                <p class="ops-module__eyebrow">Departures / Canal 07</p>
-                <h3>Performance & tests</h3>
-              </div>
-
-              <div class="ops-module__status">
-                <span data-state>LOCKED</span>
-                <i class="ops-module__lock" aria-hidden="true"></i>
-              </div>
-            </header>
-
-            <p class="ops-module__summary">
-              Amélioration continue de la performance, de la fiabilité et des
-              animations utiles au service de l’expérience utilisateur.
-            </p>
-
-            <ul class="ops-tags" aria-label="Compétences associées">
-              <li>Performance Web</li>
-              <li>Tests</li>
-              <li>GSAP avancé</li>
-              <li>Core Web Vitals</li>
-            </ul>
-
-            <div class="ops-module__panel" id="ops-report-7" hidden>
-              <p>
-                Exploration des tests, de l’optimisation des performances,
-                de la réduction des coûts d’animation et d’une utilisation plus
-                maîtrisée des animations avancées.
-              </p>
-
-              <dl class="ops-report">
-                <div>
-                  <dt>Phase</dt>
-                  <dd>En consolidation</dd>
-                </div>
-                <div>
-                  <dt>Objectif</dt>
-                  <dd>Fiabilité / rapidité</dd>
-                </div>
-                <div>
-                  <dt>Statut</dt>
-                  <dd>In review</dd>
-                </div>
-              </dl>
-            </div>
-
-            <button
-              class="ops-module__action"
-              type="button"
-              aria-expanded="false"
-              aria-controls="ops-report-7"
-            >
-              Analyser et valider
-            </button>
-          </article>
-        </li>
-
-      </ol>
-    </section>
-
-    <section class="ops-clearance" id="ops-clearance" hidden aria-labelledby="ops-clearance-title">
-      <article class="ops-clearance__card">
-        <p class="ops-overline">Final Clearance / Skills Manifest</p>
-        <h2 id="ops-clearance-title">Autorisation opérationnelle accordée</h2>
-
-        <ul class="ops-clearance__list" role="list">
-          <li>Canal 01 — Structure sémantique validée</li>
-          <li>Canal 02 — Interface responsive validée</li>
-          <li>Canal 03 — Interactions front-end validées</li>
-          <li>Canal 04 — Application & données validées</li>
-          <li>Canal 05 — Qualité & livraison validées</li>
-          <li>Canal 06 — Architecture & typage en trajectoire</li>
-          <li>Canal 07 — Performance & tests en progression</li>
-        </ul>
-
-        <p>
-          Les compétences actuellement opérationnelles sont disponibles pour les
-          prochains vols projet. Les canaux en départ indiquent la trajectoire de
-          progression en cours.
+        <p class="ops-panel__instruction" id="ops-instruction" data-ops-instruction role="status" aria-live="polite">
+          Canal actif : Analyse fonctionnelle & besoins métier. Ouvrez le rapport pour commencer.
         </p>
 
-        <p class="ops-clearance__status">
-          STATUT : CENTRE DES OPÉRATIONS SYNCHRONISÉ
+        <ol class="ops-protocol" role="list" aria-label="Procédure d’inspection">
+          <li><strong>01</strong><span>Ouvrir le rapport</span></li>
+          <li><strong>02</strong><span>Lire le contenu</span></li>
+          <li><strong>03</strong><span>Valider les contrôles</span></li>
+          <li><strong>04</strong><span>Passer au canal suivant</span></li>
+        </ol>
+
+        <ol class="ops-grid" role="list">
+
+          <!-- CANAL 01 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="1" style="--accent: var(--color-accent)"
+              aria-labelledby="ops-channel-1-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 01</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Hard skills fonctionnels</p>
+
+                <h3 id="ops-channel-1-title">Analyse fonctionnelle & besoins métier</h3>
+
+                <p>
+                  Rendez-vous clients, analyse des demandes utilisateurs,
+                  traduction des besoins et rédaction de cahiers des charges.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-1"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-1" role="region" aria-labelledby="ops-channel-1-title">
+                <p>
+                  Ce canal vérifie la capacité à comprendre un besoin métier,
+                  à participer aux échanges avec un client ou une équipe, puis à transformer
+                  les demandes en éléments fonctionnels clairs.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>Rendez-vous clients</strong>
+                    <span>Identification des besoins métier</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Analyse utilisateur</strong>
+                    <span>Traduction en besoins fonctionnels</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Cahiers des charges</strong>
+                    <span>Expérimenté</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Coordination</strong>
+                    <span>Interface entre besoin et solution</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal analyse fonctionnelle">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Besoin métier identifié.">Besoins</li>
+                    <li data-ops-phase data-message="Demandes utilisateurs analysées.">Analyse</li>
+                    <li data-ops-phase data-message="Éléments fonctionnels formalisés.">Formalisation</li>
+                    <li data-ops-phase data-message="Canal fonctionnel prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+
+          <!-- CANAL 02 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="2" style="--accent: var(--color-violet)"
+              aria-labelledby="ops-channel-2-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 02</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Hard skills techniques</p>
+
+                <h3 id="ops-channel-2-title">Développement web & systèmes techniques</h3>
+
+                <p>
+                  HTML, CSS, JavaScript, React, TypeScript, PHP, Laravel,
+                  Symfony, MySQL et suivi du code avec Git / GitLab.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-2"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-2" role="region" aria-labelledby="ops-channel-2-title">
+                <p>
+                  Ce canal regroupe les compétences techniques du profil.
+                  La base HTML/CSS est solide ; les technologies applicatives sont en formation
+                  et utilisées dans un contexte junior, stage ou projet encadré.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>HTML5 / CSS3</strong>
+                    <span>Maîtrisé</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>SASS</strong>
+                    <span>Intermédiaire</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>JavaScript ES6+</strong>
+                    <span>Notions — en formation</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>React / TypeScript</strong>
+                    <span>Notions — en formation</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>PHP / Laravel / Symfony / MySQL</strong>
+                    <span>Notions — en formation</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Git / GitLab</strong>
+                    <span>Intermédiaire</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal développement web">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Base HTML et CSS contrôlée.">Structure</li>
+                    <li data-ops-phase data-message="Technologies en formation identifiées.">Formation</li>
+                    <li data-ops-phase data-message="Versioning et suivi du code vérifiés.">Versioning</li>
+                    <li data-ops-phase data-message="Canal technique prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+
+          <!-- CANAL 03 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="3" style="--accent: var(--color-green)"
+              aria-labelledby="ops-channel-3-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 03</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Qualité projet</p>
+
+                <h3 id="ops-channel-3-title">Recette, qualité & visibilité</h3>
+
+                <p>
+                  Recette fonctionnelle, tests utilisateur, remontée d’anomalies,
+                  audits SEO et suivi d’outils Google.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-3"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-3" role="region" aria-labelledby="ops-channel-3-title">
+                <p>
+                  Ce canal vérifie les contrôles qualité réalisés autour d’un projet :
+                  tests en situation utilisateur, validation de fonctionnalités,
+                  remontée des anomalies et premières analyses SEO.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>Recette fonctionnelle</strong>
+                    <span>Participation aux validations</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Tests applicatifs</strong>
+                    <span>Pratiqué en situation utilisateur</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Remontée d’anomalies</strong>
+                    <span>Suivi organisé</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>SEO & outils Google</strong>
+                    <span>Intermédiaire — audits basiques</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Accessibilité</strong>
+                    <span>Sensibilisé</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal qualité">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Recette fonctionnelle contrôlée.">Recette</li>
+                    <li data-ops-phase data-message="Tests utilisateur vérifiés.">Tests</li>
+                    <li data-ops-phase data-message="SEO et outils Google identifiés.">Visibilité</li>
+                    <li data-ops-phase data-message="Canal qualité prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+
+          <!-- CANAL 04 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="4" style="--accent: var(--color-cockpit)"
+              aria-labelledby="ops-channel-4-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 04</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Mad skills terrain premium</p>
+
+                <h3 id="ops-channel-4-title">Service premium & hôtellerie</h3>
+
+                <p>
+                  Service gastronomique, dressage, rang important, mixologie,
+                  environnement exigeant et standards premium.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-4"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-4" role="region" aria-labelledby="ops-channel-4-title">
+                <p>
+                  Ce canal présente les compétences issues du service premium :
+                  précision, exigence, rythme, relation client et capacité à tenir
+                  des standards élevés dans des environnements contraints.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>Service à la russe, à la française et à la cloche</strong>
+                    <span>Standards gastronomiques</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Dressage de table</strong>
+                    <span>Standard premium</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Rang jusqu’à 75 couverts</strong>
+                    <span>Gestion du rythme et des priorités</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Mixologie</strong>
+                    <span>Cocktails signatures et cartes de bar</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Ice Bar</strong>
+                    <span>Service à -15°C</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Disneyland Paris</strong>
+                    <span>Nettoyage de 30 chambres dont 15 suites</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal service premium">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Standards premium contrôlés.">Standards</li>
+                    <li data-ops-phase data-message="Qualité de service vérifiée.">Service</li>
+                    <li data-ops-phase data-message="Environnements exigeants identifiés.">Exigence</li>
+                    <li data-ops-phase data-message="Canal service premium prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+
+          <!-- CANAL 05 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="5" style="--accent: var(--color-primary)"
+              aria-labelledby="ops-channel-5-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 05</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Flux & sécurité</p>
+
+                <h3 id="ops-channel-5-title">Accueil, flux & sécurité</h3>
+
+                <p>
+                  Régulation de flux voyageurs, sécurité, accueil public,
+                  état civil, guest flow et exploitation terrain.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-5"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-5" role="region" aria-labelledby="ops-channel-5-title">
+                <p>
+                  Ce canal montre la capacité à gérer des publics, des flux humains
+                  et des situations nécessitant attention, calme, sécurité et transmission claire.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>RATP</strong>
+                    <span>Régulation des flux voyageurs</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Sécurité portes RER A</strong>
+                    <span>Vigilance et responsabilité</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Mairie</strong>
+                    <span>Accueil état civil</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Actes de naissance</strong>
+                    <span>Traitement administratif</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Guest flow</strong>
+                    <span>Orientation et expérience visiteur</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Opérateur d’attraction</strong>
+                    <span>Exploitation terrain</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal accueil et flux">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Expériences d’accueil contrôlées.">Accueil</li>
+                    <li data-ops-phase data-message="Gestion des flux identifiée.">Flux</li>
+                    <li data-ops-phase data-message="Vigilance et sécurité vérifiées.">Sécurité</li>
+                    <li data-ops-phase data-message="Canal accueil et flux prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+
+          <!-- CANAL 06 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="6" style="--accent: var(--color-amber)"
+              aria-labelledby="ops-channel-6-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 06</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Opérations retail</p>
+
+                <h3 id="ops-channel-6-title">Commerce, caisse & opérations retail</h3>
+
+                <p>
+                  Standards de marque, caisse, fonds de caisse, inventaires,
+                  réserve, réassort, matching et formation.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-6"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-6" role="region" aria-labelledby="ops-channel-6-title">
+                <p>
+                  Ce canal regroupe les compétences de commerce et d’exploitation :
+                  fiabilité en caisse, organisation des stocks, respect des standards de marque
+                  et accompagnement de nouveaux collaborateurs.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>Zara / H&amp;M</strong>
+                    <span>Standards de marque</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Ouverture / fermeture caisse</strong>
+                    <span>Procédures opérationnelles</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Comptage fonds de caisse</strong>
+                    <span>Fiabilité et rigueur</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Inventaires & réserve</strong>
+                    <span>Organisation stock</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Réassort & matching</strong>
+                    <span>Gestion produit</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Formation caisse / vente</strong>
+                    <span>Accompagnement nouveaux profils</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal commerce">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Procédures de caisse contrôlées.">Caisse</li>
+                    <li data-ops-phase data-message="Opérations de stock vérifiées.">Stock</li>
+                    <li data-ops-phase data-message="Standards retail identifiés.">Retail</li>
+                    <li data-ops-phase data-message="Canal commerce prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+
+          <!-- CANAL 07 -->
+          <li class="ops-grid__item">
+            <article class="ops-channel" data-ops-card data-channel="7" style="--accent: var(--color-tower)"
+              aria-labelledby="ops-channel-7-title">
+              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
+
+              <header class="ops-channel__header">
+                <div class="ops-channel__meta">
+                  <p class="ops-channel__code">Canal 07</p>
+                  <p class="ops-channel__state" data-ops-state>À consulter</p>
+                </div>
+
+                <p class="ops-channel__type">Soft skills / facteurs humains</p>
+
+                <h3 id="ops-channel-7-title">Savoir-être & facteurs humains</h3>
+
+                <p>
+                  Sang-froid, gestion du stress, adaptabilité multi-secteurs,
+                  coordination, travail en équipe et résilience.
+                </p>
+              </header>
+
+              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-7"
+                aria-expanded="false" aria-describedby="ops-instruction">
+                <span data-ops-cta>Ouvrir le rapport</span>
+                <span class="ops-channel__lock" aria-hidden="true"></span>
+              </button>
+
+              <section class="ops-channel__body" id="ops-report-7" role="region" aria-labelledby="ops-channel-7-title">
+                <p>
+                  Ce canal rassemble les compétences humaines construites par un parcours
+                  multi-secteurs : rester calme, s’adapter, travailler en équipe,
+                  coordonner et progresser dans des environnements variés.
+                </p>
+
+                <ul class="ops-skill-list" role="list">
+                  <li data-ops-light>
+                    <strong>Sang-froid</strong>
+                    <span>Gestion du stress</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Adaptabilité</strong>
+                    <span>Parcours multi-secteurs</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Coordination</strong>
+                    <span>Travail en équipe</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Résilience</strong>
+                    <span>Progression continue</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Sens du service</strong>
+                    <span>Relation client et accueil</span>
+                  </li>
+                  <li data-ops-light>
+                    <strong>Veille & IA</strong>
+                    <span>ChatGPT / Copilot comme support</span>
+                  </li>
+                </ul>
+
+                <section class="ops-check" aria-label="Contrôles du canal savoir-être">
+                  <p data-ops-live>
+                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
+                  </p>
+
+                  <ol class="ops-check__list" role="list">
+                    <li data-ops-phase data-message="Facteurs humains identifiés.">Humain</li>
+                    <li data-ops-phase data-message="Adaptabilité multi-secteurs contrôlée.">Adaptation</li>
+                    <li data-ops-phase data-message="Coordination et travail en équipe vérifiés.">Équipe</li>
+                    <li data-ops-phase data-message="Canal savoir-être prêt à être validé.">Validation</li>
+                  </ol>
+                </section>
+
+                <footer class="ops-channel__footer">
+                  <p class="ops-channel__note">
+                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
+                  </p>
+
+                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
+                    Valider le premier contrôle
+                  </button>
+                </footer>
+              </section>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+      <section class="ops-final" data-ops-final hidden aria-labelledby="ops-final-title">
+        <article class="ops-final__card">
+          <p class="ops__overline">Final Clearance / Skills Manifest</p>
+
+          <h2 id="ops-final-title">Autorisation opérationnelle accordée</h2>
+
+          <p>
+            Les sept canaux de compétences ont été inspectés. Le centre des opérations
+            confirme un profil polyvalent, capable de relier expérience terrain,
+            coordination fonctionnelle et montée en compétence numérique.
+          </p>
+
+          <ul class="ops-final__list" role="list">
+            <li>Analyse fonctionnelle & besoins métier contrôlés</li>
+            <li>Développement web & systèmes techniques contrôlés</li>
+            <li>Recette, qualité & visibilité contrôlées</li>
+            <li>Service premium & hôtellerie contrôlés</li>
+            <li>Accueil, flux & sécurité contrôlés</li>
+            <li>Commerce, caisse & opérations retail contrôlés</li>
+            <li>Savoir-être & facteurs humains contrôlés</li>
+          </ul>
+
+          <p class="ops-final__status">
+            STATUT : CENTRE DES OPÉRATIONS SYNCHRONISÉ
+          </p>
+
+          <div class="ops-final__actions">
+            <a class="ops-btn" href="boarding-gate.html">Voir les projets</a>
+            <a class="ops-btn ops-btn--ghost" href="cockpit.html">Voir le cockpit</a>
+            <a class="ops-btn ops-btn--ghost" href="control-tower.html">Contacter la tour</a>
+          </div>
+        </article>
+      </section>
+
+      <noscript>
+        <section class="ops-noscript" aria-label="Information JavaScript">
+          <p>
+            JavaScript est désactivé. Les rapports restent visibles dans le HTML,
+            mais la progression interactive nécessite JavaScript.
+          </p>
+        </section>
+      </noscript>
+
+    </section>
+  </main>
+
+
+
+
+  <footer class="claim-footer" role="contentinfo">
+    <div class="container claim-footer__layout">
+
+      <!-- 1. TERMINAL STATUS -->
+      <section class="airport-panel claim-status" aria-label="Statut du terminal d’arrivée">
+        <p class="claim-status__item">
+          <span>TERMINAL CH-2025</span>
+          <i aria-hidden="true"></i>
+          <strong>PORTE D’ARRIVÉE</strong>
         </p>
 
-        <div class="ops-clearance__actions">
-          <a class="ops-btn" href="boarding-gate.html">Consulter Boarding Gate</a>
-          <a class="ops-btn ops-btn--ghost" href="cockpit.html">Consulter Cockpit</a>
-        </div>
-      </article>
-    </section>
+        <p class="claim-status__item">
+          <span>STATUT</span>
+          <i aria-hidden="true"></i>
+          <strong>APPROCHE TERMINÉE</strong>
+        </p>
 
-  </section>
-</main>
+        <p class="claim-status__item">
+          <span>7 ESCALES VALIDÉES</span>
+          <i aria-hidden="true"></i>
+          <strong>SORTIE AUTORISÉE</strong>
+        </p>
+      </section>
 
+      <!-- 2. BAGGAGE CLAIM -->
+      <section class="airport-panel claim-stage" aria-labelledby="baggageClaimTitle">
+        <header class="claim-stage__head">
+          <div class="claim-stage__copy">
+            <p class="claim-stage__eyebrow">Zone bagages · accès de sortie</p>
+            <h2 id="baggageClaimTitle" class="claim-stage__title">
+              Hall d’arrivée · récupération finale
+            </h2>
+          </div>
 
-    <footer class="claim-footer" role="contentinfo">
-        <div class="container claim-footer__layout">
+          <p class="claim-stage__state">
+            Carrousel 01 · convoyeur en mouvement lent
+          </p>
+        </header>
 
-            <!-- 1. TERMINAL STATUS -->
-            <section class="airport-panel claim-status" aria-label="Statut du terminal d’arrivée">
-                <p class="claim-status__item">
-                    <span>TERMINAL CH-2025</span>
-                    <i aria-hidden="true"></i>
-                    <strong>PORTE D’ARRIVÉE</strong>
-                </p>
+        <div class="claim-belt-shell">
+          <nav class="claim-belt claim-belt-track" aria-label="Points d’accès finaux">
 
-                <p class="claim-status__item">
-                    <span>STATUT</span>
-                    <i aria-hidden="true"></i>
-                    <strong>APPROCHE TERMINÉE</strong>
-                </p>
+            <!-- BAG 01 — GITHUB -->
+            <a href="https://github.com/ton-profil" target="_blank" rel="noreferrer noopener"
+              class="luggage luggage--lg luggage--github" style="--y:2px;--tilt:-1deg;"
+              aria-label="Bagage GitHub, accès au code source">
+              <span class="luggage__shadow" aria-hidden="true"></span>
 
-                <p class="claim-status__item">
-                    <span>7 ESCALES VALIDÉES</span>
-                    <i aria-hidden="true"></i>
-                    <strong>SORTIE AUTORISÉE</strong>
-                </p>
-            </section>
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--priority" aria-hidden="true">PRIORITY</span>
 
-            <!-- 2. BAGGAGE CLAIM -->
-            <section class="airport-panel claim-stage" aria-labelledby="baggageClaimTitle">
-                <header class="claim-stage__head">
-                    <div class="claim-stage__copy">
-                        <p class="claim-stage__eyebrow">Zone bagages · accès de sortie</p>
-                        <h2 id="baggageClaimTitle" class="claim-stage__title">
-                            Hall d’arrivée · récupération finale
-                        </h2>
-                    </div>
-
-                    <p class="claim-stage__state">
-                        Carrousel 01 · convoyeur en mouvement lent
-                    </p>
-                </header>
-
-                <div class="claim-belt-shell">
-                    <nav class="claim-belt claim-belt-track" aria-label="Points d’accès finaux">
-
-                        <!-- BAG 01 — GITHUB -->
-                        <a href="https://github.com/ton-profil" target="_blank" rel="noreferrer noopener"
-                            class="luggage luggage--lg luggage--github" style="--y:2px;--tilt:-1deg;"
-                            aria-label="Bagage GitHub, accès au code source">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--priority"
-                                    aria-hidden="true">PRIORITY</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.9.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3" />
-                                    </svg>
-                                    <h3 class="luggage__title">GITHUB</h3>
-                                    <p class="luggage__desc">Code source</p>
-                                </div>
-                            </div>
-
-                            <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
-                                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none"
-                                    stroke-linecap="round" />
-                            </svg>
-
-                            <div class="luggage__tag">
-                                <span class="luggage__tag-ring" aria-hidden="true"></span>
-                                <strong>ACCÈS<br>VALIDÉ</strong>
-                                <span class="luggage__tag-bar" aria-hidden="true"></span>
-                                <span class="luggage__tag-code">CH-01</span>
-                            </div>
-                        </a>
-
-                        <!-- BAG 02 — LINKEDIN -->
-                        <a href="https://www.linkedin.com/in/ton-profil" target="_blank" rel="noreferrer noopener"
-                            class="luggage luggage--md luggage--linkedin" style="--y:-4px;--tilt:1.2deg;"
-                            aria-label="Bagage LinkedIn, canal professionnel ouvert">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--fragile"
-                                    aria-hidden="true">FRAGILE</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M19 0H5a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5h14a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zM8 19H5V8h3v11zM6.5 6.7a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5zM20 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.6-1.7 1.3-.1.2-.1.6-.1.9V19h-3V8h3v1.3c.4-.7 1.2-1.6 2.9-1.6 2.1 0 3.6 1.4 3.6 4.3V19z" />
-                                    </svg>
-                                    <h3 class="luggage__title">LINKEDIN</h3>
-                                    <p class="luggage__desc">Canal pro</p>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- BAG 03 — CV -->
-                        <a href="/docs/cv.pdf" download class="luggage luggage--md luggage--cv"
-                            style="--y:1px;--tilt:-0.8deg;" aria-label="Dossier de vol, CV prêt au téléchargement">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--checked"
-                                    aria-hidden="true">CHECKED</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
-                                    </svg>
-                                    <h3 class="luggage__title">CV</h3>
-                                    <p class="luggage__desc">Dossier de vol</p>
-                                </div>
-                            </div>
-
-                            <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
-                                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none"
-                                    stroke-linecap="round" />
-                            </svg>
-
-                            <div class="luggage__tag">
-                                <span class="luggage__tag-ring" aria-hidden="true"></span>
-                                <strong>FICHIER<br>PRÊT</strong>
-                                <span class="luggage__tag-bar" aria-hidden="true"></span>
-                                <span class="luggage__tag-code">CH-03</span>
-                            </div>
-                        </a>
-
-                        <!-- BAG 04 — CONTACT -->
-                        <a href="mailto:contact@tonsite.com" class="luggage luggage--lg luggage--contact"
-                            style="--y:-2px;--tilt:0.7deg;" aria-label="Bagage contact, transmission finale prête">
-                            <span class="luggage__shadow" aria-hidden="true"></span>
-
-                            <div class="luggage__body">
-                                <span class="luggage__side" aria-hidden="true"></span>
-                                <span class="luggage__handle" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
-                                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
-                                <span class="luggage__led" aria-hidden="true"></span>
-                                <span class="luggage__sticker luggage__sticker--vip" aria-hidden="true">VIP</span>
-
-                                <div class="luggage__face">
-                                    <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18"
-                                        aria-hidden="true">
-                                        <path fill="currentColor"
-                                            d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                                    </svg>
-                                    <h3 class="luggage__title">CONTACT</h3>
-                                    <p class="luggage__desc">Tour de contrôle</p>
-                                </div>
-                            </div>
-                        </a>
-
-                    </nav>
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.9.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3" />
+                  </svg>
+                  <h3 class="luggage__title">GITHUB</h3>
+                  <p class="luggage__desc">Code source</p>
                 </div>
+              </div>
 
-                <p class="claim-stage__hint">
-                    Sélectionnez vos bagages avant de quitter le terminal
-                </p>
-            </section>
+              <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
+                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none" stroke-linecap="round" />
+              </svg>
 
-            <!-- 3. SCAN LINE -->
-            <div class="claim-scan" aria-hidden="true"></div>
+              <div class="luggage__tag">
+                <span class="luggage__tag-ring" aria-hidden="true"></span>
+                <strong>ACCÈS<br>VALIDÉ</strong>
+                <span class="luggage__tag-bar" aria-hidden="true"></span>
+                <span class="luggage__tag-code">CH-01</span>
+              </div>
+            </a>
 
-            <!-- 4. FLIGHT SUMMARY -->
-            <section class="airport-panel claim-summary" aria-label="Résumé final du trajet">
-                <p class="claim-summary__route">
-                    <span>Terminal CH-2025</span>
-                    <span>7 escales validées</span>
-                    <span>Atterrissage confirmé</span>
-                    <span>Prêt pour le prochain départ</span>
-                </p>
+            <!-- BAG 02 — LINKEDIN -->
+            <a href="https://www.linkedin.com/in/ton-profil" target="_blank" rel="noreferrer noopener"
+              class="luggage luggage--md luggage--linkedin" style="--y:-4px;--tilt:1.2deg;"
+              aria-label="Bagage LinkedIn, canal professionnel ouvert">
+              <span class="luggage__shadow" aria-hidden="true"></span>
 
-                <div class="claim-summary__side">
-                    <span>Autorisation finale</span>
-                    <strong>Sortie validée</strong>
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--fragile" aria-hidden="true">FRAGILE</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M19 0H5a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5h14a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zM8 19H5V8h3v11zM6.5 6.7a1.8 1.8 0 1 1 0-3.5 1.8 1.8 0 0 1 0 3.5zM20 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3-1 0-1.5.6-1.7 1.3-.1.2-.1.6-.1.9V19h-3V8h3v1.3c.4-.7 1.2-1.6 2.9-1.6 2.1 0 3.6 1.4 3.6 4.3V19z" />
+                  </svg>
+                  <h3 class="luggage__title">LINKEDIN</h3>
+                  <p class="luggage__desc">Canal pro</p>
                 </div>
-            </section>
+              </div>
+            </a>
 
+            <!-- BAG 03 — CV -->
+            <a href="/docs/cv.pdf" download class="luggage luggage--md luggage--cv" style="--y:1px;--tilt:-0.8deg;"
+              aria-label="Dossier de vol, CV prêt au téléchargement">
+              <span class="luggage__shadow" aria-hidden="true"></span>
+
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--checked" aria-hidden="true">CHECKED</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
+                  </svg>
+                  <h3 class="luggage__title">CV</h3>
+                  <p class="luggage__desc">Dossier de vol</p>
+                </div>
+              </div>
+
+              <svg class="luggage__string" viewBox="0 0 50 70" aria-hidden="true">
+                <path d="M 25 4 Q 30 22, 40 42" stroke="#3a4254" stroke-width="1" fill="none" stroke-linecap="round" />
+              </svg>
+
+              <div class="luggage__tag">
+                <span class="luggage__tag-ring" aria-hidden="true"></span>
+                <strong>FICHIER<br>PRÊT</strong>
+                <span class="luggage__tag-bar" aria-hidden="true"></span>
+                <span class="luggage__tag-code">CH-03</span>
+              </div>
+            </a>
+
+            <!-- BAG 04 — CONTACT -->
+            <a href="mailto:contact@tonsite.com" class="luggage luggage--lg luggage--contact"
+              style="--y:-2px;--tilt:0.7deg;" aria-label="Bagage contact, transmission finale prête">
+              <span class="luggage__shadow" aria-hidden="true"></span>
+
+              <div class="luggage__body">
+                <span class="luggage__side" aria-hidden="true"></span>
+                <span class="luggage__handle" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--l" aria-hidden="true"></span>
+                <span class="luggage__latch luggage__latch--r" aria-hidden="true"></span>
+                <span class="luggage__led" aria-hidden="true"></span>
+                <span class="luggage__sticker luggage__sticker--vip" aria-hidden="true">VIP</span>
+
+                <div class="luggage__face">
+                  <svg class="luggage__icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                    <path fill="currentColor"
+                      d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                  </svg>
+                  <h3 class="luggage__title">CONTACT</h3>
+                  <p class="luggage__desc">Tour de contrôle</p>
+                </div>
+              </div>
+            </a>
+
+          </nav>
         </div>
-    </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-     <script src="./asset/js/main.js"></script>
-     <script src="./asset/js/departures.js"></script>
+        <p class="claim-stage__hint">
+          Sélectionnez vos bagages avant de quitter le terminal
+        </p>
+      </section>
+
+      <!-- 3. SCAN LINE -->
+      <div class="claim-scan" aria-hidden="true"></div>
+
+      <!-- 4. FLIGHT SUMMARY -->
+      <section class="airport-panel claim-summary" aria-label="Résumé final du trajet">
+        <p class="claim-summary__route">
+          <span>Terminal CH-2025</span>
+          <span>7 escales validées</span>
+          <span>Atterrissage confirmé</span>
+          <span>Prêt pour le prochain départ</span>
+        </p>
+
+        <div class="claim-summary__side">
+          <span>Autorisation finale</span>
+          <strong>Sortie validée</strong>
+        </div>
+      </section>
+
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="./asset/js/main.js"></script>
+  <script src="./asset/js/departures.js"></script>
 </body>
 
 </html>
