@@ -4,17 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Christophe Hascoet — Terminal A56</title>
+  <title>Operation Center </title>
+  <meta name="description"
+    content="Centre des opérations : inspection des systèmes de compétences. Coordination fonctionnelle, développement front-end et back-end, expérience terrain et savoir-être — chaque système contrôlé déverrouille le suivant.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-
 
 
   <link rel="stylesheet" href="./asset/css/style.css">
@@ -113,729 +111,500 @@
   </header>
   <!-- ═══ MAIN  ═══ -->
 
-  <main id="main" class="ops" data-ops-root>
-    <section class="container ops__inner" aria-labelledby="ops-title">
+  <main class="ops container" id="main-content">
 
-      <header class="ops__hero">
-        <p class="ops__kicker">OPS-251 / Centre opérationnel des compétences</p>
+    <!-- ═══ EN-TÊTE DE PAGE ═══ -->
+    <header class="ops-head">
+      <p class="ops-head__label">● OPS / SKILL TRAFFIC CONTROL</p>
+      <h1 class="ops-head__title">OPERATION CENTER</h1>
+      <p class="ops-head__sub">INSPECTION DES SYSTÈMES AVANT DÉPART</p>
+    </header>
 
-        <h1 id="ops-title">Operation Center</h1>
+    <!-- ═══ STATUS BAR — liste de définitions (terme / valeur) ═══ -->
+    <dl class="ops-status" aria-label="État de la station">
+      <div class="ops-status__item">
+        <dt>STATION</dt>
+        <dd>OPS-251</dd>
+      </div>
+      <div class="ops-status__item">
+        <dt>SYSTÈME</dt>
+        <dd class="ops-status__value--green">ONLINE</dd>
+      </div>
+      <div class="ops-status__item">
+        <dt>SYSTÈMES</dt>
+        <dd>06 DÉTECTÉS</dd>
+      </div>
+      <div class="ops-status__item">
+        <dt>INTÉGRITÉ</dt>
+        <dd class="ops-status__value--green">NOMINALE</dd>
+      </div>
+    </dl>
 
-        <p class="ops__lead">
-          Inspection des compétences numériques, opérationnelles et humaines.
-          Un canal correspond à un groupe de compétences. Ouvrez le rapport,
-          lisez le contenu, validez les contrôles, puis passez au canal suivant.
-        </p>
+    <!-- ═══ GRAND PANEL HUD ═══ -->
+    <section class="ops-panel" aria-labelledby="ops-panel-title">
+
+      <header class="ops-panel__head">
+        <div>
+          <p class="ops-panel__label">SYSTEMS INSPECTION / SECTOR 01</p>
+          <h2 class="ops-panel__title" id="ops-panel-title">SYSTÈMES À INSPECTER</h2>
+        </div>
+        <p class="ops-panel__status" id="ops-panel-status">● 0 / 6 CONTRÔLÉS</p>
       </header>
 
-      <section class="ops-status" aria-label="État du centre opérationnel">
-        <article class="ops-status__item">
-          <span>Station</span>
-          <strong>OPS-251</strong>
-        </article>
-
-        <article class="ops-status__item">
-          <span>Système</span>
-          <strong class="ops-status__online">Disponible</strong>
-        </article>
-
-        <article class="ops-status__item">
-          <span>Inspection</span>
-          <strong data-ops-count>0 / 7 canaux</strong>
-        </article>
-
-        <article class="ops-status__item">
-          <span>Autorisation</span>
-          <strong class="ops-status__clearance" data-ops-status>En cours</strong>
-        </article>
-      </section>
-
-      <section class="ops-panel" aria-labelledby="ops-panel-title">
-        <header class="ops-panel__header">
-          <div>
-            <p class="ops__overline">Skill Storage / Sector 02</p>
-            <h2 id="ops-panel-title">Canaux de compétences récupérés</h2>
-          </div>
-
-          <div class="ops-panel__right">
-            <ol class="ops-sequence" role="list" aria-label="Progression des canaux inspectés">
-              <li data-ops-sequence="1" style="--accent: var(--color-accent)"><span>01</span></li>
-              <li data-ops-sequence="2" style="--accent: var(--color-violet)"><span>02</span></li>
-              <li data-ops-sequence="3" style="--accent: var(--color-green)"><span>03</span></li>
-              <li data-ops-sequence="4" style="--accent: var(--color-cockpit)"><span>04</span></li>
-              <li data-ops-sequence="5" style="--accent: var(--color-primary)"><span>05</span></li>
-              <li data-ops-sequence="6" style="--accent: var(--color-amber)"><span>06</span></li>
-              <li data-ops-sequence="7" style="--accent: var(--color-tower)"><span>07</span></li>
-            </ol>
-
-            <button class="ops-panel__fast" type="button" data-ops-fast>
-              Mode recruteur
-            </button>
-          </div>
-        </header>
-
-        <p class="ops-panel__instruction" id="ops-instruction" data-ops-instruction role="status" aria-live="polite">
-          Canal actif : Analyse fonctionnelle & besoins métier. Ouvrez le rapport pour commencer.
-        </p>
-
-        <ol class="ops-protocol" role="list" aria-label="Procédure d’inspection">
-          <li><strong>01</strong><span>Ouvrir le rapport</span></li>
-          <li><strong>02</strong><span>Lire le contenu</span></li>
-          <li><strong>03</strong><span>Valider les contrôles</span></li>
-          <li><strong>04</strong><span>Passer au canal suivant</span></li>
-        </ol>
-
-        <ol class="ops-grid" role="list">
-
-          <!-- CANAL 01 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="1" style="--accent: var(--color-accent)"
-              aria-labelledby="ops-channel-1-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 01</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Hard skills fonctionnels</p>
-
-                <h3 id="ops-channel-1-title">Analyse fonctionnelle & besoins métier</h3>
-
-                <p>
-                  Rendez-vous clients, analyse des demandes utilisateurs,
-                  traduction des besoins et rédaction de cahiers des charges.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-1"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-1" role="region" aria-labelledby="ops-channel-1-title">
-                <p>
-                  Ce canal vérifie la capacité à comprendre un besoin métier,
-                  à participer aux échanges avec un client ou une équipe, puis à transformer
-                  les demandes en éléments fonctionnels clairs.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>Rendez-vous clients</strong>
-                    <span>Identification des besoins métier</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Analyse utilisateur</strong>
-                    <span>Traduction en besoins fonctionnels</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Cahiers des charges</strong>
-                    <span>Expérimenté</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Coordination</strong>
-                    <span>Interface entre besoin et solution</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal analyse fonctionnelle">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Besoin métier identifié.">Besoins</li>
-                    <li data-ops-phase data-message="Demandes utilisateurs analysées.">Analyse</li>
-                    <li data-ops-phase data-message="Éléments fonctionnels formalisés.">Formalisation</li>
-                    <li data-ops-phase data-message="Canal fonctionnel prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-
-          <!-- CANAL 02 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="2" style="--accent: var(--color-violet)"
-              aria-labelledby="ops-channel-2-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 02</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Hard skills techniques</p>
-
-                <h3 id="ops-channel-2-title">Développement web & systèmes techniques</h3>
-
-                <p>
-                  HTML, CSS, JavaScript, React, TypeScript, PHP, Laravel,
-                  Symfony, MySQL et suivi du code avec Git / GitLab.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-2"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-2" role="region" aria-labelledby="ops-channel-2-title">
-                <p>
-                  Ce canal regroupe les compétences techniques du profil.
-                  La base HTML/CSS est solide ; les technologies applicatives sont en formation
-                  et utilisées dans un contexte junior, stage ou projet encadré.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>HTML5 / CSS3</strong>
-                    <span>Maîtrisé</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>SASS</strong>
-                    <span>Intermédiaire</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>JavaScript ES6+</strong>
-                    <span>Notions — en formation</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>React / TypeScript</strong>
-                    <span>Notions — en formation</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>PHP / Laravel / Symfony / MySQL</strong>
-                    <span>Notions — en formation</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Git / GitLab</strong>
-                    <span>Intermédiaire</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal développement web">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Base HTML et CSS contrôlée.">Structure</li>
-                    <li data-ops-phase data-message="Technologies en formation identifiées.">Formation</li>
-                    <li data-ops-phase data-message="Versioning et suivi du code vérifiés.">Versioning</li>
-                    <li data-ops-phase data-message="Canal technique prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-
-          <!-- CANAL 03 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="3" style="--accent: var(--color-green)"
-              aria-labelledby="ops-channel-3-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 03</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Qualité projet</p>
-
-                <h3 id="ops-channel-3-title">Recette, qualité & visibilité</h3>
-
-                <p>
-                  Recette fonctionnelle, tests utilisateur, remontée d’anomalies,
-                  audits SEO et suivi d’outils Google.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-3"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-3" role="region" aria-labelledby="ops-channel-3-title">
-                <p>
-                  Ce canal vérifie les contrôles qualité réalisés autour d’un projet :
-                  tests en situation utilisateur, validation de fonctionnalités,
-                  remontée des anomalies et premières analyses SEO.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>Recette fonctionnelle</strong>
-                    <span>Participation aux validations</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Tests applicatifs</strong>
-                    <span>Pratiqué en situation utilisateur</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Remontée d’anomalies</strong>
-                    <span>Suivi organisé</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>SEO & outils Google</strong>
-                    <span>Intermédiaire — audits basiques</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Accessibilité</strong>
-                    <span>Sensibilisé</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal qualité">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Recette fonctionnelle contrôlée.">Recette</li>
-                    <li data-ops-phase data-message="Tests utilisateur vérifiés.">Tests</li>
-                    <li data-ops-phase data-message="SEO et outils Google identifiés.">Visibilité</li>
-                    <li data-ops-phase data-message="Canal qualité prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-
-          <!-- CANAL 04 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="4" style="--accent: var(--color-cockpit)"
-              aria-labelledby="ops-channel-4-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 04</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Mad skills terrain premium</p>
-
-                <h3 id="ops-channel-4-title">Service premium & hôtellerie</h3>
-
-                <p>
-                  Service gastronomique, dressage, rang important, mixologie,
-                  environnement exigeant et standards premium.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-4"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-4" role="region" aria-labelledby="ops-channel-4-title">
-                <p>
-                  Ce canal présente les compétences issues du service premium :
-                  précision, exigence, rythme, relation client et capacité à tenir
-                  des standards élevés dans des environnements contraints.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>Service à la russe, à la française et à la cloche</strong>
-                    <span>Standards gastronomiques</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Dressage de table</strong>
-                    <span>Standard premium</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Rang jusqu’à 75 couverts</strong>
-                    <span>Gestion du rythme et des priorités</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Mixologie</strong>
-                    <span>Cocktails signatures et cartes de bar</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Ice Bar</strong>
-                    <span>Service à -15°C</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Disneyland Paris</strong>
-                    <span>Nettoyage de 30 chambres dont 15 suites</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal service premium">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Standards premium contrôlés.">Standards</li>
-                    <li data-ops-phase data-message="Qualité de service vérifiée.">Service</li>
-                    <li data-ops-phase data-message="Environnements exigeants identifiés.">Exigence</li>
-                    <li data-ops-phase data-message="Canal service premium prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-
-          <!-- CANAL 05 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="5" style="--accent: var(--color-primary)"
-              aria-labelledby="ops-channel-5-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 05</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Flux & sécurité</p>
-
-                <h3 id="ops-channel-5-title">Accueil, flux & sécurité</h3>
-
-                <p>
-                  Régulation de flux voyageurs, sécurité, accueil public,
-                  état civil, guest flow et exploitation terrain.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-5"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-5" role="region" aria-labelledby="ops-channel-5-title">
-                <p>
-                  Ce canal montre la capacité à gérer des publics, des flux humains
-                  et des situations nécessitant attention, calme, sécurité et transmission claire.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>RATP</strong>
-                    <span>Régulation des flux voyageurs</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Sécurité portes RER A</strong>
-                    <span>Vigilance et responsabilité</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Mairie</strong>
-                    <span>Accueil état civil</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Actes de naissance</strong>
-                    <span>Traitement administratif</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Guest flow</strong>
-                    <span>Orientation et expérience visiteur</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Opérateur d’attraction</strong>
-                    <span>Exploitation terrain</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal accueil et flux">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Expériences d’accueil contrôlées.">Accueil</li>
-                    <li data-ops-phase data-message="Gestion des flux identifiée.">Flux</li>
-                    <li data-ops-phase data-message="Vigilance et sécurité vérifiées.">Sécurité</li>
-                    <li data-ops-phase data-message="Canal accueil et flux prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-
-          <!-- CANAL 06 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="6" style="--accent: var(--color-amber)"
-              aria-labelledby="ops-channel-6-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 06</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Opérations retail</p>
-
-                <h3 id="ops-channel-6-title">Commerce, caisse & opérations retail</h3>
-
-                <p>
-                  Standards de marque, caisse, fonds de caisse, inventaires,
-                  réserve, réassort, matching et formation.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-6"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-6" role="region" aria-labelledby="ops-channel-6-title">
-                <p>
-                  Ce canal regroupe les compétences de commerce et d’exploitation :
-                  fiabilité en caisse, organisation des stocks, respect des standards de marque
-                  et accompagnement de nouveaux collaborateurs.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>Zara / H&amp;M</strong>
-                    <span>Standards de marque</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Ouverture / fermeture caisse</strong>
-                    <span>Procédures opérationnelles</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Comptage fonds de caisse</strong>
-                    <span>Fiabilité et rigueur</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Inventaires & réserve</strong>
-                    <span>Organisation stock</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Réassort & matching</strong>
-                    <span>Gestion produit</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Formation caisse / vente</strong>
-                    <span>Accompagnement nouveaux profils</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal commerce">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Procédures de caisse contrôlées.">Caisse</li>
-                    <li data-ops-phase data-message="Opérations de stock vérifiées.">Stock</li>
-                    <li data-ops-phase data-message="Standards retail identifiés.">Retail</li>
-                    <li data-ops-phase data-message="Canal commerce prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-
-          <!-- CANAL 07 -->
-          <li class="ops-grid__item">
-            <article class="ops-channel" data-ops-card data-channel="7" style="--accent: var(--color-tower)"
-              aria-labelledby="ops-channel-7-title">
-              <span class="ops-channel__stamp" aria-hidden="true">Contrôlé ✓</span>
-
-              <header class="ops-channel__header">
-                <div class="ops-channel__meta">
-                  <p class="ops-channel__code">Canal 07</p>
-                  <p class="ops-channel__state" data-ops-state>À consulter</p>
-                </div>
-
-                <p class="ops-channel__type">Soft skills / facteurs humains</p>
-
-                <h3 id="ops-channel-7-title">Savoir-être & facteurs humains</h3>
-
-                <p>
-                  Sang-froid, gestion du stress, adaptabilité multi-secteurs,
-                  coordination, travail en équipe et résilience.
-                </p>
-              </header>
-
-              <button class="ops-channel__trigger" type="button" data-ops-trigger aria-controls="ops-report-7"
-                aria-expanded="false" aria-describedby="ops-instruction">
-                <span data-ops-cta>Ouvrir le rapport</span>
-                <span class="ops-channel__lock" aria-hidden="true"></span>
-              </button>
-
-              <section class="ops-channel__body" id="ops-report-7" role="region" aria-labelledby="ops-channel-7-title">
-                <p>
-                  Ce canal rassemble les compétences humaines construites par un parcours
-                  multi-secteurs : rester calme, s’adapter, travailler en équipe,
-                  coordonner et progresser dans des environnements variés.
-                </p>
-
-                <ul class="ops-skill-list" role="list">
-                  <li data-ops-light>
-                    <strong>Sang-froid</strong>
-                    <span>Gestion du stress</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Adaptabilité</strong>
-                    <span>Parcours multi-secteurs</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Coordination</strong>
-                    <span>Travail en équipe</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Résilience</strong>
-                    <span>Progression continue</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Sens du service</strong>
-                    <span>Relation client et accueil</span>
-                  </li>
-                  <li data-ops-light>
-                    <strong>Veille & IA</strong>
-                    <span>ChatGPT / Copilot comme support</span>
-                  </li>
-                </ul>
-
-                <section class="ops-check" aria-label="Contrôles du canal savoir-être">
-                  <p data-ops-live>
-                    Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.
-                  </p>
-
-                  <ol class="ops-check__list" role="list">
-                    <li data-ops-phase data-message="Facteurs humains identifiés.">Humain</li>
-                    <li data-ops-phase data-message="Adaptabilité multi-secteurs contrôlée.">Adaptation</li>
-                    <li data-ops-phase data-message="Coordination et travail en équipe vérifiés.">Équipe</li>
-                    <li data-ops-phase data-message="Canal savoir-être prêt à être validé.">Validation</li>
-                  </ol>
-                </section>
-
-                <footer class="ops-channel__footer">
-                  <p class="ops-channel__note">
-                    Le canal suivant ne se débloque qu’après validation complète de ce rapport.
-                  </p>
-
-                  <button class="ops-channel__confirm" type="button" data-ops-confirm>
-                    Valider le premier contrôle
-                  </button>
-                </footer>
-              </section>
-            </article>
-          </li>
-        </ol>
-      </section>
-
-      <section class="ops-final" data-ops-final hidden aria-labelledby="ops-final-title">
-        <article class="ops-final__card">
-          <p class="ops__overline">Final Clearance / Skills Manifest</p>
-
-          <h2 id="ops-final-title">Autorisation opérationnelle accordée</h2>
-
-          <p>
-            Les sept canaux de compétences ont été inspectés. Le centre des opérations
-            confirme un profil polyvalent, capable de relier expérience terrain,
-            coordination fonctionnelle et montée en compétence numérique.
-          </p>
-
-          <ul class="ops-final__list" role="list">
-            <li>Analyse fonctionnelle & besoins métier contrôlés</li>
-            <li>Développement web & systèmes techniques contrôlés</li>
-            <li>Recette, qualité & visibilité contrôlées</li>
-            <li>Service premium & hôtellerie contrôlés</li>
-            <li>Accueil, flux & sécurité contrôlés</li>
-            <li>Commerce, caisse & opérations retail contrôlés</li>
-            <li>Savoir-être & facteurs humains contrôlés</li>
-          </ul>
-
-          <p class="ops-final__status">
-            STATUT : CENTRE DES OPÉRATIONS SYNCHRONISÉ
-          </p>
-
-          <div class="ops-final__actions">
-            <a class="ops-btn" href="boarding-gate.html">Voir les projets</a>
-            <a class="ops-btn ops-btn--ghost" href="cockpit.html">Voir le cockpit</a>
-            <a class="ops-btn ops-btn--ghost" href="control-tower.html">Contacter la tour</a>
-          </div>
-        </article>
-      </section>
+      <!-- ═══ PROGRESSION GLOBALE (barre fine, style crew-profile) ═══ -->
+      <div class="ops-meter" aria-hidden="true">
+        <span class="ops-meter__fill" id="ops-meter-fill"></span>
+      </div>
+
+      <p class="ops-panel__intro">
+        Sélectionnez un système afin d'initialiser son inspection. Chaque
+        canal correspond à un domaine de compétences documenté — chaque
+        système contrôlé déverrouille le suivant.
+      </p>
+
+      <p class="ops-brief" id="ops-brief">
+        ► Commencez l'inspection en sélectionnant le premier système signalé.
+      </p>
 
       <noscript>
-        <section class="ops-noscript" aria-label="Information JavaScript">
-          <p>
-            JavaScript est désactivé. Les rapports restent visibles dans le HTML,
-            mais la progression interactive nécessite JavaScript.
-          </p>
-        </section>
+        <p class="ops-noscript">ℹ JavaScript est désactivé : l'inspection interactive est inactive, mais
+          l'intégralité des rapports est visible ci-dessous.</p>
       </noscript>
 
+      <!-- ═══ PASTILLES DE PROGRESSION + CONNECTEURS ═══ -->
+      <nav class="ops-dots" aria-label="Progression de l'inspection">
+        <button class="ops-dot ops-dot--01" type="button" disabled
+          aria-label="Canal 01 — Coordination et fonctionnel : verrouillé"></button>
+        <span class="ops-link" aria-hidden="true"></span>
+        <button class="ops-dot ops-dot--02" type="button" disabled
+          aria-label="Canal 02 — Intégration front-end : verrouillé"></button>
+        <span class="ops-link" aria-hidden="true"></span>
+        <button class="ops-dot ops-dot--03" type="button" disabled
+          aria-label="Canal 03 — Interactions et frameworks : verrouillé"></button>
+        <span class="ops-link" aria-hidden="true"></span>
+        <button class="ops-dot ops-dot--04" type="button" disabled
+          aria-label="Canal 04 — Back-end et outils : verrouillé"></button>
+        <span class="ops-link" aria-hidden="true"></span>
+        <button class="ops-dot ops-dot--05" type="button" disabled
+          aria-label="Canal 05 — Expérience terrain : verrouillé"></button>
+        <span class="ops-link" aria-hidden="true"></span>
+        <button class="ops-dot ops-dot--06" type="button" disabled
+          aria-label="Canal 06 — Savoir-être : verrouillé"></button>
+      </nav>
+
+      <!-- ═══ LÉGENDE DES NIVEAUX (couleurs pilotées par data-level) ═══ -->
+      <div class="ops-legend" role="group"
+        aria-label="Légende des niveaux — cliquez sur un niveau pour le surligner dans les rapports ouverts">
+        <p class="ops-legend__title">LÉGENDE</p>
+        <button class="ops-legend__item" type="button" data-level="operational" aria-pressed="false">
+          <span class="ops-legend__led" aria-hidden="true"></span>
+          OPÉRATIONNEL <small>maîtrisé</small>
+        </button>
+        <button class="ops-legend__item" type="button" data-level="service" aria-pressed="false">
+          <span class="ops-legend__led" aria-hidden="true"></span>
+          EN SERVICE <small>pratiqué</small>
+        </button>
+        <button class="ops-legend__item" type="button" data-level="calibration" aria-pressed="false">
+          <span class="ops-legend__led" aria-hidden="true"></span>
+          CALIBRATION <small>en apprentissage</small>
+        </button>
+      </div>
+
+      <!-- ═══ GRILLE DES SYSTÈMES ═══ -->
+      <ol class="ops-grid">
+
+        <!-- ─── CANAL 01 · COORDINATION & FONCTIONNEL ─── -->
+        <li class="channel channel--01">
+          <article class="channel__card">
+            <header class="channel__head">
+              <span class="channel__code">CANAL 01 / PILOTAGE</span>
+              <span class="channel__status">
+                <span class="channel__led" aria-hidden="true"></span>
+                <span class="channel__status-text">VERROUILLÉ</span>
+                <svg class="channel__lock" aria-hidden="true">
+                  <use href="#icon-lock" />
+                </svg>
+              </span>
+            </header>
+
+            <h3 class="channel__title">COORDINATION &amp; FONCTIONNEL</h3>
+            <p class="channel__desc">Traduction des besoins métier en livrables actionnables — de l'écoute
+              client au cahier des charges validé.</p>
+
+            <ul class="channel__tags">
+              <li class="channel__tag">BESOINS CLIENTS</li>
+              <li class="channel__tag">CAHIERS DES CHARGES</li>
+              <li class="channel__tag">RECETTE</li>
+              <li class="channel__tag">TESTS</li>
+            </ul>
+
+            <div class="channel__panel" id="panel-01">
+              <ul class="channel__systems">
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">RECUEIL DES BESOINS</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">CAHIERS DES CHARGES</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">RECETTE &amp; VALIDATION</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">TESTS &amp; ANOMALIES</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+              </ul>
+              <p class="channel__note">
+                3 cahiers des charges réalisés en conditions réelles :
+                Cook'n'Way, FKM Mobilité, Cami Courses Express. Rendez-vous
+                clients, phases de recette et remontée d'anomalies sur Trello.
+              </p>
+            </div>
+
+            <button class="channel__action" type="button" aria-expanded="false" aria-controls="panel-01">LANCER
+              L'INSPECTION</button>
+          </article>
+        </li>
+
+        <!-- ─── CANAL 02 · INTÉGRATION FRONT-END ─── -->
+        <li class="channel channel--02">
+          <article class="channel__card">
+            <header class="channel__head">
+              <span class="channel__code">CANAL 02 / FRONT</span>
+              <span class="channel__status">
+                <span class="channel__led" aria-hidden="true"></span>
+                <span class="channel__status-text">VERROUILLÉ</span>
+                <svg class="channel__lock" aria-hidden="true">
+                  <use href="#icon-lock" />
+                </svg>
+              </span>
+            </header>
+
+            <h3 class="channel__title">INTÉGRATION FRONT-END</h3>
+            <p class="channel__desc">Construction d'interfaces claires, sémantiques et responsives — la
+              cellule de chaque projet.</p>
+
+            <ul class="channel__tags">
+              <li class="channel__tag">HTML5</li>
+              <li class="channel__tag">CSS3</li>
+              <li class="channel__tag">SASS</li>
+              <li class="channel__tag">RESPONSIVE</li>
+            </ul>
+
+            <div class="channel__panel" id="panel-02">
+              <ul class="channel__systems">
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">HTML5 / CSS3</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">SASS</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">RESPONSIVE / MOBILE-FIRST</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+              </ul>
+              <p class="channel__note">
+                Balises sémantiques, mobile-first, variables CSS et
+                architecture modulaire. Ce portfolio en est la démonstration.
+              </p>
+            </div>
+
+            <button class="channel__action" type="button" aria-expanded="false" aria-controls="panel-02">LANCER
+              L'INSPECTION</button>
+          </article>
+        </li>
+
+        <!-- ─── CANAL 03 · INTERACTIONS & FRAMEWORKS ─── -->
+        <li class="channel channel--03">
+          <article class="channel__card">
+            <header class="channel__head">
+              <span class="channel__code">CANAL 03 / FRONT</span>
+              <span class="channel__status">
+                <span class="channel__led" aria-hidden="true"></span>
+                <span class="channel__status-text">VERROUILLÉ</span>
+                <svg class="channel__lock" aria-hidden="true">
+                  <use href="#icon-lock" />
+                </svg>
+              </span>
+            </header>
+
+            <h3 class="channel__title">INTERACTIONS &amp; FRAMEWORKS</h3>
+            <p class="channel__desc">Comportements interactifs : états d'interface, composants dynamiques et
+              animations.</p>
+
+            <ul class="channel__tags">
+              <li class="channel__tag">JAVASCRIPT</li>
+              <li class="channel__tag">REACT</li>
+              <li class="channel__tag">TYPESCRIPT</li>
+              <li class="channel__tag">GSAP</li>
+            </ul>
+
+            <div class="channel__panel" id="panel-03">
+              <ul class="channel__systems">
+                <li class="mini" data-level="calibration">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">JAVASCRIPT ES6+</span>
+                  <span class="mini__state">CALIBRATION</span>
+                </li>
+                <li class="mini" data-level="calibration">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">REACT.JS</span>
+                  <span class="mini__state">CALIBRATION</span>
+                </li>
+                <li class="mini" data-level="calibration">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">TYPESCRIPT</span>
+                  <span class="mini__state">CALIBRATION</span>
+                </li>
+                <li class="mini" data-level="calibration">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">GSAP</span>
+                  <span class="mini__state">CALIBRATION</span>
+                </li>
+              </ul>
+              <p class="channel__note">
+                Notions acquises en formation : DOM, événements, composants.
+                Systèmes en calibration active — plan de montée en puissance
+                documenté.
+              </p>
+            </div>
+
+            <button class="channel__action" type="button" aria-expanded="false" aria-controls="panel-03">LANCER
+              L'INSPECTION</button>
+          </article>
+        </li>
+
+        <!-- ─── CANAL 04 · BACK-END & OUTILS ─── -->
+        <li class="channel channel--04">
+          <article class="channel__card">
+            <header class="channel__head">
+              <span class="channel__code">CANAL 04 / BACK</span>
+              <span class="channel__status">
+                <span class="channel__led" aria-hidden="true"></span>
+                <span class="channel__status-text">VERROUILLÉ</span>
+                <svg class="channel__lock" aria-hidden="true">
+                  <use href="#icon-lock" />
+                </svg>
+              </span>
+            </header>
+
+            <h3 class="channel__title">BACK-END &amp; OUTILS</h3>
+            <p class="channel__desc">Logique applicative côté serveur, versioning du code et visibilité des
+              projets.</p>
+
+            <ul class="channel__tags">
+              <li class="channel__tag">PHP</li>
+              <li class="channel__tag">LARAVEL</li>
+              <li class="channel__tag">SYMFONY</li>
+              <li class="channel__tag">GIT</li>
+              <li class="channel__tag">SEO</li>
+            </ul>
+
+            <div class="channel__panel" id="panel-04">
+              <ul class="channel__systems">
+                <li class="mini" data-level="calibration">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">LARAVEL</span>
+                  <span class="mini__state">CALIBRATION</span>
+                </li>
+                <li class="mini" data-level="calibration">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">SYMFONY</span>
+                  <span class="mini__state">CALIBRATION</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">GIT / GITLAB</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">SEO &amp; OUTILS GOOGLE</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+              </ul>
+              <p class="channel__note">
+                Première version d'un logiciel de caisse développée avec
+                Laravel, suivi du code sous Git/GitLab, audits SEO et
+                participation aux évolutions et corrections applicatives.
+              </p>
+            </div>
+
+            <button class="channel__action" type="button" aria-expanded="false" aria-controls="panel-04">LANCER
+              L'INSPECTION</button>
+          </article>
+        </li>
+
+        <!-- ─── CANAL 05 · EXPÉRIENCE TERRAIN ─── -->
+        <li class="channel channel--05">
+          <article class="channel__card">
+            <header class="channel__head">
+              <span class="channel__code">CANAL 05 / TERRAIN</span>
+              <span class="channel__status">
+                <span class="channel__led" aria-hidden="true"></span>
+                <span class="channel__status-text">VERROUILLÉ</span>
+                <svg class="channel__lock" aria-hidden="true">
+                  <use href="#icon-lock" />
+                </svg>
+              </span>
+            </header>
+
+            <h3 class="channel__title">EXPÉRIENCE TERRAIN</h3>
+            <p class="channel__desc">Des environnements exigeants qui forgent la rigueur — transférable à
+              chaque mission projet.</p>
+
+            <ul class="channel__tags">
+              <li class="channel__tag">SERVICE PREMIUM</li>
+              <li class="channel__tag">FLUX</li>
+              <li class="channel__tag">COMMERCE</li>
+              <li class="channel__tag">FORMATION</li>
+            </ul>
+
+            <div class="channel__panel" id="panel-05">
+              <ul class="channel__systems">
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">SERVICE PREMIUM</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">RÉGULATION DE FLUX</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">STANDARDS COMMERCE</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="service">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">FORMATION D'ÉQUIPES</span>
+                  <span class="mini__state">EN SERVICE</span>
+                </li>
+              </ul>
+              <p class="channel__note">
+                Service à −15 °C en Ice Bar, mixologie et rang jusqu'à
+                75 couverts. Régulation des flux voyageurs RER A, standards
+                Zara / H&amp;M jusqu'à la formation des nouveaux caissiers-vendeurs.
+              </p>
+            </div>
+
+            <button class="channel__action" type="button" aria-expanded="false" aria-controls="panel-05">LANCER
+              L'INSPECTION</button>
+          </article>
+        </li>
+
+        <!-- ─── CANAL 06 · SAVOIR-ÊTRE ─── -->
+        <li class="channel channel--06">
+          <article class="channel__card">
+            <header class="channel__head">
+              <span class="channel__code">CANAL 06 / ÉQUIPAGE</span>
+              <span class="channel__status">
+                <span class="channel__led" aria-hidden="true"></span>
+                <span class="channel__status-text">VERROUILLÉ</span>
+                <svg class="channel__lock" aria-hidden="true">
+                  <use href="#icon-lock" />
+                </svg>
+              </span>
+            </header>
+
+            <h3 class="channel__title">SAVOIR-ÊTRE</h3>
+            <p class="channel__desc">Les systèmes humains du pilote — ceux qui tiennent le cap quand les
+              conditions se dégradent.</p>
+
+            <ul class="channel__tags">
+              <li class="channel__tag">SANG-FROID</li>
+              <li class="channel__tag">ADAPTABILITÉ</li>
+              <li class="channel__tag">COORDINATION</li>
+              <li class="channel__tag">RÉSILIENCE</li>
+            </ul>
+
+            <div class="channel__panel" id="panel-06">
+              <ul class="channel__systems">
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">SANG-FROID / STRESS</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">ADAPTABILITÉ MULTI-SECTEURS</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">COORDINATION / ÉQUIPE</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+                <li class="mini" data-level="operational">
+                  <span class="mini__led" aria-hidden="true"></span>
+                  <span class="mini__name">RÉSILIENCE</span>
+                  <span class="mini__state">OPÉRATIONNEL</span>
+                </li>
+              </ul>
+              <p class="channel__note">
+                Forgés sur le terrain — hôtellerie premium, flux tendus,
+                commerce — ces systèmes ne s'apprennent pas en formation :
+                ils se prouvent en conditions réelles.
+              </p>
+            </div>
+
+            <button class="channel__action" type="button" aria-expanded="false" aria-controls="panel-06">LANCER
+              L'INSPECTION</button>
+          </article>
+        </li>
+
+      </ol>
+
+      <!-- ═══ JOURNAL DES OPÉRATIONS ═══ -->
+      <div class="ops-log" aria-label="Journal des opérations">
+        <p class="ops-log__head">JOURNAL DES OPÉRATIONS</p>
+        <ol class="ops-log__list" id="ops-event-log"></ol>
+      </div>
+
     </section>
+
+    <!-- ═══ AUTORISATION FINALE ═══ -->
+    <section class="ops-final" id="ops-final" aria-labelledby="ops-final-title">
+      <p class="ops-final__label">INSPECTION TERMINÉE / TOUS SYSTÈMES CONTRÔLÉS</p>
+      <h2 class="ops-final__title" id="ops-final-title">AUTORISATION DE DÉPART ACCORDÉE</h2>
+      <ul class="ops-final__list">
+        <li>✓ Canal 01 — Coordination &amp; fonctionnel validées</li>
+        <li>✓ Canal 02 — Intégration front-end contrôlée</li>
+        <li>✓ Canal 03 — Interactions &amp; frameworks en calibration</li>
+        <li>✓ Canal 04 — Back-end &amp; outils en progression</li>
+        <li>✓ Canal 05 — Expérience terrain confirmée</li>
+        <li>✓ Canal 06 — Savoir-être certifié</li>
+      </ul>
+      <p class="ops-final__text">
+        Un profil numérique adossé à des années de terrain : coordination de
+        projet, exigence de service et gestion de flux tendus. Les systèmes
+        en calibration suivent un plan de montée en puissance documenté —
+        la trajectoire est nominale.
+      </p>
+      <p class="ops-final__status">STATUT : <strong>CENTRE DES OPÉRATIONS CERTIFIÉ</strong></p>
+      <div class="ops-final__actions">
+        <a class="ops-final__cta ops-final__cta--primary" href="./bording-gate.html">CONSULTER BOARDING GATE</a>
+        <a class="ops-final__cta ops-final__cta--ghost" href="./cockpit.html">CONSULTER COCKPIT</a>
+      </div>
+    </section>
+
+    <p class="sr-only" aria-live="polite" id="ops-live"></p>
+
   </main>
 
 

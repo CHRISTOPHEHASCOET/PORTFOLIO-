@@ -1,497 +1,567 @@
 (() => {
-  "use strict";
+  'use strict';
 
-  const initOperationCenter = () => {
-    const root = document.querySelector("[data-ops-root]");
-    if (!root) return;
+  document.documentElement.classList.add('js');
 
-    const cards = [...root.querySelectorAll("[data-ops-card]")]
-      .sort((a, b) => Number(a.dataset.channel) - Number(b.dataset.channel));
+  /* ─── Configuration figée ─── */
+  const CONFIG = Object.freeze({
+    STEP_DELAY: 380,
+    WORDS_PER_MINUTE: 200,
+    MIN_READ_MS: 6000,
+    MAX_READ_MS: 14000,
+    SCRAMBLE_FRAMES: 8,
+    SCRAMBLE_CHARS: '█▓▒░<>/\\|01',
+  });
 
-    if (!cards.length) {
-      console.warn("Operation Center : aucune carte [data-ops-card] trouvée.");
+  const STATUS_LABEL = Object.freeze({
+    locked: 'VERROUILLÉ',
+    active: 'PRÊT POUR INSPECTION',
+    open: 'INSPECTION EN COURS',
+    validated: 'CONTRÔLÉ ✓',
+  });
+
+  const ACTION_LABEL = Object.freeze({
+    locked: 'SYSTÈME VERROUILLÉ',
+    active: "LANCER L'INSPECTION",
+    open: 'INSPECTION EN COURS…',
+    validated: 'RAPPORT — MASQUER',
+  });
+
+  const LEVEL_LABEL = Object.freeze({
+    operational: 'OPÉRATIONNEL',
+    service: 'EN SERVICE',
+    calibration: 'CALIBRATION',
+  });
+
+  /* ─── Sélecteurs ─── */
+  const channels = [...document.querySelectorAll('.channel')];
+  const dotsNav = document.querySelector('.ops-dots');
+  const dots = [...document.querySelectorAll('.ops-dot')];
+  const links = [...document.querySelectorAll('.ops-link')];
+  const legendItems = [...document.querySelectorAll('.ops-legend__item')];
+  const panelStatus = document.getElementById('ops-panel-status');
+  const meterFill = document.getElementById('ops-meter-fill');
+  const brief = document.getElementById('ops-brief');
+  const finalPanel = document.getElementById('ops-final');
+  const live = document.getElementById('ops-live');
+  const eventLog = document.getElementById('ops-event-log');
+
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const dotTitles = channels.map((channel) =>
+    channel.querySelector('.channel__title')?.textContent.trim() ?? ''
+  );
+
+  /* ─── État du module (privé) ─── */
+  let validated = 0;
+  let inspection = null;
+  let activeFilter = null;
+
+  /* ═══ Journal des opérations ═══ */
+
+  const missionStart = performance.now();
+
+  function missionTime() {
+    const elapsed = Math.floor((performance.now() - missionStart) / 1000);
+    const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
+    const s = String(elapsed % 60).padStart(2, '0');
+    return `T+${m}:${s}`;
+  }
+
+  function logEvent(text, type = '') {
+    if (!eventLog) return;
+    const li = document.createElement('li');
+    li.className = type ? `ops-log__entry ops-log__entry--${type}` : 'ops-log__entry';
+    const time = document.createElement('span');
+    time.className = 'ops-log__time';
+    time.textContent = missionTime();
+    li.append(time, document.createTextNode(text));
+    eventLog.appendChild(li);
+    eventLog.scrollTop = eventLog.scrollHeight;
+  }
+
+  /* ═══ Compteurs par niveau (source unique : data-level du DOM) ═══ */
+
+  function countByLevel() {
+    const counts = { operational: 0, service: 0, calibration: 0 };
+    document.querySelectorAll('.mini').forEach((mini) => {
+      if (mini.dataset.level in counts) counts[mini.dataset.level] += 1;
+    });
+    return counts;
+  }
+
+  function initLegendCounts() {
+    const counts = countByLevel();
+    legendItems.forEach((item) => {
+      const small = item.querySelector('small');
+      if (!small) return;
+      if (!small.dataset.hint) small.dataset.hint = small.textContent.trim();
+      small.textContent = `${small.dataset.hint} · ${counts[item.dataset.level]}`;
+    });
+  }
+
+  /* ═══ Récap final généré depuis le DOM ═══ */
+
+  function buildFinalRecap() {
+    if (!finalPanel) return;
+
+    const list = finalPanel.querySelector('.ops-final__list');
+    if (list) {
+      list.replaceChildren(...channels.map((channel, i) => {
+        const li = document.createElement('li');
+        li.textContent = `✓ Canal ${String(i + 1).padStart(2, '0')} — ${dotTitles[i]}`;
+        return li;
+      }));
+    }
+
+    const counts = countByLevel();
+    const stats = document.createElement('p');
+    stats.className = 'ops-final__stats';
+    stats.textContent = 'RÉPARTITION : ';
+
+    Object.keys(counts).forEach((level, i) => {
+      const strong = document.createElement('strong');
+      strong.className = `ops-final__stat ops-final__stat--${level}`;
+      strong.textContent = String(counts[level]).padStart(2, '0');
+      stats.append(strong, document.createTextNode(` ${LEVEL_LABEL[level]}S`));
+      if (i < 2) stats.append(document.createTextNode(' · '));
+    });
+
+    const anchor = finalPanel.querySelector('.ops-final__text');
+    anchor?.before(stats);
+  }
+
+  /* ═══ Split-flap sur le titre à l'activation ═══ */
+
+  function scrambleTitle(channel) {
+    const title = channel.querySelector('.channel__title');
+    if (!title) return;
+    if (!title.dataset.original) title.dataset.original = title.textContent;
+    const target = title.dataset.original;
+
+    if (REDUCED) {
+      title.textContent = target;
       return;
     }
 
-    const sequenceItems = [...root.querySelectorAll("[data-ops-sequence]")];
+    let frame = 0;
+    const interval = setInterval(() => {
+      title.textContent = target
+        .split('')
+        .map((char, i) => {
+          if (char === ' ') return ' ';
+          return i < (frame / CONFIG.SCRAMBLE_FRAMES) * target.length
+            ? char
+            : CONFIG.SCRAMBLE_CHARS[Math.floor(Math.random() * CONFIG.SCRAMBLE_CHARS.length)];
+        })
+        .join('');
+      frame += 1;
+      if (frame > CONFIG.SCRAMBLE_FRAMES) {
+        clearInterval(interval);
+        title.textContent = target;
+      }
+    }, 40);
+  }
 
-    const countOutput = root.querySelector("[data-ops-count]");
-    const statusOutput = root.querySelector("[data-ops-status]");
-    const instruction = root.querySelector("[data-ops-instruction]");
-    const finalPanel = root.querySelector("[data-ops-final]");
-    const fastButton = root.querySelector("[data-ops-fast]");
+  /* ═══ Filtre légende ═══ */
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function syncFilterFor(mini) {
+    if (!activeFilter || mini.classList.contains('is-pending')) return;
+    const match = mini.dataset.level === activeFilter;
+    mini.classList.toggle('is-highlighted', match);
+    mini.classList.toggle('is-dimmed', !match);
+  }
 
-    const controlledChannels = new Set();
-    const phaseProgress = new Map();
+  function applyLegendFilter(level) {
+    activeFilter = level;
 
-    cards.forEach((card) => {
-      phaseProgress.set(Number(card.dataset.channel), 0);
+    legendItems.forEach((item) => {
+      const isActive = item.dataset.level === level;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', String(isActive));
     });
 
-    const getChannel = (card) => Number(card.dataset.channel);
-
-    const getTrigger = (card) => card.querySelector("[data-ops-trigger]");
-
-    const getBody = (card) => {
-      const trigger = getTrigger(card);
-      const id = trigger?.getAttribute("aria-controls");
-      return id ? document.getElementById(id) : null;
-    };
-
-    const getState = (card) => card.querySelector("[data-ops-state]");
-    const getCta = (card) => card.querySelector("[data-ops-cta]");
-    const getConfirm = (card) => card.querySelector("[data-ops-confirm]");
-    const getLive = (card) => card.querySelector("[data-ops-live]");
-    const getPhases = (card) => [...card.querySelectorAll("[data-ops-phase]")];
-    const getLights = (card) => [...card.querySelectorAll("[data-ops-light]")];
-
-    const getTitle = (card) => {
-      return card.querySelector("h3")?.textContent.trim() || `Canal ${getChannel(card)}`;
-    };
-
-    const getProgress = (card) => {
-      return phaseProgress.get(getChannel(card)) || 0;
-    };
-
-    const setProgress = (card, value) => {
-      phaseProgress.set(getChannel(card), value);
-    };
-
-    const getFirstPendingIndex = () => {
-      return cards.findIndex((card) => !controlledChannels.has(getChannel(card)));
-    };
-
-    const isControlled = (card) => {
-      return controlledChannels.has(getChannel(card));
-    };
-
-    const isCurrent = (card) => {
-      return cards.indexOf(card) === getFirstPendingIndex();
-    };
-
-    const isLocked = (card) => {
-      return !isControlled(card) && !isCurrent(card);
-    };
-
-    const isOpen = (card) => {
-      return getTrigger(card)?.getAttribute("aria-expanded") === "true";
-    };
-
-    const isReady = (card) => {
-      return getProgress(card) >= getPhases(card).length;
-    };
-
-    const setOpenItem = (card, open) => {
-      const item = card.closest(".ops-grid__item");
-      if (item) item.classList.toggle("is-open-item", open);
-    };
-
-    const closeCard = (card) => {
-      const body = getBody(card);
-      const trigger = getTrigger(card);
-
-      if (body) body.hidden = true;
-      if (trigger) trigger.setAttribute("aria-expanded", "false");
-
-      card.classList.remove("is-open", "is-ready");
-      setOpenItem(card, false);
-    };
-
-    const closeOtherCards = (activeCard) => {
-      cards.forEach((card) => {
-        if (card !== activeCard) closeCard(card);
-      });
-    };
-
-    const openCard = (card) => {
-      const body = getBody(card);
-      const trigger = getTrigger(card);
-
-      closeOtherCards(card);
-
-      if (body) body.hidden = false;
-      if (trigger) trigger.setAttribute("aria-expanded", "true");
-
-      card.classList.add("is-open");
-      setOpenItem(card, true);
-    };
-
-    const updateCardVisuals = (card) => {
-      const controlled = isControlled(card);
-      const current = isCurrent(card);
-      const locked = isLocked(card);
-      const open = isOpen(card);
-      const ready = isReady(card);
-
-      const phases = getPhases(card);
-      const lights = getLights(card);
-      const progress = getProgress(card);
-      const maxPhases = phases.length || 1;
-
-      const trigger = getTrigger(card);
-      const state = getState(card);
-      const cta = getCta(card);
-      const confirm = getConfirm(card);
-
-      card.classList.toggle("is-controlled", controlled);
-      card.classList.toggle("is-current", current);
-      card.classList.toggle("is-locked", locked);
-      card.classList.toggle("is-ready", current && open && ready && !controlled);
-
-      if (trigger) {
-        trigger.disabled = false;
-        trigger.setAttribute("aria-disabled", String(locked));
-      }
-
-      if (state && cta) {
-        if (controlled) {
-          state.textContent = "Contrôlé ✓";
-          cta.textContent = open ? "Refermer le rapport" : "Relire le rapport";
-        } else if (locked) {
-          state.textContent = "Verrouillé";
-          cta.textContent = "Canal verrouillé";
-        } else if (open && ready) {
-          state.textContent = "Prêt à valider";
-          cta.textContent = "Refermer le rapport";
-        } else if (open) {
-          state.textContent = "Contrôle en cours";
-          cta.textContent = "Refermer le rapport";
-        } else {
-          state.textContent = "Prêt";
-          cta.textContent = "Ouvrir le rapport";
-        }
-      }
-
-      phases.forEach((phase, index) => {
-        const done = controlled || index < progress;
-        const active =
-          !controlled &&
-          current &&
-          open &&
-          index === progress &&
-          progress < phases.length;
-
-        phase.classList.toggle("is-done", done);
-        phase.classList.toggle("is-active", active);
-      });
-
-      const litCount = controlled
-        ? lights.length
-        : Math.ceil((progress / maxPhases) * lights.length);
-
-      lights.forEach((light, index) => {
-        light.classList.toggle("is-lit", index < litCount);
-      });
-
-      if (!confirm) return;
-
-      if (controlled) {
-        confirm.hidden = true;
-        confirm.disabled = true;
-        confirm.classList.remove("is-final");
-        confirm.textContent = "Canal contrôlé";
+    document.querySelectorAll('.mini').forEach((mini) => {
+      if (!level) {
+        mini.classList.remove('is-dimmed', 'is-highlighted');
         return;
       }
-
-      if (!current) {
-        confirm.hidden = true;
-        confirm.disabled = true;
-        confirm.classList.remove("is-final");
-        confirm.textContent = "Canal verrouillé";
-        return;
-      }
-
-      confirm.hidden = false;
-      confirm.disabled = !open;
-
-      if (ready) {
-        confirm.classList.add("is-final");
-        confirm.textContent = "Valider le canal";
-        return;
-      }
-
-      const phaseLabel = phases[progress]?.textContent.trim() || "contrôle";
-      confirm.classList.remove("is-final");
-      confirm.textContent = `Valider : ${phaseLabel}`;
-    };
-
-    const updateSequence = () => {
-      const currentIndex = getFirstPendingIndex();
-
-      sequenceItems.forEach((item) => {
-        const channel = Number(item.dataset.opsSequence);
-        const itemIndex = channel - 1;
-        const current = itemIndex === currentIndex;
-
-        item.classList.toggle("is-done", controlledChannels.has(channel));
-        item.classList.toggle("is-current", current);
-
-        if (current) {
-          item.setAttribute("aria-current", "step");
-        } else {
-          item.removeAttribute("aria-current");
-        }
-      });
-    };
-
-    const updateStatus = () => {
-      const done = controlledChannels.size;
-      const total = cards.length;
-      const complete = done === total;
-      const currentIndex = getFirstPendingIndex();
-
-      if (countOutput) {
-        countOutput.textContent = `${done} / ${total} canaux`;
-      }
-
-      if (complete) {
-        if (statusOutput) {
-          statusOutput.textContent = "Autorisé";
-          statusOutput.classList.add("is-complete");
-        }
-
-        if (instruction) {
-          instruction.textContent =
-            "Tous les canaux sont contrôlés. Autorisation opérationnelle accordée.";
-        }
-
-        if (finalPanel) {
-          finalPanel.hidden = false;
-        }
-
-        if (fastButton) {
-          fastButton.disabled = true;
-          fastButton.textContent = "Inspection complète";
-        }
-
-        return;
-      }
-
-      if (statusOutput) {
-        statusOutput.textContent = "En cours";
-        statusOutput.classList.remove("is-complete");
-      }
-
-      if (finalPanel) {
-        finalPanel.hidden = true;
-      }
-
-      if (fastButton) {
-        fastButton.disabled = false;
-        fastButton.textContent = "Mode recruteur";
-      }
-
-      const currentCard = cards[currentIndex];
-      if (!currentCard || !instruction) return;
-
-      const title = getTitle(currentCard);
-      const open = isOpen(currentCard);
-      const ready = isReady(currentCard);
-      const phases = getPhases(currentCard);
-      const progress = getProgress(currentCard);
-
-      if (open && ready) {
-        instruction.textContent =
-          `Canal prêt : ${title}. Validez le canal pour débloquer le contrôle suivant.`;
-        return;
-      }
-
-      if (open) {
-        const phaseLabel = phases[progress]?.textContent.trim() || "contrôle";
-
-        instruction.textContent =
-          `Rapport ouvert : ${title}. Validez "${phaseLabel}" quand vous êtes prêt.`;
-        return;
-      }
-
-      instruction.textContent =
-        `Canal actif : ${title}. Ouvrez le rapport pour consulter les compétences.`;
-    };
-
-    const refresh = () => {
-      updateSequence();
-      cards.forEach(updateCardVisuals);
-      updateStatus();
-    };
-
-    const announce = (card, message) => {
-      const live = getLive(card);
-      if (live) live.textContent = message;
-    };
-
-    const denyLockedCard = (card) => {
-      card.classList.add("is-denied");
-
-      if (instruction) {
-        instruction.textContent =
-          "Canal verrouillé : contrôlez d’abord le canal actif avant de poursuivre.";
-      }
-
-      window.setTimeout(() => {
-        card.classList.remove("is-denied");
-        updateStatus();
-      }, reduceMotion ? 120 : 600);
-    };
-
-    const toggleControlledCard = (card) => {
-      if (isOpen(card)) {
-        closeCard(card);
-        refresh();
-        return;
-      }
-
-      openCard(card);
-      setProgress(card, getPhases(card).length);
-      announce(card, "Rapport déjà contrôlé. Consultation disponible.");
-      refresh();
-    };
-
-    const toggleCurrentCard = (card) => {
-      if (isOpen(card)) {
-        closeCard(card);
-        refresh();
-        return;
-      }
-
-      openCard(card);
-
-      if (getProgress(card) === 0) {
-        announce(card, "Rapport ouvert. Lisez le contenu, puis validez les contrôles à votre rythme.");
-      } else if (isReady(card)) {
-        announce(card, "Tous les contrôles sont validés. Vous pouvez valider le canal.");
-      } else {
-        announce(card, "Rapport rouvert. Continuez la procédure de contrôle.");
-      }
-
-      refresh();
-    };
-
-    const validateNextStep = (card) => {
-      if (isLocked(card)) {
-        denyLockedCard(card);
-        return;
-      }
-
-      if (isControlled(card) || !isCurrent(card)) return;
-
-      if (!isOpen(card)) {
-        openCard(card);
-        refresh();
-        return;
-      }
-
-      const phases = getPhases(card);
-      const progress = getProgress(card);
-
-      if (progress < phases.length) {
-        const phase = phases[progress];
-        const message =
-          phase.dataset.message ||
-          `Contrôle validé : ${phase.textContent.trim()}.`;
-
-        setProgress(card, progress + 1);
-        announce(card, message);
-        refresh();
-        return;
-      }
-
-      validateChannel(card);
-    };
-
-    const validateChannel = (card) => {
-      const channel = getChannel(card);
-
-      controlledChannels.add(channel);
-      setProgress(card, getPhases(card).length);
-      announce(card, "Canal validé. Le contrôle suivant est disponible.");
-
-      refresh();
-
-      window.setTimeout(() => {
-        closeCard(card);
-        refresh();
-
-        const nextIndex = getFirstPendingIndex();
-        const target = nextIndex >= 0 ? cards[nextIndex] : finalPanel;
-
-        if (target) {
-          target.scrollIntoView({
-            behavior: reduceMotion ? "auto" : "smooth",
-            block: "center",
-          });
-        }
-      }, reduceMotion ? 100 : 420);
-    };
-
-    const handleTrigger = (card) => {
-      if (isLocked(card)) {
-        denyLockedCard(card);
-        return;
-      }
-
-      if (isControlled(card)) {
-        toggleControlledCard(card);
-        return;
-      }
-
-      if (isCurrent(card)) {
-        toggleCurrentCard(card);
-      }
-    };
-
-    const enableRecruiterMode = () => {
-      cards.forEach((card) => {
-        controlledChannels.add(getChannel(card));
-        setProgress(card, getPhases(card).length);
-        closeCard(card);
-      });
-
-      refresh();
-
-      if (finalPanel) {
-        finalPanel.scrollIntoView({
-          behavior: reduceMotion ? "auto" : "smooth",
-          block: "center",
-        });
-      }
-    };
-
-    const init = () => {
-      root.classList.add("is-enhanced");
-
-      cards.forEach((card) => {
-        closeCard(card);
-        setProgress(card, 0);
-
-        const trigger = getTrigger(card);
-        const confirm = getConfirm(card);
-
-        trigger?.addEventListener("click", () => {
-          handleTrigger(card);
-        });
-
-        confirm?.addEventListener("click", () => {
-          validateNextStep(card);
-        });
-      });
-
-      fastButton?.addEventListener("click", enableRecruiterMode);
-
-      if (finalPanel) {
-        finalPanel.hidden = true;
-      }
-
-      refresh();
-    };
-
-    init();
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initOperationCenter);
-  } else {
-    initOperationCenter();
+      syncFilterFor(mini);
+    });
+
+    logEvent(level
+      ? `FILTRE LÉGENDE → ${LEVEL_LABEL[level]} SURLIGNÉ`
+      : 'FILTRE LÉGENDE → RÉINITIALISÉ');
   }
+
+  legendItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      applyLegendFilter(activeFilter === item.dataset.level ? null : item.dataset.level);
+    });
+  });
+
+  /* ═══ Utilitaires ═══ */
+
+  function setDotLabel(index, stateLabel) {
+    const dot = dots[index];
+    if (!dot) return;
+    dot.setAttribute(
+      'aria-label',
+      `Canal ${String(index + 1).padStart(2, '0')} — ${dotTitles[index]} : ${stateLabel}`
+    );
+  }
+
+  function setCurrentDot(index) {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-current', i === index);
+      if (i === index) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+  }
+
+  function setState(channel, state) {
+    channel.dataset.state = state;
+    channel.querySelector('.channel__status-text').textContent = STATUS_LABEL[state];
+
+    const action = channel.querySelector('.channel__action');
+    action.disabled = state === 'locked' || state === 'open';
+    action.textContent = ACTION_LABEL[state];
+  }
+
+  function setPanel(channel, open) {
+    channel.querySelector('.channel__panel').hidden = !open;
+    channel.querySelector('.channel__action').setAttribute('aria-expanded', String(open));
+  }
+
+  function closeOthers(except) {
+    channels.forEach((channel) => {
+      if (channel === except) return;
+      if (!channel.querySelector('.channel__panel').hidden) {
+        setPanel(channel, false);
+        if (channel.dataset.state === 'validated') {
+          channel.querySelector('.channel__action').textContent = 'RAPPORT — AFFICHER';
+        }
+      }
+    });
+  }
+
+  function resetMinis(channel) {
+    channel.querySelectorAll('.mini').forEach((mini) => {
+      if (!mini.dataset.realState) {
+        mini.dataset.realState = mini.querySelector('.mini__state').textContent.trim();
+      }
+      mini.classList.add('is-pending');
+      mini.classList.remove('is-highlighted', 'is-dimmed');
+      mini.querySelector('.mini__state').textContent = 'EN ATTENTE';
+    });
+  }
+
+  function lightUp(mini) {
+    mini.classList.remove('is-pending');
+    mini.querySelector('.mini__state').textContent = mini.dataset.realState;
+    syncFilterFor(mini);
+  }
+
+  function updateCount() {
+    if (panelStatus) {
+      panelStatus.textContent = `● ${validated} / ${channels.length} CONTRÔLÉS`;
+    }
+    if (meterFill) {
+      meterFill.style.transform = `scaleX(${validated / channels.length})`;
+    }
+  }
+
+  function readingTimeFor(channel) {
+    const words = channel.querySelector('.channel__note').textContent.trim().split(/\s+/).length;
+    const ms = (words / CONFIG.WORDS_PER_MINUTE) * 60 * 1000;
+    return Math.min(CONFIG.MAX_READ_MS, Math.max(CONFIG.MIN_READ_MS, ms));
+  }
+
+  /* ═══ Minuterie avec pause au survol / focus ═══ */
+
+  function waitForReading(channel, duration, token) {
+    return new Promise((resolve) => {
+      const panel = channel.querySelector('.channel__panel');
+      const countdown = document.createElement('p');
+      countdown.className = 'channel__reading';
+      countdown.setAttribute('aria-hidden', 'true');
+      panel.appendChild(countdown);
+
+      let remaining = duration;
+      let paused = false;
+      let last = performance.now();
+      let done = false;
+
+      const render = () => {
+        countdown.textContent = paused
+          ? 'LECTURE EN COURS — MINUTERIE EN PAUSE'
+          : `FERMETURE AUTOMATIQUE — ${Math.max(0, Math.ceil(remaining / 1000))} s`;
+      };
+
+      const pause = () => { paused = true; render(); };
+      const resume = () => { paused = false; last = performance.now(); render(); };
+
+      panel.addEventListener('pointerenter', pause);
+      panel.addEventListener('pointerleave', resume);
+      panel.addEventListener('focusin', pause);
+      panel.addEventListener('focusout', resume);
+
+      token.skip = finish;
+
+      const timer = setInterval(() => {
+        if (token.cancelled) { finish(); return; }
+        const now = performance.now();
+        if (!paused) remaining -= now - last;
+        last = now;
+        render();
+        if (remaining <= 0) finish();
+      }, 250);
+
+      function finish() {
+        if (done) return;
+        done = true;
+        clearInterval(timer);
+        panel.removeEventListener('pointerenter', pause);
+        panel.removeEventListener('pointerleave', resume);
+        panel.removeEventListener('focusin', pause);
+        panel.removeEventListener('focusout', resume);
+        countdown.remove();
+        resolve();
+      }
+
+      render();
+    });
+  }
+
+  /* ═══ Annulation propre ═══ */
+
+  function cancelInspection() {
+    if (!inspection) return;
+    const { channel, index, token } = inspection;
+    token.cancelled = true;
+    resetMinis(channel);
+    setPanel(channel, false);
+    setState(channel, 'active');
+    setDotLabel(index, 'prêt pour inspection');
+    inspection = null;
+  }
+
+  /* ═══ Inspection complète ═══ */
+
+  async function startInspection(channel, index) {
+    const token = { cancelled: false, skip: null };
+    inspection = { channel, index, token };
+
+    const num = String(index + 1).padStart(2, '0');
+
+    closeOthers(channel);
+    setState(channel, 'open');
+    setPanel(channel, true);
+    brief?.classList.add('is-hidden');
+    setCurrentDot(index);
+    setDotLabel(index, 'inspection en cours');
+    logEvent(`CANAL ${num} → INSPECTION INITIALISÉE`);
+    if (live) live.textContent = `Inspection du canal ${num} en cours.`;
+
+    for (const mini of channel.querySelectorAll('.mini')) {
+      await sleep(REDUCED ? 0 : CONFIG.STEP_DELAY);
+      if (token.cancelled) return;
+      lightUp(mini);
+    }
+
+    const action = channel.querySelector('.channel__action');
+    action.disabled = false;
+    action.textContent = 'TERMINER ET CONTINUER →';
+
+    await waitForReading(channel, readingTimeFor(channel), token);
+    if (token.cancelled) return;
+
+    inspection = null;
+    completeInspection(channel, index);
+  }
+
+  function completeInspection(channel, index) {
+    const num = String(index + 1).padStart(2, '0');
+
+    setPanel(channel, false);
+    setState(channel, 'validated');
+
+    channel.classList.add('is-flashing');
+    setTimeout(() => channel.classList.remove('is-flashing'), 950);
+
+    const dot = dots[index];
+    if (dot) {
+      dot.classList.remove('is-current');
+      dot.removeAttribute('aria-current');
+      dot.classList.add('is-done');
+      dot.disabled = false;
+    }
+    links[index]?.classList.add('is-filled');
+    setDotLabel(index, 'contrôlé — afficher le rapport');
+
+    validated += 1;
+    updateCount();
+    logEvent(`CANAL ${num} → CONTRÔLÉ ✓`, 'ok');
+
+    const next = channels[index + 1];
+
+    if (next) {
+      const nextNum = String(index + 2).padStart(2, '0');
+      setState(next, 'active');
+      scrambleTitle(next);
+      setCurrentDot(index + 1);
+      setDotLabel(index + 1, 'prêt pour inspection');
+      logEvent(`CANAL ${nextNum} → DÉVERROUILLÉ`);
+      if (live) live.textContent = `Canal ${num} contrôlé. Canal ${nextNum} déverrouillé.`;
+      setTimeout(() => {
+        next.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+        /* Le focus suit la séquence (navigation clavier) */
+        next.querySelector('.channel__action').focus({ preventScroll: true });
+      }, 500);
+    } else {
+      finishInspection(num);
+    }
+  }
+
+  async function finishInspection(lastNum) {
+    logEvent('TOUS SYSTÈMES CONTRÔLÉS', 'ok');
+    if (live) {
+      live.textContent = `Canal ${lastNum} contrôlé. Tous les systèmes sont contrôlés. Autorisation de départ accordée.`;
+    }
+
+    for (const dot of dots) {
+      dot.classList.add('is-celebrating');
+      await sleep(REDUCED ? 0 : 150);
+      setTimeout(() => dot.classList.remove('is-celebrating'), 600);
+    }
+
+    await sleep(REDUCED ? 0 : 400);
+
+    logEvent('CLEARANCE GRANTED — AUTORISATION DE DÉPART ACCORDÉE', 'final');
+    if (panelStatus) {
+      panelStatus.textContent = '● CLEARANCE GRANTED';
+      panelStatus.classList.add('ops-panel__status--green');
+    }
+    if (finalPanel) {
+      finalPanel.hidden = false;
+      finalPanel.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+      finalPanel.querySelector('.ops-final__cta')?.focus({ preventScroll: true });
+    }
+  }
+
+  /* ═══ Boot ═══ */
+
+  async function boot() {
+    for (const channel of channels) {
+      await sleep(REDUCED ? 0 : 120);
+      channel.classList.remove('is-preboot');
+      channel.classList.add('is-booted');
+    }
+    await sleep(REDUCED ? 0 : 250);
+    logEvent(`SYSTÈME OPS-251 EN LIGNE — ${String(channels.length).padStart(2, '0')} SYSTÈMES DÉTECTÉS`);
+    logEvent('CANAL 01 → PRÊT POUR INSPECTION');
+  }
+
+  /* ═══ Préparation impression : tout visible et lisible ═══ */
+
+  function preparePrint() {
+    document.querySelectorAll('.mini').forEach((mini) => {
+      if (!mini.dataset.realState) {
+        mini.dataset.realState = mini.querySelector('.mini__state').textContent.trim();
+      }
+      mini.classList.remove('is-pending', 'is-dimmed', 'is-highlighted');
+      mini.querySelector('.mini__state').textContent = mini.dataset.realState;
+    });
+    document.querySelectorAll('.channel__panel').forEach((panel) => {
+      panel.hidden = false;
+    });
+    if (finalPanel) finalPanel.hidden = false;
+  }
+
+  window.addEventListener('beforeprint', preparePrint);
+
+  /* ═══ Navigation clavier dans les pastilles (flèches) ═══ */
+
+  dotsNav?.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+
+    const enabled = dots.filter((dot) => !dot.disabled);
+    const currentIndex = enabled.indexOf(document.activeElement);
+    if (currentIndex === -1) return;
+
+    event.preventDefault();
+    const nextIndex = event.key === 'ArrowRight'
+      ? (currentIndex + 1) % enabled.length
+      : (currentIndex - 1 + enabled.length) % enabled.length;
+    enabled[nextIndex].focus();
+  });
+
+  /* ═══ Init ═══ */
+
+  channels.forEach((channel, index) => {
+    if (!REDUCED) channel.classList.add('is-preboot');
+    setState(channel, index === 0 ? 'active' : 'locked');
+    setPanel(channel, false);
+    resetMinis(channel);
+    setDotLabel(index, index === 0 ? 'prêt pour inspection' : 'verrouillé');
+  });
+
+  setCurrentDot(0);
+  if (finalPanel) finalPanel.hidden = true;
+  initLegendCounts();
+  buildFinalRecap();
+  updateCount();
+  boot();
+
+  console.log(`[OPS] ${channels.length} canaux · ${legendItems.length} niveaux · prêt.`);
+
+  /* ═══ Interactions cards ═══ */
+
+  channels.forEach((channel, index) => {
+    const action = channel.querySelector('.channel__action');
+
+    action.addEventListener('click', () => {
+      const state = channel.dataset.state;
+
+      if (state === 'active') {
+        startInspection(channel, index);
+        return;
+      }
+
+      if (state === 'open') {
+        inspection?.token.skip?.();
+        return;
+      }
+
+      if (state === 'validated') {
+        cancelInspection();
+        const isOpen = !channel.querySelector('.channel__panel').hidden;
+        if (isOpen) {
+          setPanel(channel, false);
+          action.textContent = 'RAPPORT — AFFICHER';
+        } else {
+          closeOthers(channel);
+          setPanel(channel, true);
+          action.textContent = 'RAPPORT — MASQUER';
+        }
+      }
+    });
+  });
+
+  /* ═══ Navigation par pastilles ═══ */
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      const channel = channels[index];
+      if (!channel || channel.dataset.state !== 'validated') return;
+
+      cancelInspection();
+      closeOthers(channel);
+      setPanel(channel, true);
+      channel.querySelector('.channel__action').textContent = 'RAPPORT — MASQUER';
+      channel.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+    });
+  });
+
 })();
