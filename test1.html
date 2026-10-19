@@ -4,2286 +4,681 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operation Center </title>
-    <meta name="description"
-        content="Centre des opérations : inspection des systèmes de compétences. Coordination fonctionnelle, développement front-end et back-end, expérience terrain et savoir-être — chaque système contrôlé déverrouille le suivant.">
- 
+    <title>Christophe Hascoet — Terminal A56 [PORTES INTERACTIVES]</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href="./asset/css/style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
 
     <style>
-        /* ═══════════════════════════════════════════════════════════════
-   OPERATION CENTER — Version finale de référence
-   BEM · DRY · zéro style inline · sans fond rayé
-   Le masquage pré-boot est ajouté PAR LE JS : sans JS, tout
-   le contenu reste visible (SEO / a11y).
-═══════════════════════════════════════════════════════════════ */
+        @import url("https://fonts.cdnfonts.com/css/ds-digital");
 
-        @layer components {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-            /* ─── SPRITE SVG (masqué proprement) ──────────────────── */
-            .sprite {
-                position: absolute;
-                inline-size: 0;
-                block-size: 0;
-                overflow: hidden;
+        html {
+            font-size: 16px;
+            scroll-behavior: auto;
+            color-scheme: dark;
+        }
+
+        body {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at top, #1b3957, #050b10 60%);
+            color: #e6edf3;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --color-accent: #00d2ff;
+            --color-primary: #1f6fea;
+            --color-green: #3fb950;
+            --color-amber: #ff9500;
+            --color-tech: #7c8aa6;
+            --color-cockpit: #caa24f;
+            --color-tower: #4f7cff;
+            --color-text: #e6edf3;
+            --color-muted: #909aa7;
+            --hud-green: #00ff9c;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           HEADER
+        ═══════════════════════════════════════════════════════════ */
+
+        .header {
+            background: #111820;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.9);
+            padding: 1rem 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pilot-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: linear-gradient(180deg, rgba(10, 25, 40, 0.92), rgba(3, 10, 18, 0.98));
+            border: 1px solid rgba(0, 210, 255, 0.22);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .pilot-card__avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(0, 210, 255, 0.35);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .pilot-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .pilot-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--color-text);
+            background: linear-gradient(90deg, #eaf6ff, #7fdfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pilot-status {
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .casio {
+            background: linear-gradient(180deg, #c8d0ab 0%, #b9c29a 45%, #aeb78e 100%);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-family: 'DS-Digital', monospace;
+            font-size: 1.4rem;
+            color: #111827;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            flex-shrink: 0;
+            min-width: 120px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           MAIN - TERMINAL
+        ═══════════════════════════════════════════════════════════ */
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        main::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.05), transparent 50%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 210, 255, 0.01) 0px,
+                    transparent 1px,
+                    transparent 3px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .terminal-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .terminal-title {
+            margin-bottom: 3rem;
+        }
+
+        .terminal-title h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-primary), var(--color-green), var(--color-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .terminal-subtitle {
+            color: var(--color-muted);
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           PORTES SYSTEM
+        ═══════════════════════════════════════════════════════════ */
+
+        .doors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-items: center;
+        }
+
+        .door-unit {
+            --door-color: var(--color-accent);
+            position: relative;
+            width: 100%;
+            max-width: 240px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .door-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(135deg, rgba(10, 20, 35, 0.95), rgba(5, 10, 20, 0.98));
+            border: 3px solid var(--door-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.8),
+                inset 0 0 20px rgba(0, 0, 0, 0.5),
+                0 0 30px var(--door-color);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .door-unit:hover .door-frame,
+        .door-unit.active .door-frame {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.9),
+                inset 0 0 30px rgba(0, 0, 0, 0.3),
+                0 0 50px var(--door-color);
+            border-color: var(--door-color);
+        }
+
+        .door-frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                transparent 0%, 
+                var(--door-color) 5%,
+                transparent 20%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .door-unit:hover .door-frame::before,
+        .door-unit.active .door-frame::before {
+            opacity: 0.3;
+            animation: shineSweep 0.8s ease-out;
+        }
+
+        @keyframes shineSweep {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .door-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 1rem;
+        }
+
+        .door-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--door-color);
+            text-shadow: 0 0 20px var(--door-color);
+        }
+
+        .door-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--door-color);
+            line-height: 1.3;
+        }
+
+        .door-description {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.8;
+        }
+
+        /* DOOR COLORS */
+        .door-unit--terminal { --door-color: var(--color-green); }
+        .door-unit--crew { --door-color: var(--color-primary); }
+        .door-unit--operations { --door-color: var(--color-accent); }
+        .door-unit--boarding { --door-color: var(--color-amber); }
+        .door-unit--blackbox { --door-color: var(--color-tech); }
+        .door-unit--cockpit { --door-color: var(--color-cockpit); }
+        .door-unit--control { --door-color: var(--color-tower); }
+
+        /* DOOR PULSING EFFECT */
+        .door-unit:hover .door-icon,
+        .door-unit.active .door-icon {
+            animation: doorGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes doorGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px var(--door-color);
+                filter: drop-shadow(0 0 10px var(--door-color));
+            }
+            50% {
+                text-shadow: 0 0 30px var(--door-color);
+                filter: drop-shadow(0 0 20px var(--door-color));
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════════════════════ */
+
+        footer {
+            background: linear-gradient(180deg, rgba(10, 18, 28, 0.96), rgba(3, 8, 14, 0.98));
+            border-top: 1px solid rgba(0, 210, 255, 0.12);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--color-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════════════════════ */
+
+        @media (max-width: 1024px) {
+            .doors-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
             }
 
-            /* ─── COULEURS DES CANAUX (remplace les styles inline) ── */
-            .channel--01,
-            .ops-dot--01 {
-                --ch: var(--color-accent);
+            .door-frame {
+                max-width: 200px;
             }
+        }
 
-            .channel--02,
-            .ops-dot--02 {
-                --ch: var(--color-primary);
-            }
-
-            .channel--03,
-            .ops-dot--03 {
-                --ch: var(--color-amber);
-            }
-
-            .channel--04,
-            .ops-dot--04 {
-                --ch: var(--color-violet);
-            }
-
-            .channel--05,
-            .ops-dot--05 {
-                --ch: var(--color-cockpit);
-            }
-
-            .channel--06,
-            .ops-dot--06 {
-                --ch: var(--color-green);
-            }
-
-            /* ─── COULEURS DE LÉGENDE (via data-level) ────────────── */
-            .ops-legend__item[data-level="operational"] {
-                --lv: var(--hud-green);
-            }
-
-            .ops-legend__item[data-level="service"] {
-                --lv: var(--color-accent);
-            }
-
-            .ops-legend__item[data-level="calibration"] {
-                --lv: var(--color-amber);
-            }
-
-            /* ─── EN-TÊTE DE PAGE ─────────────────────────────────── */
-            .ops-head {
-                text-align: center;
-                margin-block-end: var(--space-3);
-            }
-
-            .ops-head__label {
-                font-size: var(--text-xs);
-                letter-spacing: 0.35em;
-                color: var(--color-amber);
-                margin-block-end: 0.6rem;
-            }
-
-            .ops-head__title {
-                font-size: var(--text-hero);
-                font-weight: 800;
-                letter-spacing: 0.18em;
-                background: var(--gradient-title);
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                -webkit-text-fill-color: transparent;
-            }
-
-            .ops-head__sub {
-                margin-block-start: 0.6rem;
-                font-size: var(--text-sm);
-                letter-spacing: 0.35em;
-                color: var(--color-muted);
-            }
-
-            /* ─── STATUS BAR (<dl> : dt = label, dd = valeur) ─────── */
-            .ops-status {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                margin-block-end: var(--space-3);
-                background: var(--bg-glass);
-                border: var(--border-glass);
-                border-radius: var(--radius-sm);
-                overflow: hidden;
-            }
-
-            .ops-status__item {
-                padding: 0.6rem 1rem;
-                border-inline-end: 1px solid var(--color-white-06);
-            }
-
-            .ops-status__item:last-child {
-                border-inline-end: none;
-            }
-
-            .ops-status__item dt {
-                font-size: var(--text-xs);
-                letter-spacing: 0.2em;
-                color: var(--color-muted);
-            }
-
-            .ops-status__item dd {
-                margin: 0;
-                font-family: var(--font-mono);
-                font-size: var(--text-md);
-                font-weight: 700;
-            }
-
-            .ops-status__value--green {
-                color: var(--hud-green);
-            }
-
-            /* ─── GRAND PANEL HUD ─────────────────────────────────── */
-            .ops-panel {
-                position: relative;
-                isolation: isolate;
-                margin-block-end: var(--space-3);
-                padding: var(--space-3);
-                background: var(--bg-glass-top), var(--bg-glass);
-                border: var(--border-glass);
-                border-radius: var(--radius-md);
-                box-shadow: var(--shadow-board);
-                clip-path: var(--clip-hud);
-            }
-
-            .ops-panel::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                inset-inline: 20px;
-                height: 3px;
-                background: var(--gradient-neon-line);
-                pointer-events: none;
-            }
-
-            .ops-panel__head {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                gap: 1rem;
-                flex-wrap: wrap;
-                margin-block-end: 0.75rem;
-            }
-
-            .ops-panel__label {
-                font-size: var(--text-xs);
-                letter-spacing: 0.25em;
-                color: var(--color-muted);
-            }
-
-            .ops-panel__title {
-                font-family: var(--font-mono);
-                font-size: var(--text-xl);
-                letter-spacing: 0.12em;
-                margin-block-start: 0.25rem;
-            }
-
-            .ops-panel__status {
-                font-family: var(--font-mono);
-                font-size: var(--text-sm);
-                letter-spacing: 0.15em;
-                color: var(--color-muted);
-                white-space: nowrap;
-                transition: color 0.4s ease;
-            }
-
-            .ops-panel__status--green {
-                color: var(--hud-green);
-            }
-
-            /* ─── PROGRESSION GLOBALE (barre néon, JS uniquement) ─── */
-            .ops-meter {
-                block-size: 0.35rem;
-                margin-block-end: var(--space-2);
-                background: var(--color-white-06);
-                border-radius: var(--radius-pill);
-                overflow: hidden;
-            }
-
-            html:not(.js) .ops-meter {
-                display: none;
-            }
-
-            .ops-meter__fill {
-                display: block;
-                inline-size: 100%;
-                block-size: 100%;
-                background: linear-gradient(90deg,
-                        var(--color-primary),
-                        var(--color-accent),
-                        var(--color-green),
-                        var(--color-amber));
-                transform: scaleX(0);
-                transform-origin: left;
-                transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            }
-
-            .ops-panel__intro {
-                max-inline-size: 75ch;
-                font-size: var(--text-md);
-                line-height: 1.7;
-                color: var(--color-muted);
-                margin-block-end: var(--space-2);
-            }
-
-            /* ─── CONSIGNE (JS uniquement) ────────────────────────── */
-            .ops-brief {
-                padding: 0.6rem 1rem;
-                margin-block-end: var(--space-2);
-                font-size: var(--text-sm);
-                color: var(--color-accent);
-                background: var(--color-accent-06);
-                border: var(--border-accent-35);
-                border-radius: var(--radius-sm);
-                transition: opacity 0.4s ease;
-            }
-
-            html:not(.js) .ops-brief {
-                display: none;
-            }
-
-            .ops-brief.is-hidden {
-                opacity: 0;
-                pointer-events: none;
-                position: absolute;
-            }
-
-            /* ─── PASTILLES + CONNECTEURS (JS uniquement) ─────────── */
-            .ops-dots {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-block-end: var(--space-2);
-            }
-
-            html:not(.js) .ops-dots {
-                display: none;
-            }
-
-            .ops-dot {
-                inline-size: 14px;
-                block-size: 14px;
-                padding: 0;
-                flex-shrink: 0;
-                border-radius: 50%;
-                background: transparent;
-                border: 2px solid var(--color-muted);
-                cursor: pointer;
-                transition:
-                    background 0.3s ease,
-                    border-color 0.3s ease,
-                    box-shadow 0.3s ease,
-                    transform 0.3s ease,
-                    opacity 0.3s ease;
-            }
-
-            .ops-dot:disabled {
-                cursor: not-allowed;
-                opacity: 0.5;
-            }
-
-            .ops-dot.is-current {
-                border-color: var(--ch);
-                box-shadow: 0 0 8px color-mix(in srgb, var(--ch) 55%, transparent);
-                animation: hudPulse 1.8s infinite;
-            }
-
-            .ops-dot.is-done {
-                background: var(--ch);
-                border-color: var(--ch);
-                box-shadow: 0 0 10px color-mix(in srgb, var(--ch) 60%, transparent);
-                opacity: 1;
-            }
-
-            .ops-dot.is-done:hover {
-                transform: scale(1.3);
-            }
-
-            .ops-dot.is-celebrating {
-                animation: opsDotCelebrate 0.6s ease;
-            }
-
-            .ops-link {
-                inline-size: 2rem;
-                block-size: 2px;
-                margin-inline: 0.35rem;
-                background: var(--color-white-08);
-                position: relative;
-                overflow: hidden;
-                border-radius: var(--radius-pill);
-            }
-
-            .ops-link::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(90deg, var(--hud-green), var(--color-accent));
-                transform: scaleX(0);
-                transform-origin: left;
-                transition: transform 0.6s ease;
-            }
-
-            .ops-link.is-filled::after {
-                transform: scaleX(1);
-            }
-
-            /* ─── LÉGENDE DES NIVEAUX ─────────────────────────────── */
-            .ops-legend {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 0.4rem 0.6rem;
-                width: fit-content;
-                margin-inline: auto;
-                margin-block-end: var(--space-3);
-                padding: 0.5rem 1rem;
-                background: var(--color-black-35);
-                border: var(--border-white-06);
-                border-radius: var(--radius-pill);
-            }
-
-            .ops-legend__title {
-                font-size: var(--text-xs);
-                letter-spacing: 0.25em;
-                color: var(--color-muted);
-                margin: 0 0.4rem 0 0;
-            }
-
-            .ops-legend__item {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.45rem;
-                padding: 0.3rem 0.7rem;
-                font-family: var(--font-mono);
-                font-size: var(--text-xs);
-                letter-spacing: 0.08em;
-                font-weight: 700;
-                color: var(--color-text);
-                background: transparent;
-                border: 1px solid transparent;
-                border-radius: var(--radius-pill);
-                cursor: pointer;
-                transition:
-                    color var(--transition-fast),
-                    border-color var(--transition-fast),
-                    background var(--transition-fast),
-                    box-shadow var(--transition-fast);
-            }
-
-            html:not(.js) .ops-legend__item {
-                cursor: default;
-            }
-
-            .ops-legend__item small {
-                font-weight: 400;
-                color: var(--color-muted);
-            }
-
-            .ops-legend__led {
-                inline-size: 8px;
-                block-size: 8px;
-                border-radius: 50%;
-                background: var(--lv);
-                box-shadow: 0 0 6px color-mix(in srgb, var(--lv) 70%, transparent);
-                flex-shrink: 0;
-            }
-
-            .ops-legend__item:hover {
-                border-color: color-mix(in srgb, var(--lv) 40%, transparent);
-            }
-
-            .ops-legend__item.is-active {
-                color: var(--lv);
-                background: color-mix(in srgb, var(--lv) 10%, transparent);
-                border-color: color-mix(in srgb, var(--lv) 55%, transparent);
-                box-shadow: 0 0 12px color-mix(in srgb, var(--lv) 25%, transparent);
-            }
-
-            /* ─── GRILLE — chaque card garde SA hauteur ───────────── */
-            .ops-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                align-items: start;
-                gap: 1.25rem;
-            }
-
-            .channel {
-                scroll-margin-top: 1.5rem;
-            }
-
-            /* Boot : masquage ajouté PAR LE JS uniquement */
-            .channel.is-preboot {
-                opacity: 0;
-                transform: translateY(14px);
-            }
-
-            .channel.is-booted {
-                opacity: 1;
-                transform: none;
-                transition: opacity 0.5s ease, transform 0.5s ease;
-            }
-
-            /* CARD — box-shadow 4 couches */
-            .channel__card {
-                position: relative;
-                display: flex;
+        @media (max-width: 768px) {
+            .header__inner {
                 flex-direction: column;
-                gap: 0.75rem;
-                padding: 1.25rem;
-                background: linear-gradient(180deg,
-                        rgba(12, 24, 40, 0.92),
-                        rgba(4, 10, 18, 0.98));
-                border: 1px solid color-mix(in srgb, var(--ch) 35%, transparent);
-                border-radius: var(--radius-md);
-                overflow: hidden;
-                box-shadow:
-                    0 18px 40px rgba(0, 0, 0, 0.6),
-                    0 6px 16px color-mix(in srgb, var(--ch) 12%, transparent),
-                    inset 0 1px 0 var(--color-white-06),
-                    inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-                transition:
-                    opacity 0.4s ease,
-                    filter 0.4s ease,
-                    box-shadow 0.4s ease,
-                    border-color 0.4s ease;
-            }
-
-            .channel__card::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                inset-inline: 20px;
-                height: 3px;
-                background: linear-gradient(90deg,
-                        transparent,
-                        color-mix(in srgb, var(--ch) 75%, transparent),
-                        transparent);
-                border-radius: var(--radius-md);
-                pointer-events: none;
-            }
-
-            /* États */
-            .channel[data-state="locked"] .channel__card {
-                opacity: 0.35;
-                filter: grayscale(0.85);
-                box-shadow:
-                    0 8px 18px rgba(0, 0, 0, 0.4),
-                    inset 0 1px 0 var(--color-white-04);
-            }
-
-            .channel[data-state="active"] .channel__card {
-                border-color: color-mix(in srgb, var(--ch) 60%, transparent);
-                animation: opsChannelGlow 2.4s ease-in-out infinite;
-            }
-
-            .channel[data-state="validated"] .channel__card {
-                border-color: color-mix(in srgb, var(--ch) 55%, transparent);
-                box-shadow:
-                    0 18px 40px rgba(0, 0, 0, 0.6),
-                    0 0 22px color-mix(in srgb, var(--ch) 18%, transparent),
-                    inset 0 1px 0 var(--color-white-06),
-                    inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-            }
-
-            .channel.is-flashing .channel__card {
-                animation: opsValidatedFlash 0.95s ease;
-            }
-
-            /* En-tête de card */
-            .channel__head {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 0.5rem;
-                font-size: var(--text-xs);
-                letter-spacing: 0.18em;
-            }
-
-            .channel__code {
-                color: var(--ch);
-            }
-
-            .channel__status {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.4rem;
-                font-family: var(--font-mono);
-                color: var(--color-muted);
-                white-space: nowrap;
-            }
-
-            .channel__led {
-                inline-size: 8px;
-                block-size: 8px;
-                border-radius: 50%;
-                background: var(--color-muted);
-                transition: background 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            .channel[data-state="active"] .channel__status,
-            .channel[data-state="open"] .channel__status,
-            .channel[data-state="validated"] .channel__status {
-                color: var(--ch);
-            }
-
-            .channel[data-state="active"] .channel__led,
-            .channel[data-state="open"] .channel__led {
-                background: var(--ch);
-                box-shadow: 0 0 8px var(--ch);
-            }
-
-            .channel[data-state="validated"] .channel__led {
-                background: var(--hud-green);
-                box-shadow: 0 0 8px var(--hud-green);
-            }
-
-            .channel__lock {
-                inline-size: 0.9rem;
-                block-size: 0.9rem;
-                fill: currentColor;
-                transition: color 0.3s ease, filter 0.3s ease;
-            }
-
-            .channel[data-state="validated"] .channel__lock {
-                color: var(--ch);
-                filter: drop-shadow(0 0 6px color-mix(in srgb, var(--ch) 70%, transparent));
-            }
-
-            /* Corps de card */
-            .channel__title {
-                font-family: var(--font-mono);
-                font-size: var(--text-lg);
-                letter-spacing: 0.1em;
-            }
-
-            .channel__desc {
-                font-size: var(--text-md);
-                line-height: 1.6;
-                color: var(--color-muted);
-            }
-
-            .channel__tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.4rem;
-            }
-
-            .channel__tag {
-                padding: 0.2rem 0.55rem;
-                font-size: var(--text-xs);
-                letter-spacing: 0.12em;
-                color: var(--ch);
-                background: color-mix(in srgb, var(--ch) 8%, transparent);
-                border: 1px solid color-mix(in srgb, var(--ch) 40%, transparent);
-                border-radius: var(--radius-xs);
-            }
-
-            /* Panneau dépliable */
-            .channel__panel {
-                display: grid;
-                gap: 0.8rem;
-                padding: 0.9rem;
-                background: rgba(0, 6, 14, 0.65);
-                border: 1px solid color-mix(in srgb, var(--ch) 25%, transparent);
-                border-radius: var(--radius-sm);
-                box-shadow:
-                    inset 0 3px 10px rgba(0, 0, 0, 0.6),
-                    0 1px 0 var(--color-white-04);
-                animation: opsPanelIn 0.35s ease;
-            }
-
-            .channel__panel[hidden] {
-                display: none;
-            }
-
-            /* Systèmes : LED + nom + voyant — cascade en fondu doux */
-            .channel__systems {
-                display: grid;
-                gap: 0.45rem;
-            }
-
-            .mini {
-                display: grid;
-                grid-template-columns: 0.75rem 1fr auto;
-                align-items: center;
-                gap: 0.7rem;
-                padding: 0.5rem 0.7rem;
-                background: var(--bg-row);
-                border: var(--border-white-06);
-                border-radius: var(--radius-xs);
-                font-family: var(--font-mono);
-                font-size: var(--text-sm);
-                transition:
-                    opacity 0.45s ease,
-                    filter 0.45s ease,
-                    border-color 0.45s ease,
-                    box-shadow 0.45s ease;
-            }
-
-            .mini.is-pending {
-                opacity: 0.4;
-                filter: grayscale(0.9);
-            }
-
-            /* Filtre légende */
-            .mini.is-dimmed {
-                opacity: 0.25;
-                filter: grayscale(0.7);
-            }
-
-            .mini.is-highlighted[data-level="operational"] {
-                border-color: rgba(0, 255, 156, 0.45);
-                box-shadow: 0 0 10px rgba(0, 255, 156, 0.15);
-            }
-
-            .mini.is-highlighted[data-level="service"] {
-                border-color: rgba(0, 210, 255, 0.45);
-                box-shadow: 0 0 10px rgba(0, 210, 255, 0.15);
-            }
-
-            .mini.is-highlighted[data-level="calibration"] {
-                border-color: rgba(255, 149, 0, 0.45);
-                box-shadow: 0 0 10px rgba(255, 149, 0, 0.15);
-            }
-
-            .mini__led {
-                inline-size: 8px;
-                block-size: 8px;
-                border-radius: 50%;
-                background: var(--color-muted);
-                transition: background 0.4s ease, box-shadow 0.4s ease;
-            }
-
-            .mini__name {
-                letter-spacing: 0.08em;
-            }
-
-            .mini__state {
-                font-size: var(--text-xs);
-                letter-spacing: 0.12em;
-            }
-
-            .mini.is-pending .mini__state {
-                color: var(--color-muted);
-            }
-
-            .mini[data-level="operational"]:not(.is-pending) .mini__led {
-                background: var(--hud-green);
-                box-shadow: 0 0 8px var(--hud-green);
-            }
-
-            .mini[data-level="operational"]:not(.is-pending) .mini__state {
-                color: var(--hud-green);
-            }
-
-            .mini[data-level="service"]:not(.is-pending) .mini__led {
-                background: var(--color-accent);
-                box-shadow: 0 0 8px var(--color-accent);
-            }
-
-            .mini[data-level="service"]:not(.is-pending) .mini__state {
-                color: var(--color-accent);
-            }
-
-            .mini[data-level="calibration"]:not(.is-pending) .mini__led {
-                background: var(--color-amber);
-                box-shadow: 0 0 8px var(--color-amber);
-            }
-
-            .mini[data-level="calibration"]:not(.is-pending) .mini__state {
-                color: var(--color-amber);
-            }
-
-            .channel__note {
-                font-size: var(--text-sm);
-                line-height: 1.65;
-                color: var(--crew-readable);
-                border-inline-start: 2px solid var(--ch);
-                padding-inline-start: 0.8rem;
-            }
-
-            /* Minuterie de lecture (générée par JS) */
-            .channel__reading {
-                margin: 0;
-                font-family: var(--font-mono);
-                font-size: var(--text-xs);
-                letter-spacing: 0.15em;
-                text-align: end;
-                color: var(--color-muted);
-            }
-
-            /* Bouton d'action (masqué sans JS) */
-            .channel__action {
-                margin-block-start: auto;
-                inline-size: 100%;
-                padding: 0.7rem;
-                font-family: var(--font-mono);
-                font-size: var(--text-sm);
-                letter-spacing: 0.2em;
-                color: var(--ch);
-                background: color-mix(in srgb, var(--ch) 10%, transparent);
-                border: 1px solid color-mix(in srgb, var(--ch) 45%, transparent);
-                border-radius: var(--radius-sm);
-                cursor: pointer;
-                transition:
-                    background var(--transition-fast),
-                    box-shadow var(--transition-fast),
-                    color var(--transition-fast);
-            }
-
-            html:not(.js) .channel__action {
-                display: none;
-            }
-
-            .channel__action:hover:not(:disabled) {
-                background: color-mix(in srgb, var(--ch) 20%, transparent);
-                box-shadow: 0 0 16px color-mix(in srgb, var(--ch) 30%, transparent);
-            }
-
-            .channel__action:disabled {
-                color: var(--color-muted);
-                background: var(--color-white-04);
-                border-color: var(--color-white-08);
-                cursor: not-allowed;
-            }
-
-            /* ─── JOURNAL DES OPÉRATIONS ──────────────────────────── */
-            .ops-log {
-                margin-block-start: var(--space-3);
-                background: var(--color-black-72);
-                border: var(--border-glass);
-                border-radius: var(--radius-sm);
-                box-shadow:
-                    inset 0 3px 10px rgba(0, 0, 0, 0.6),
-                    0 1px 0 var(--color-white-04);
-                overflow: hidden;
-            }
-
-            html:not(.js) .ops-log {
-                display: none;
-            }
-
-            .ops-log__head {
-                padding: 0.55rem 1rem;
-                font-size: var(--text-xs);
-                letter-spacing: 0.25em;
-                color: var(--color-muted);
-                border-block-end: 1px solid var(--color-white-06);
-            }
-
-            .ops-log__list {
-                max-block-size: 9.5rem;
-                overflow-y: auto;
-                padding: 0.6rem 1rem;
-                font-family: var(--font-mono);
-                font-size: var(--text-xs);
-                line-height: 1.9;
-                color: var(--color-muted);
-            }
-
-            .ops-log__entry {
-                display: flex;
-                gap: 0.75rem;
-                animation: opsLogIn 0.3s ease;
-            }
-
-            .ops-log__time {
-                color: var(--color-accent);
-                flex-shrink: 0;
-            }
-
-            .ops-log__entry--ok,
-            .ops-log__entry--ok .ops-log__time {
-                color: var(--hud-green);
-            }
-
-            .ops-log__entry--final,
-            .ops-log__entry--final .ops-log__time {
-                color: var(--color-amber);
-            }
-
-            /* ─── AUTORISATION FINALE (sans fond rayé) ────────────── */
-            .ops-final {
-                position: relative;
-                padding: var(--space-3);
-                background: var(--bg-glass);
-                border: 1px solid rgba(255, 149, 0, 0.35);
-                border-radius: var(--radius-md);
-                overflow: hidden;
-                animation: opsPanelIn 0.5s ease;
-            }
-
-            /* Simple liseré néon ambre — cohérent, pas de fatigue visuelle */
-            .ops-final::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                inset-inline: 20px;
-                height: 3px;
-                background: linear-gradient(90deg,
-                        transparent,
-                        rgba(255, 149, 0, 0.7),
-                        transparent);
-                pointer-events: none;
-            }
-
-            .ops-final[hidden] {
-                display: none;
-            }
-
-            .ops-final__label {
-                font-size: var(--text-xs);
-                letter-spacing: 0.3em;
-                color: var(--color-amber);
-            }
-
-            .ops-final__title {
-                position: relative;
-                margin-block: 0.6rem 1rem;
-                font-family: var(--font-mono);
-                font-size: var(--text-2xl);
-                letter-spacing: 0.1em;
-                color: var(--color-amber);
-                text-shadow: 0 0 20px rgba(255, 149, 0, 0.4);
-            }
-
-            .ops-final__list {
-                position: relative;
-                display: grid;
-                gap: 0.3rem;
-                margin-block-end: 1rem;
-                color: var(--color-green);
-                font-size: var(--text-md);
-            }
-
-            .ops-final__text {
-                position: relative;
-                max-inline-size: 72ch;
-                line-height: 1.7;
-                color: var(--crew-readable);
-                margin-block-end: 1rem;
-            }
-
-            .ops-final__status {
-                position: relative;
-                display: inline-block;
-                padding: 0.5rem 1rem;
-                margin-block-end: 1.25rem;
-                letter-spacing: 0.15em;
-                color: var(--color-amber);
-                border: 1px dashed rgba(255, 149, 0, 0.4);
-                border-radius: var(--radius-xs);
-            }
-
-            .ops-final__actions {
-                position: relative;
-                display: flex;
                 gap: 1rem;
-                flex-wrap: wrap;
             }
 
-            .ops-final__cta {
-                padding: 0.75rem 1.5rem;
-                font-family: var(--font-mono);
-                letter-spacing: 0.15em;
-                border-radius: var(--radius-pill);
-                transition: box-shadow var(--transition-fast),
-                    background var(--transition-fast);
+            .terminal-title h1 {
+                font-size: 2rem;
             }
 
-            .ops-final__cta--primary {
-                color: #fff;
-                background: var(--color-primary);
-                box-shadow: 0 0 16px rgba(31, 111, 234, 0.5);
+            .doors-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
             }
 
-            .ops-final__cta--primary:hover {
-                box-shadow: 0 0 24px rgba(31, 111, 234, 0.8);
+            .door-content {
+                padding: 1.5rem 1rem;
+                gap: 0.8rem;
             }
 
-            .ops-final__cta--ghost {
-                color: var(--color-accent);
-                border: var(--border-accent-35);
+            .door-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
 
-            .ops-final__cta--ghost:hover {
-                background: var(--color-accent-08);
+            .door-label {
+                font-size: 0.9rem;
             }
         }
 
-        @layer components {
-
-            /* ─── MESSAGE NOSCRIPT ────────────────────────────────── */
-            .ops-noscript {
-                padding: 0.6rem 1rem;
-                margin-block-end: var(--space-2);
-                font-size: var(--text-sm);
-                color: var(--color-amber);
-                background: rgba(255, 149, 0, 0.06);
-                border: 1px solid rgba(255, 149, 0, 0.3);
-                border-radius: var(--radius-sm);
+        @media (max-width: 480px) {
+            .doors-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
             }
 
-            /* ─── STATS DE RÉPARTITION (panel final, généré par JS) ── */
-            .ops-final__stats {
-                position: relative;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.4rem 1.25rem;
-                margin-block-end: 1rem;
-                font-family: var(--font-mono);
-                font-size: var(--text-sm);
-                letter-spacing: 0.1em;
-                color: var(--color-muted);
+            .door-frame {
+                border-width: 2px;
             }
 
-            .ops-final__stat {
-                color: var(--color-text);
+            .door-label {
+                font-size: 0.8rem;
+                letter-spacing: 0.05em;
             }
 
-            .ops-final__stat--operational {
-                color: var(--hud-green);
-            }
-
-            .ops-final__stat--service {
-                color: var(--color-accent);
-            }
-
-            .ops-final__stat--calibration {
-                color: var(--color-amber);
+            .door-description {
+                font-size: 0.65rem;
             }
         }
 
-        /* ═══ PRINT : tout visible, fond clair, interactif masqué ═══ */
-        @layer a11y {
-            @media print {
-
-                .skip-link,
-                .ops-dots,
-                .ops-log,
-                .ops-brief,
-                .ops-meter,
-                .ops-legend,
-                .ops-noscript,
-                .channel__action,
-                .ops-final__actions {
-                    display: none !important;
-                }
-
-                body {
-                    background: #fff;
-                    color: #000;
-                }
-
-                .ops-head__label,
-                .ops-head__sub,
-                .ops-panel__label,
-                .ops-panel__status,
-                .ops-panel__intro,
-                .ops-final__label,
-                .ops-final__text,
-                .channel__desc,
-                .channel__note,
-                .ops-status__item dt {
-                    color: #333;
-                }
-
-                .ops-head__title,
-                .ops-panel__title,
-                .ops-final__title,
-                .channel__title {
-                    color: #000;
-                    -webkit-text-fill-color: #000;
-                    text-shadow: none;
-                }
-
-                .ops-status,
-                .ops-panel,
-                .ops-final,
-                .channel__card,
-                .mini {
-                    background: #fff;
-                    border-color: #bbb;
-                    box-shadow: none;
-                    clip-path: none;
-                    animation: none;
-                    filter: none;
-                    opacity: 1;
-                }
-
-                .channel,
-                .channel.is-preboot {
-                    opacity: 1;
-                    transform: none;
-                }
-
-                .channel__panel[hidden] {
-                    display: grid !important;
-                }
-
-                .ops-final[hidden] {
-                    display: block !important;
-                }
-
-                .mini__name {
-                    color: #000;
-                }
-
-                .mini__state,
-                .ops-status__item dd {
-                    color: #222;
-                }
-
-                .ops-grid {
-                    grid-template-columns: 1fr;
-                }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
             }
         }
 
-        /* ═══ ANIMATIONS ═══ */
-        @layer animations {
-
-            @keyframes opsChannelGlow {
-
-                0%,
-                100% {
-                    box-shadow:
-                        0 18px 40px rgba(0, 0, 0, 0.6),
-                        0 0 0 color-mix(in srgb, var(--ch) 0%, transparent),
-                        inset 0 1px 0 var(--color-white-06),
-                        inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-                }
-
-                50% {
-                    box-shadow:
-                        0 18px 40px rgba(0, 0, 0, 0.6),
-                        0 0 20px color-mix(in srgb, var(--ch) 28%, transparent),
-                        inset 0 1px 0 var(--color-white-06),
-                        inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-                }
-            }
-
-            @keyframes opsValidatedFlash {
-                0% {
-                    box-shadow:
-                        0 18px 40px rgba(0, 0, 0, 0.6),
-                        0 0 0 rgba(63, 185, 80, 0),
-                        inset 0 1px 0 var(--color-white-06),
-                        inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-                }
-
-                35% {
-                    box-shadow:
-                        0 18px 40px rgba(0, 0, 0, 0.6),
-                        0 0 40px rgba(63, 185, 80, 0.5),
-                        inset 0 1px 0 var(--color-white-06),
-                        inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-                }
-
-                100% {
-                    box-shadow:
-                        0 18px 40px rgba(0, 0, 0, 0.6),
-                        0 0 22px color-mix(in srgb, var(--ch) 18%, transparent),
-                        inset 0 1px 0 var(--color-white-06),
-                        inset 0 -3px 10px rgba(0, 0, 0, 0.55);
-                }
-            }
-
-            @keyframes opsDotCelebrate {
-                50% {
-                    transform: scale(1.6);
-                    box-shadow: 0 0 16px color-mix(in srgb, var(--ch) 80%, transparent);
-                }
-            }
-
-            @keyframes opsLogIn {
-                from {
-                    opacity: 0;
-                    transform: translateX(-8px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: none;
-                }
-            }
-
-            @keyframes opsPanelIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-8px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: none;
-                }
-            }
-        }
-
-        /* ═══ RESPONSIVE ═══ */
-        @layer responsive {
-            @media (max-width: 56rem) {
-                .ops-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .ops-status {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-
-                .ops-status__item:nth-child(2) {
-                    border-inline-end: none;
-                }
-
-                .ops-status__item:nth-child(-n+2) {
-                    border-block-end: 1px solid var(--color-white-06);
-                }
-
-                .ops-legend {
-                    border-radius: var(--radius-sm);
-                }
-            }
-        }
-
-        /* ═══ A11Y — mouvement réduit ═══ */
-        @layer a11y {
-            @media (prefers-reduced-motion: reduce) {
-
-                .channel[data-state="active"] .channel__card,
-                .channel.is-flashing .channel__card,
-                .channel__panel,
-                .ops-final,
-                .ops-dot.is-current,
-                .ops-dot.is-celebrating,
-                .ops-log__entry {
-                    animation: none;
-                }
-
-                .channel.is-preboot,
-                .channel.is-booted {
-                    opacity: 1;
-                    transform: none;
-                    transition: none;
-                }
-
-                .mini,
-                .mini__led,
-                .channel__card,
-                .ops-dot,
-                .ops-link::after,
-                .ops-meter__fill {
-                    transition: none;
-                }
-            }
-        }
     </style>
-
 </head>
 
 <body>
 
-    <!-- ═══ SPRITE SVG — icônes réutilisables sur tout le site ═══ -->
-    <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <symbol id="icon-lock" viewBox="0 0 16 16">
-            <path
-                d="M8 1a3 3 0 0 0-3 3v2H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1V4a3 3 0 0 0-3-3zm0 2a1 1 0 0 1 1 1v2H7V4a1 1 0 0 1 1-1z" />
-        </symbol>
-    </svg>
+    <!-- ═══════════════════════════════════════════════════════════
+         HEADER
+    ═══════════════════════════════════════════════════════════ -->
 
-
-
-    <!-- ════ HEADER GLOBAL — colle ici ton header existant ════ -->
-
-    <main class="ops container" id="main-content">
-
-        <!-- ═══ EN-TÊTE DE PAGE ═══ -->
-        <header class="ops-head">
-            <p class="ops-head__label">● OPS / SKILL TRAFFIC CONTROL</p>
-            <h1 class="ops-head__title">OPERATION CENTER</h1>
-            <p class="ops-head__sub">INSPECTION DES SYSTÈMES AVANT DÉPART</p>
-        </header>
-
-        <!-- ═══ STATUS BAR — liste de définitions (terme / valeur) ═══ -->
-        <dl class="ops-status" aria-label="État de la station">
-            <div class="ops-status__item">
-                <dt>STATION</dt>
-                <dd>OPS-251</dd>
-            </div>
-            <div class="ops-status__item">
-                <dt>SYSTÈME</dt>
-                <dd class="ops-status__value--green">ONLINE</dd>
-            </div>
-            <div class="ops-status__item">
-                <dt>SYSTÈMES</dt>
-                <dd>06 DÉTECTÉS</dd>
-            </div>
-            <div class="ops-status__item">
-                <dt>INTÉGRITÉ</dt>
-                <dd class="ops-status__value--green">NOMINALE</dd>
-            </div>
-        </dl>
-
-        <!-- ═══ GRAND PANEL HUD ═══ -->
-        <section class="ops-panel" aria-labelledby="ops-panel-title">
-
-            <header class="ops-panel__head">
-                <div>
-                    <p class="ops-panel__label">SYSTEMS INSPECTION / SECTOR 01</p>
-                    <h2 class="ops-panel__title" id="ops-panel-title">SYSTÈMES À INSPECTER</h2>
+    <header class="header">
+        <div class="header__inner">
+            <article class="pilot-card">
+                <img src="./asset/images/pilote christophehascoet3.png" alt="Christophe Hascoet"
+                    class="pilot-card__avatar">
+                <div class="pilot-info">
+                    <h2 class="pilot-name">Christophe Hascoet</h2>
+                    <span class="pilot-status">CPT-001 · ACTIF</span>
                 </div>
-                <p class="ops-panel__status" id="ops-panel-status">● 0 / 6 CONTRÔLÉS</p>
-            </header>
+            </article>
 
-            <!-- ═══ PROGRESSION GLOBALE (barre fine, style crew-profile) ═══ -->
-            <div class="ops-meter" aria-hidden="true">
-                <span class="ops-meter__fill" id="ops-meter-fill"></span>
+            <div class="casio" id="casio-clock">
+                <div id="casio-time">11:04</div>
             </div>
+        </div>
+    </header>
 
-            <p class="ops-panel__intro">
-                Sélectionnez un système afin d'initialiser son inspection. Chaque
-                canal correspond à un domaine de compétences documenté — chaque
-                système contrôlé déverrouille le suivant.
-            </p>
+    <!-- ═══════════════════════════════════════════════════════════
+         MAIN - TERMINAL PORTES
+    ═══════════════════════════════════════════════════════════ -->
 
-            <p class="ops-brief" id="ops-brief">
-                ► Commencez l'inspection en sélectionnant le premier système signalé.
-            </p>
+    <main>
+        <div class="terminal-container">
 
-            <noscript>
-                <p class="ops-noscript">ℹ JavaScript est désactivé : l'inspection interactive est inactive, mais
-                    l'intégralité des rapports est visible ci-dessous.</p>
-            </noscript>
+            <!-- TITLE -->
+            <section class="terminal-title">
+                <h1>Bienvenue au Terminal</h1>
+                <p class="terminal-subtitle">Sélectionnez une porte pour embarquer</p>
+            </section>
 
-            <!-- ═══ PASTILLES DE PROGRESSION + CONNECTEURS ═══ -->
-            <nav class="ops-dots" aria-label="Progression de l'inspection">
-                <button class="ops-dot ops-dot--01" type="button" disabled
-                    aria-label="Canal 01 — Coordination et fonctionnel : verrouillé"></button>
-                <span class="ops-link" aria-hidden="true"></span>
-                <button class="ops-dot ops-dot--02" type="button" disabled
-                    aria-label="Canal 02 — Intégration front-end : verrouillé"></button>
-                <span class="ops-link" aria-hidden="true"></span>
-                <button class="ops-dot ops-dot--03" type="button" disabled
-                    aria-label="Canal 03 — Interactions et frameworks : verrouillé"></button>
-                <span class="ops-link" aria-hidden="true"></span>
-                <button class="ops-dot ops-dot--04" type="button" disabled
-                    aria-label="Canal 04 — Back-end et outils : verrouillé"></button>
-                <span class="ops-link" aria-hidden="true"></span>
-                <button class="ops-dot ops-dot--05" type="button" disabled
-                    aria-label="Canal 05 — Expérience terrain : verrouillé"></button>
-                <span class="ops-link" aria-hidden="true"></span>
-                <button class="ops-dot ops-dot--06" type="button" disabled
-                    aria-label="Canal 06 — Savoir-être : verrouillé"></button>
-            </nav>
+            <!-- DOORS GRID -->
+            <div class="doors-grid" id="doors-grid"></div>
 
-            <!-- ═══ LÉGENDE DES NIVEAUX (couleurs pilotées par data-level) ═══ -->
-            <div class="ops-legend" role="group"
-                aria-label="Légende des niveaux — cliquez sur un niveau pour le surligner dans les rapports ouverts">
-                <p class="ops-legend__title">LÉGENDE</p>
-                <button class="ops-legend__item" type="button" data-level="operational" aria-pressed="false">
-                    <span class="ops-legend__led" aria-hidden="true"></span>
-                    OPÉRATIONNEL <small>maîtrisé</small>
-                </button>
-                <button class="ops-legend__item" type="button" data-level="service" aria-pressed="false">
-                    <span class="ops-legend__led" aria-hidden="true"></span>
-                    EN SERVICE <small>pratiqué</small>
-                </button>
-                <button class="ops-legend__item" type="button" data-level="calibration" aria-pressed="false">
-                    <span class="ops-legend__led" aria-hidden="true"></span>
-                    CALIBRATION <small>en apprentissage</small>
-                </button>
-            </div>
-
-            <!-- ═══ GRILLE DES SYSTÈMES ═══ -->
-            <ol class="ops-grid">
-
-                <!-- ─── CANAL 01 · COORDINATION & FONCTIONNEL ─── -->
-                <li class="channel channel--01">
-                    <article class="channel__card">
-                        <header class="channel__head">
-                            <span class="channel__code">CANAL 01 / PILOTAGE</span>
-                            <span class="channel__status">
-                                <span class="channel__led" aria-hidden="true"></span>
-                                <span class="channel__status-text">VERROUILLÉ</span>
-                                <svg class="channel__lock" aria-hidden="true">
-                                    <use href="#icon-lock" />
-                                </svg>
-                            </span>
-                        </header>
-
-                        <h3 class="channel__title">COORDINATION &amp; FONCTIONNEL</h3>
-                        <p class="channel__desc">Traduction des besoins métier en livrables actionnables — de l'écoute
-                            client au cahier des charges validé.</p>
-
-                        <ul class="channel__tags">
-                            <li class="channel__tag">BESOINS CLIENTS</li>
-                            <li class="channel__tag">CAHIERS DES CHARGES</li>
-                            <li class="channel__tag">RECETTE</li>
-                            <li class="channel__tag">TESTS</li>
-                        </ul>
-
-                        <div class="channel__panel" id="panel-01">
-                            <ul class="channel__systems">
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">RECUEIL DES BESOINS</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">CAHIERS DES CHARGES</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">RECETTE &amp; VALIDATION</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">TESTS &amp; ANOMALIES</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                            </ul>
-                            <p class="channel__note">
-                                3 cahiers des charges réalisés en conditions réelles :
-                                Cook'n'Way, FKM Mobilité, Cami Courses Express. Rendez-vous
-                                clients, phases de recette et remontée d'anomalies sur Trello.
-                            </p>
-                        </div>
-
-                        <button class="channel__action" type="button" aria-expanded="false"
-                            aria-controls="panel-01">LANCER L'INSPECTION</button>
-                    </article>
-                </li>
-
-                <!-- ─── CANAL 02 · INTÉGRATION FRONT-END ─── -->
-                <li class="channel channel--02">
-                    <article class="channel__card">
-                        <header class="channel__head">
-                            <span class="channel__code">CANAL 02 / FRONT</span>
-                            <span class="channel__status">
-                                <span class="channel__led" aria-hidden="true"></span>
-                                <span class="channel__status-text">VERROUILLÉ</span>
-                                <svg class="channel__lock" aria-hidden="true">
-                                    <use href="#icon-lock" />
-                                </svg>
-                            </span>
-                        </header>
-
-                        <h3 class="channel__title">INTÉGRATION FRONT-END</h3>
-                        <p class="channel__desc">Construction d'interfaces claires, sémantiques et responsives — la
-                            cellule de chaque projet.</p>
-
-                        <ul class="channel__tags">
-                            <li class="channel__tag">HTML5</li>
-                            <li class="channel__tag">CSS3</li>
-                            <li class="channel__tag">SASS</li>
-                            <li class="channel__tag">RESPONSIVE</li>
-                        </ul>
-
-                        <div class="channel__panel" id="panel-02">
-                            <ul class="channel__systems">
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">HTML5 / CSS3</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">SASS</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">RESPONSIVE / MOBILE-FIRST</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                            </ul>
-                            <p class="channel__note">
-                                Balises sémantiques, mobile-first, variables CSS et
-                                architecture modulaire. Ce portfolio en est la démonstration.
-                            </p>
-                        </div>
-
-                        <button class="channel__action" type="button" aria-expanded="false"
-                            aria-controls="panel-02">LANCER L'INSPECTION</button>
-                    </article>
-                </li>
-
-                <!-- ─── CANAL 03 · INTERACTIONS & FRAMEWORKS ─── -->
-                <li class="channel channel--03">
-                    <article class="channel__card">
-                        <header class="channel__head">
-                            <span class="channel__code">CANAL 03 / FRONT</span>
-                            <span class="channel__status">
-                                <span class="channel__led" aria-hidden="true"></span>
-                                <span class="channel__status-text">VERROUILLÉ</span>
-                                <svg class="channel__lock" aria-hidden="true">
-                                    <use href="#icon-lock" />
-                                </svg>
-                            </span>
-                        </header>
-
-                        <h3 class="channel__title">INTERACTIONS &amp; FRAMEWORKS</h3>
-                        <p class="channel__desc">Comportements interactifs : états d'interface, composants dynamiques et
-                            animations.</p>
-
-                        <ul class="channel__tags">
-                            <li class="channel__tag">JAVASCRIPT</li>
-                            <li class="channel__tag">REACT</li>
-                            <li class="channel__tag">TYPESCRIPT</li>
-                            <li class="channel__tag">GSAP</li>
-                        </ul>
-
-                        <div class="channel__panel" id="panel-03">
-                            <ul class="channel__systems">
-                                <li class="mini" data-level="calibration">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">JAVASCRIPT ES6+</span>
-                                    <span class="mini__state">CALIBRATION</span>
-                                </li>
-                                <li class="mini" data-level="calibration">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">REACT.JS</span>
-                                    <span class="mini__state">CALIBRATION</span>
-                                </li>
-                                <li class="mini" data-level="calibration">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">TYPESCRIPT</span>
-                                    <span class="mini__state">CALIBRATION</span>
-                                </li>
-                                <li class="mini" data-level="calibration">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">GSAP</span>
-                                    <span class="mini__state">CALIBRATION</span>
-                                </li>
-                            </ul>
-                            <p class="channel__note">
-                                Notions acquises en formation : DOM, événements, composants.
-                                Systèmes en calibration active — plan de montée en puissance
-                                documenté.
-                            </p>
-                        </div>
-
-                        <button class="channel__action" type="button" aria-expanded="false"
-                            aria-controls="panel-03">LANCER L'INSPECTION</button>
-                    </article>
-                </li>
-
-                <!-- ─── CANAL 04 · BACK-END & OUTILS ─── -->
-                <li class="channel channel--04">
-                    <article class="channel__card">
-                        <header class="channel__head">
-                            <span class="channel__code">CANAL 04 / BACK</span>
-                            <span class="channel__status">
-                                <span class="channel__led" aria-hidden="true"></span>
-                                <span class="channel__status-text">VERROUILLÉ</span>
-                                <svg class="channel__lock" aria-hidden="true">
-                                    <use href="#icon-lock" />
-                                </svg>
-                            </span>
-                        </header>
-
-                        <h3 class="channel__title">BACK-END &amp; OUTILS</h3>
-                        <p class="channel__desc">Logique applicative côté serveur, versioning du code et visibilité des
-                            projets.</p>
-
-                        <ul class="channel__tags">
-                            <li class="channel__tag">PHP</li>
-                            <li class="channel__tag">LARAVEL</li>
-                            <li class="channel__tag">SYMFONY</li>
-                            <li class="channel__tag">GIT</li>
-                            <li class="channel__tag">SEO</li>
-                        </ul>
-
-                        <div class="channel__panel" id="panel-04">
-                            <ul class="channel__systems">
-                                <li class="mini" data-level="calibration">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">LARAVEL</span>
-                                    <span class="mini__state">CALIBRATION</span>
-                                </li>
-                                <li class="mini" data-level="calibration">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">SYMFONY</span>
-                                    <span class="mini__state">CALIBRATION</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">GIT / GITLAB</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">SEO &amp; OUTILS GOOGLE</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                            </ul>
-                            <p class="channel__note">
-                                Première version d'un logiciel de caisse développée avec
-                                Laravel, suivi du code sous Git/GitLab, audits SEO et
-                                participation aux évolutions et corrections applicatives.
-                            </p>
-                        </div>
-
-                        <button class="channel__action" type="button" aria-expanded="false"
-                            aria-controls="panel-04">LANCER L'INSPECTION</button>
-                    </article>
-                </li>
-
-                <!-- ─── CANAL 05 · EXPÉRIENCE TERRAIN ─── -->
-                <li class="channel channel--05">
-                    <article class="channel__card">
-                        <header class="channel__head">
-                            <span class="channel__code">CANAL 05 / TERRAIN</span>
-                            <span class="channel__status">
-                                <span class="channel__led" aria-hidden="true"></span>
-                                <span class="channel__status-text">VERROUILLÉ</span>
-                                <svg class="channel__lock" aria-hidden="true">
-                                    <use href="#icon-lock" />
-                                </svg>
-                            </span>
-                        </header>
-
-                        <h3 class="channel__title">EXPÉRIENCE TERRAIN</h3>
-                        <p class="channel__desc">Des environnements exigeants qui forgent la rigueur — transférable à
-                            chaque mission projet.</p>
-
-                        <ul class="channel__tags">
-                            <li class="channel__tag">SERVICE PREMIUM</li>
-                            <li class="channel__tag">FLUX</li>
-                            <li class="channel__tag">COMMERCE</li>
-                            <li class="channel__tag">FORMATION</li>
-                        </ul>
-
-                        <div class="channel__panel" id="panel-05">
-                            <ul class="channel__systems">
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">SERVICE PREMIUM</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">RÉGULATION DE FLUX</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">STANDARDS COMMERCE</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="service">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">FORMATION D'ÉQUIPES</span>
-                                    <span class="mini__state">EN SERVICE</span>
-                                </li>
-                            </ul>
-                            <p class="channel__note">
-                                Service à −15 °C en Ice Bar, mixologie et rang jusqu'à
-                                75 couverts. Régulation des flux voyageurs RER A, standards
-                                Zara / H&amp;M jusqu'à la formation des nouveaux caissiers-vendeurs.
-                            </p>
-                        </div>
-
-                        <button class="channel__action" type="button" aria-expanded="false"
-                            aria-controls="panel-05">LANCER L'INSPECTION</button>
-                    </article>
-                </li>
-
-                <!-- ─── CANAL 06 · SAVOIR-ÊTRE ─── -->
-                <li class="channel channel--06">
-                    <article class="channel__card">
-                        <header class="channel__head">
-                            <span class="channel__code">CANAL 06 / ÉQUIPAGE</span>
-                            <span class="channel__status">
-                                <span class="channel__led" aria-hidden="true"></span>
-                                <span class="channel__status-text">VERROUILLÉ</span>
-                                <svg class="channel__lock" aria-hidden="true">
-                                    <use href="#icon-lock" />
-                                </svg>
-                            </span>
-                        </header>
-
-                        <h3 class="channel__title">SAVOIR-ÊTRE</h3>
-                        <p class="channel__desc">Les systèmes humains du pilote — ceux qui tiennent le cap quand les
-                            conditions se dégradent.</p>
-
-                        <ul class="channel__tags">
-                            <li class="channel__tag">SANG-FROID</li>
-                            <li class="channel__tag">ADAPTABILITÉ</li>
-                            <li class="channel__tag">COORDINATION</li>
-                            <li class="channel__tag">RÉSILIENCE</li>
-                        </ul>
-
-                        <div class="channel__panel" id="panel-06">
-                            <ul class="channel__systems">
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">SANG-FROID / STRESS</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">ADAPTABILITÉ MULTI-SECTEURS</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">COORDINATION / ÉQUIPE</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                                <li class="mini" data-level="operational">
-                                    <span class="mini__led" aria-hidden="true"></span>
-                                    <span class="mini__name">RÉSILIENCE</span>
-                                    <span class="mini__state">OPÉRATIONNEL</span>
-                                </li>
-                            </ul>
-                            <p class="channel__note">
-                                Forgés sur le terrain — hôtellerie premium, flux tendus,
-                                commerce — ces systèmes ne s'apprennent pas en formation :
-                                ils se prouvent en conditions réelles.
-                            </p>
-                        </div>
-
-                        <button class="channel__action" type="button" aria-expanded="false"
-                            aria-controls="panel-06">LANCER L'INSPECTION</button>
-                    </article>
-                </li>
-
-            </ol>
-
-            <!-- ═══ JOURNAL DES OPÉRATIONS ═══ -->
-            <div class="ops-log" aria-label="Journal des opérations">
-                <p class="ops-log__head">JOURNAL DES OPÉRATIONS</p>
-                <ol class="ops-log__list" id="ops-event-log"></ol>
-            </div>
-
-        </section>
-
-        <!-- ═══ AUTORISATION FINALE ═══ -->
-        <section class="ops-final" id="ops-final" aria-labelledby="ops-final-title">
-            <p class="ops-final__label">INSPECTION TERMINÉE / TOUS SYSTÈMES CONTRÔLÉS</p>
-            <h2 class="ops-final__title" id="ops-final-title">AUTORISATION DE DÉPART ACCORDÉE</h2>
-            <ul class="ops-final__list">
-                <li>✓ Canal 01 — Coordination &amp; fonctionnel validées</li>
-                <li>✓ Canal 02 — Intégration front-end contrôlée</li>
-                <li>✓ Canal 03 — Interactions &amp; frameworks en calibration</li>
-                <li>✓ Canal 04 — Back-end &amp; outils en progression</li>
-                <li>✓ Canal 05 — Expérience terrain confirmée</li>
-                <li>✓ Canal 06 — Savoir-être certifié</li>
-            </ul>
-            <p class="ops-final__text">
-                Un profil numérique adossé à des années de terrain : coordination de
-                projet, exigence de service et gestion de flux tendus. Les systèmes
-                en calibration suivent un plan de montée en puissance documenté —
-                la trajectoire est nominale.
-            </p>
-            <p class="ops-final__status">STATUT : <strong>CENTRE DES OPÉRATIONS CERTIFIÉ</strong></p>
-            <div class="ops-final__actions">
-                <a class="ops-final__cta ops-final__cta--primary" href="boarding-gate.html">CONSULTER BOARDING GATE</a>
-                <a class="ops-final__cta ops-final__cta--ghost" href="cockpit.html">CONSULTER COCKPIT</a>
-            </div>
-        </section>
-
-        <p class="sr-only" aria-live="polite" id="ops-live"></p>
-
+        </div>
     </main>
 
-    <!-- ════ FOOTER GLOBAL — colle ici ton footer existant ════ -->
+    <!-- ═══════════════════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════════════════ -->
+
+    <footer>
+        <p>Terminal CH-2025 · Système de navigation interactive · © 2026</p>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCRIPTS
+    ═══════════════════════════════════════════════════════════ -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <script>
-        /* ═══════════════════════════════════════════════════════════════
-        OPERATION CENTER — Version définitive
-        + Compteurs de légende calculés depuis les données
-        + Focus management (la séquence se suit au clavier)
-        + Récap final et stats générés depuis le DOM
-        + Navigation clavier (flèches) dans les pastilles
-        + Préparation impression (tout visible)
-        - IIFE stricte · textContent uniquement · 100 % data-driven
-     ═══════════════════════════════════════════════════════════════ */
-        (() => {
-            'use strict';
+        // ═══════════════════════════════════════════════════════════
+        // DONNÉES DES PORTES
+        // ═══════════════════════════════════════════════════════════
 
-            document.documentElement.classList.add('js');
+        const DOORS_DATA = [
+            {
+                id: 'terminal',
+                label: 'INFORMATION',
+                description: 'Accueil passager',
+                icon: '🚪',
+                href: 'index.html',
+                class: 'door-unit--terminal'
+            },
+            {
+                id: 'crew',
+                label: 'CREW PROFILE',
+                description: 'À propos',
+                icon: '👤',
+                href: 'crew-profil.html',
+                class: 'door-unit--crew'
+            },
+            {
+                id: 'operations',
+                label: 'OPERATION CENTER',
+                description: 'Compétences',
+                icon: '⚙️',
+                href: 'departures.html',
+                class: 'door-unit--operations'
+            },
+            {
+                id: 'boarding',
+                label: 'BOARDING GATE',
+                description: 'Projets',
+                icon: '📱',
+                href: 'bording-gate.html',
+                class: 'door-unit--boarding'
+            },
+            {
+                id: 'blackbox',
+                label: 'BLACK BOX',
+                description: 'Documentation',
+                icon: '📊',
+                href: 'black-box.html',
+                class: 'door-unit--blackbox'
+            },
+            {
+                id: 'cockpit',
+                label: 'COCKPIT',
+                description: 'CV',
+                icon: '✈️',
+                href: 'cockpit.html',
+                class: 'door-unit--cockpit'
+            },
+            {
+                id: 'control',
+                label: 'CONTROL TOWER',
+                description: 'Contact',
+                icon: '📞',
+                href: 'control-tower.html',
+                class: 'door-unit--control'
+            }
+        ];
 
-            /* ─── Configuration figée ─── */
-            const CONFIG = Object.freeze({
-                STEP_DELAY: 380,
-                WORDS_PER_MINUTE: 200,
-                MIN_READ_MS: 6000,
-                MAX_READ_MS: 14000,
-                SCRAMBLE_FRAMES: 8,
-                SCRAMBLE_CHARS: '█▓▒░<>/\\|01',
+        // ═══════════════════════════════════════════════════════════
+        // RENDER DOORS
+        // ═══════════════════════════════════════════════════════════
+
+        function renderDoors() {
+            const container = document.getElementById('doors-grid');
+
+            DOORS_DATA.forEach((door, index) => {
+                const doorUnit = document.createElement('div');
+                doorUnit.className = `door-unit ${door.class}`;
+                doorUnit.dataset.doorId = door.id;
+
+                doorUnit.innerHTML = `
+                    <button class="door-frame" data-door-id="${door.id}" aria-label="Aller à ${door.label}">
+                        <div class="door-content">
+                            <div class="door-icon">${door.icon}</div>
+                            <div class="door-label">${door.label}</div>
+                            <div class="door-description">${door.description}</div>
+                        </div>
+                    </button>
+                `;
+
+                const button = doorUnit.querySelector('.door-frame');
+                
+                button.addEventListener('mouseenter', () => highlightDoor(door.id));
+                button.addEventListener('mouseleave', () => clearHighlight());
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    selectDoor(door);
+                });
+
+                // Animation d'entrée
+                gsap.from(doorUnit, {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: 'power3.out'
+                });
+
+                container.appendChild(doorUnit);
             });
+        }
 
-            const STATUS_LABEL = Object.freeze({
-                locked: 'VERROUILLÉ',
-                active: 'PRÊT POUR INSPECTION',
-                open: 'INSPECTION EN COURS',
-                validated: 'CONTRÔLÉ ✓',
-            });
+        // ═══════════════════════════════════════════════════════════
+        // HIGHLIGHT DOOR
+        // ═══════════════════════════════════════════════════════════
 
-            const ACTION_LABEL = Object.freeze({
-                locked: 'SYSTÈME VERROUILLÉ',
-                active: "LANCER L'INSPECTION",
-                open: 'INSPECTION EN COURS…',
-                validated: 'RAPPORT — MASQUER',
-            });
-
-            const LEVEL_LABEL = Object.freeze({
-                operational: 'OPÉRATIONNEL',
-                service: 'EN SERVICE',
-                calibration: 'CALIBRATION',
-            });
-
-            /* ─── Sélecteurs ─── */
-            const channels = [...document.querySelectorAll('.channel')];
-            const dotsNav = document.querySelector('.ops-dots');
-            const dots = [...document.querySelectorAll('.ops-dot')];
-            const links = [...document.querySelectorAll('.ops-link')];
-            const legendItems = [...document.querySelectorAll('.ops-legend__item')];
-            const panelStatus = document.getElementById('ops-panel-status');
-            const meterFill = document.getElementById('ops-meter-fill');
-            const brief = document.getElementById('ops-brief');
-            const finalPanel = document.getElementById('ops-final');
-            const live = document.getElementById('ops-live');
-            const eventLog = document.getElementById('ops-event-log');
-
-            const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-            const dotTitles = channels.map((channel) =>
-                channel.querySelector('.channel__title')?.textContent.trim() ?? ''
-            );
-
-            /* ─── État du module (privé) ─── */
-            let validated = 0;
-            let inspection = null;
-            let activeFilter = null;
-
-            /* ═══ Journal des opérations ═══ */
-
-            const missionStart = performance.now();
-
-            function missionTime() {
-                const elapsed = Math.floor((performance.now() - missionStart) / 1000);
-                const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
-                const s = String(elapsed % 60).padStart(2, '0');
-                return `T+${m}:${s}`;
-            }
-
-            function logEvent(text, type = '') {
-                if (!eventLog) return;
-                const li = document.createElement('li');
-                li.className = type ? `ops-log__entry ops-log__entry--${type}` : 'ops-log__entry';
-                const time = document.createElement('span');
-                time.className = 'ops-log__time';
-                time.textContent = missionTime();
-                li.append(time, document.createTextNode(text));
-                eventLog.appendChild(li);
-                eventLog.scrollTop = eventLog.scrollHeight;
-            }
-
-            /* ═══ Compteurs par niveau (source unique : data-level du DOM) ═══ */
-
-            function countByLevel() {
-                const counts = { operational: 0, service: 0, calibration: 0 };
-                document.querySelectorAll('.mini').forEach((mini) => {
-                    if (mini.dataset.level in counts) counts[mini.dataset.level] += 1;
-                });
-                return counts;
-            }
-
-            function initLegendCounts() {
-                const counts = countByLevel();
-                legendItems.forEach((item) => {
-                    const small = item.querySelector('small');
-                    if (!small) return;
-                    if (!small.dataset.hint) small.dataset.hint = small.textContent.trim();
-                    small.textContent = `${small.dataset.hint} · ${counts[item.dataset.level]}`;
+        function highlightDoor(doorId) {
+            const door = document.querySelector(`.door-unit[data-door-id="${doorId}"]`);
+            if (door) {
+                door.classList.add('active');
+                gsap.to(door, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: 'back.out(1.7)'
                 });
             }
+        }
 
-            /* ═══ Récap final généré depuis le DOM ═══ */
-
-            function buildFinalRecap() {
-                if (!finalPanel) return;
-
-                const list = finalPanel.querySelector('.ops-final__list');
-                if (list) {
-                    list.replaceChildren(...channels.map((channel, i) => {
-                        const li = document.createElement('li');
-                        li.textContent = `✓ Canal ${String(i + 1).padStart(2, '0')} — ${dotTitles[i]}`;
-                        return li;
-                    }));
-                }
-
-                const counts = countByLevel();
-                const stats = document.createElement('p');
-                stats.className = 'ops-final__stats';
-                stats.textContent = 'RÉPARTITION : ';
-
-                Object.keys(counts).forEach((level, i) => {
-                    const strong = document.createElement('strong');
-                    strong.className = `ops-final__stat ops-final__stat--${level}`;
-                    strong.textContent = String(counts[level]).padStart(2, '0');
-                    stats.append(strong, document.createTextNode(` ${LEVEL_LABEL[level]}S`));
-                    if (i < 2) stats.append(document.createTextNode(' · '));
-                });
-
-                const anchor = finalPanel.querySelector('.ops-final__text');
-                anchor?.before(stats);
-            }
-
-            /* ═══ Split-flap sur le titre à l'activation ═══ */
-
-            function scrambleTitle(channel) {
-                const title = channel.querySelector('.channel__title');
-                if (!title) return;
-                if (!title.dataset.original) title.dataset.original = title.textContent;
-                const target = title.dataset.original;
-
-                if (REDUCED) {
-                    title.textContent = target;
-                    return;
-                }
-
-                let frame = 0;
-                const interval = setInterval(() => {
-                    title.textContent = target
-                        .split('')
-                        .map((char, i) => {
-                            if (char === ' ') return ' ';
-                            return i < (frame / CONFIG.SCRAMBLE_FRAMES) * target.length
-                                ? char
-                                : CONFIG.SCRAMBLE_CHARS[Math.floor(Math.random() * CONFIG.SCRAMBLE_CHARS.length)];
-                        })
-                        .join('');
-                    frame += 1;
-                    if (frame > CONFIG.SCRAMBLE_FRAMES) {
-                        clearInterval(interval);
-                        title.textContent = target;
-                    }
-                }, 40);
-            }
-
-            /* ═══ Filtre légende ═══ */
-
-            function syncFilterFor(mini) {
-                if (!activeFilter || mini.classList.contains('is-pending')) return;
-                const match = mini.dataset.level === activeFilter;
-                mini.classList.toggle('is-highlighted', match);
-                mini.classList.toggle('is-dimmed', !match);
-            }
-
-            function applyLegendFilter(level) {
-                activeFilter = level;
-
-                legendItems.forEach((item) => {
-                    const isActive = item.dataset.level === level;
-                    item.classList.toggle('is-active', isActive);
-                    item.setAttribute('aria-pressed', String(isActive));
-                });
-
-                document.querySelectorAll('.mini').forEach((mini) => {
-                    if (!level) {
-                        mini.classList.remove('is-dimmed', 'is-highlighted');
-                        return;
-                    }
-                    syncFilterFor(mini);
-                });
-
-                logEvent(level
-                    ? `FILTRE LÉGENDE → ${LEVEL_LABEL[level]} SURLIGNÉ`
-                    : 'FILTRE LÉGENDE → RÉINITIALISÉ');
-            }
-
-            legendItems.forEach((item) => {
-                item.addEventListener('click', () => {
-                    applyLegendFilter(activeFilter === item.dataset.level ? null : item.dataset.level);
+        function clearHighlight() {
+            document.querySelectorAll('.door-unit.active').forEach(door => {
+                door.classList.remove('active');
+                gsap.to(door, {
+                    scale: 1,
+                    duration: 0.3
                 });
             });
+        }
 
-            /* ═══ Utilitaires ═══ */
+        // ═══════════════════════════════════════════════════════════
+        // SELECT DOOR
+        // ═══════════════════════════════════════════════════════════
 
-            function setDotLabel(index, stateLabel) {
-                const dot = dots[index];
-                if (!dot) return;
-                dot.setAttribute(
-                    'aria-label',
-                    `Canal ${String(index + 1).padStart(2, '0')} — ${dotTitles[index]} : ${stateLabel}`
-                );
-            }
-
-            function setCurrentDot(index) {
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('is-current', i === index);
-                    if (i === index) dot.setAttribute('aria-current', 'true');
-                    else dot.removeAttribute('aria-current');
-                });
-            }
-
-            function setState(channel, state) {
-                channel.dataset.state = state;
-                channel.querySelector('.channel__status-text').textContent = STATUS_LABEL[state];
-
-                const action = channel.querySelector('.channel__action');
-                action.disabled = state === 'locked' || state === 'open';
-                action.textContent = ACTION_LABEL[state];
-            }
-
-            function setPanel(channel, open) {
-                channel.querySelector('.channel__panel').hidden = !open;
-                channel.querySelector('.channel__action').setAttribute('aria-expanded', String(open));
-            }
-
-            function closeOthers(except) {
-                channels.forEach((channel) => {
-                    if (channel === except) return;
-                    if (!channel.querySelector('.channel__panel').hidden) {
-                        setPanel(channel, false);
-                        if (channel.dataset.state === 'validated') {
-                            channel.querySelector('.channel__action').textContent = 'RAPPORT — AFFICHER';
-                        }
-                    }
-                });
-            }
-
-            function resetMinis(channel) {
-                channel.querySelectorAll('.mini').forEach((mini) => {
-                    if (!mini.dataset.realState) {
-                        mini.dataset.realState = mini.querySelector('.mini__state').textContent.trim();
-                    }
-                    mini.classList.add('is-pending');
-                    mini.classList.remove('is-highlighted', 'is-dimmed');
-                    mini.querySelector('.mini__state').textContent = 'EN ATTENTE';
-                });
-            }
-
-            function lightUp(mini) {
-                mini.classList.remove('is-pending');
-                mini.querySelector('.mini__state').textContent = mini.dataset.realState;
-                syncFilterFor(mini);
-            }
-
-            function updateCount() {
-                if (panelStatus) {
-                    panelStatus.textContent = `● ${validated} / ${channels.length} CONTRÔLÉS`;
-                }
-                if (meterFill) {
-                    meterFill.style.transform = `scaleX(${validated / channels.length})`;
-                }
-            }
-
-            function readingTimeFor(channel) {
-                const words = channel.querySelector('.channel__note').textContent.trim().split(/\s+/).length;
-                const ms = (words / CONFIG.WORDS_PER_MINUTE) * 60 * 1000;
-                return Math.min(CONFIG.MAX_READ_MS, Math.max(CONFIG.MIN_READ_MS, ms));
-            }
-
-            /* ═══ Minuterie avec pause au survol / focus ═══ */
-
-            function waitForReading(channel, duration, token) {
-                return new Promise((resolve) => {
-                    const panel = channel.querySelector('.channel__panel');
-                    const countdown = document.createElement('p');
-                    countdown.className = 'channel__reading';
-                    countdown.setAttribute('aria-hidden', 'true');
-                    panel.appendChild(countdown);
-
-                    let remaining = duration;
-                    let paused = false;
-                    let last = performance.now();
-                    let done = false;
-
-                    const render = () => {
-                        countdown.textContent = paused
-                            ? 'LECTURE EN COURS — MINUTERIE EN PAUSE'
-                            : `FERMETURE AUTOMATIQUE — ${Math.max(0, Math.ceil(remaining / 1000))} s`;
-                    };
-
-                    const pause = () => { paused = true; render(); };
-                    const resume = () => { paused = false; last = performance.now(); render(); };
-
-                    panel.addEventListener('pointerenter', pause);
-                    panel.addEventListener('pointerleave', resume);
-                    panel.addEventListener('focusin', pause);
-                    panel.addEventListener('focusout', resume);
-
-                    token.skip = finish;
-
-                    const timer = setInterval(() => {
-                        if (token.cancelled) { finish(); return; }
-                        const now = performance.now();
-                        if (!paused) remaining -= now - last;
-                        last = now;
-                        render();
-                        if (remaining <= 0) finish();
-                    }, 250);
-
-                    function finish() {
-                        if (done) return;
-                        done = true;
-                        clearInterval(timer);
-                        panel.removeEventListener('pointerenter', pause);
-                        panel.removeEventListener('pointerleave', resume);
-                        panel.removeEventListener('focusin', pause);
-                        panel.removeEventListener('focusout', resume);
-                        countdown.remove();
-                        resolve();
-                    }
-
-                    render();
-                });
-            }
-
-            /* ═══ Annulation propre ═══ */
-
-            function cancelInspection() {
-                if (!inspection) return;
-                const { channel, index, token } = inspection;
-                token.cancelled = true;
-                resetMinis(channel);
-                setPanel(channel, false);
-                setState(channel, 'active');
-                setDotLabel(index, 'prêt pour inspection');
-                inspection = null;
-            }
-
-            /* ═══ Inspection complète ═══ */
-
-            async function startInspection(channel, index) {
-                const token = { cancelled: false, skip: null };
-                inspection = { channel, index, token };
-
-                const num = String(index + 1).padStart(2, '0');
-
-                closeOthers(channel);
-                setState(channel, 'open');
-                setPanel(channel, true);
-                brief?.classList.add('is-hidden');
-                setCurrentDot(index);
-                setDotLabel(index, 'inspection en cours');
-                logEvent(`CANAL ${num} → INSPECTION INITIALISÉE`);
-                if (live) live.textContent = `Inspection du canal ${num} en cours.`;
-
-                for (const mini of channel.querySelectorAll('.mini')) {
-                    await sleep(REDUCED ? 0 : CONFIG.STEP_DELAY);
-                    if (token.cancelled) return;
-                    lightUp(mini);
-                }
-
-                const action = channel.querySelector('.channel__action');
-                action.disabled = false;
-                action.textContent = 'TERMINER ET CONTINUER →';
-
-                await waitForReading(channel, readingTimeFor(channel), token);
-                if (token.cancelled) return;
-
-                inspection = null;
-                completeInspection(channel, index);
-            }
-
-            function completeInspection(channel, index) {
-                const num = String(index + 1).padStart(2, '0');
-
-                setPanel(channel, false);
-                setState(channel, 'validated');
-
-                channel.classList.add('is-flashing');
-                setTimeout(() => channel.classList.remove('is-flashing'), 950);
-
-                const dot = dots[index];
-                if (dot) {
-                    dot.classList.remove('is-current');
-                    dot.removeAttribute('aria-current');
-                    dot.classList.add('is-done');
-                    dot.disabled = false;
-                }
-                links[index]?.classList.add('is-filled');
-                setDotLabel(index, 'contrôlé — afficher le rapport');
-
-                validated += 1;
-                updateCount();
-                logEvent(`CANAL ${num} → CONTRÔLÉ ✓`, 'ok');
-
-                const next = channels[index + 1];
-
-                if (next) {
-                    const nextNum = String(index + 2).padStart(2, '0');
-                    setState(next, 'active');
-                    scrambleTitle(next);
-                    setCurrentDot(index + 1);
-                    setDotLabel(index + 1, 'prêt pour inspection');
-                    logEvent(`CANAL ${nextNum} → DÉVERROUILLÉ`);
-                    if (live) live.textContent = `Canal ${num} contrôlé. Canal ${nextNum} déverrouillé.`;
-                    setTimeout(() => {
-                        next.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
-                        /* Le focus suit la séquence (navigation clavier) */
-                        next.querySelector('.channel__action').focus({ preventScroll: true });
-                    }, 500);
-                } else {
-                    finishInspection(num);
-                }
-            }
-
-            async function finishInspection(lastNum) {
-                logEvent('TOUS SYSTÈMES CONTRÔLÉS', 'ok');
-                if (live) {
-                    live.textContent = `Canal ${lastNum} contrôlé. Tous les systèmes sont contrôlés. Autorisation de départ accordée.`;
-                }
-
-                for (const dot of dots) {
-                    dot.classList.add('is-celebrating');
-                    await sleep(REDUCED ? 0 : 150);
-                    setTimeout(() => dot.classList.remove('is-celebrating'), 600);
-                }
-
-                await sleep(REDUCED ? 0 : 400);
-
-                logEvent('CLEARANCE GRANTED — AUTORISATION DE DÉPART ACCORDÉE', 'final');
-                if (panelStatus) {
-                    panelStatus.textContent = '● CLEARANCE GRANTED';
-                    panelStatus.classList.add('ops-panel__status--green');
-                }
-                if (finalPanel) {
-                    finalPanel.hidden = false;
-                    finalPanel.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
-                    finalPanel.querySelector('.ops-final__cta')?.focus({ preventScroll: true });
-                }
-            }
-
-            /* ═══ Boot ═══ */
-
-            async function boot() {
-                for (const channel of channels) {
-                    await sleep(REDUCED ? 0 : 120);
-                    channel.classList.remove('is-preboot');
-                    channel.classList.add('is-booted');
-                }
-                await sleep(REDUCED ? 0 : 250);
-                logEvent(`SYSTÈME OPS-251 EN LIGNE — ${String(channels.length).padStart(2, '0')} SYSTÈMES DÉTECTÉS`);
-                logEvent('CANAL 01 → PRÊT POUR INSPECTION');
-            }
-
-            /* ═══ Préparation impression : tout visible et lisible ═══ */
-
-            function preparePrint() {
-                document.querySelectorAll('.mini').forEach((mini) => {
-                    if (!mini.dataset.realState) {
-                        mini.dataset.realState = mini.querySelector('.mini__state').textContent.trim();
-                    }
-                    mini.classList.remove('is-pending', 'is-dimmed', 'is-highlighted');
-                    mini.querySelector('.mini__state').textContent = mini.dataset.realState;
-                });
-                document.querySelectorAll('.channel__panel').forEach((panel) => {
-                    panel.hidden = false;
-                });
-                if (finalPanel) finalPanel.hidden = false;
-            }
-
-            window.addEventListener('beforeprint', preparePrint);
-
-            /* ═══ Navigation clavier dans les pastilles (flèches) ═══ */
-
-            dotsNav?.addEventListener('keydown', (event) => {
-                if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-
-                const enabled = dots.filter((dot) => !dot.disabled);
-                const currentIndex = enabled.indexOf(document.activeElement);
-                if (currentIndex === -1) return;
-
-                event.preventDefault();
-                const nextIndex = event.key === 'ArrowRight'
-                    ? (currentIndex + 1) % enabled.length
-                    : (currentIndex - 1 + enabled.length) % enabled.length;
-                enabled[nextIndex].focus();
+        function selectDoor(door) {
+            const doorEl = document.querySelector(`.door-unit[data-door-id="${door.id}"]`);
+            
+            // Animation d'embarquement
+            gsap.to(doorEl, {
+                scale: 1.15,
+                boxShadow: `0 0 80px ${getComputedStyle(doorEl).getPropertyValue('--door-color')}`,
+                duration: 0.6,
+                ease: 'back.out(1.7)'
             });
 
-            /* ═══ Init ═══ */
+            // Fade out et navigation
+            gsap.to(document.body, {
+                opacity: 0,
+                duration: 0.8,
+                delay: 0.4,
+                ease: 'power2.in',
+                onComplete: () => {
+                    window.location.href = door.href;
+                }
+            });
+        }
 
-            channels.forEach((channel, index) => {
-                if (!REDUCED) channel.classList.add('is-preboot');
-                setState(channel, index === 0 ? 'active' : 'locked');
-                setPanel(channel, false);
-                resetMinis(channel);
-                setDotLabel(index, index === 0 ? 'prêt pour inspection' : 'verrouillé');
+        // ═══════════════════════════════════════════════════════════
+        // CASIO CLOCK
+        // ═══════════════════════════════════════════════════════════
+
+        function updateCasio() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('casio-time').textContent = `${hours}:${minutes}`;
+        }
+
+        setInterval(updateCasio, 1000);
+        updateCasio();
+
+        // ═══════════════════════════════════════════════════════════
+        // INIT
+        // ═══════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDoors();
+
+            // Animation du titre
+            gsap.from('.terminal-title h1', {
+                opacity: 0,
+                y: -30,
+                duration: 0.8,
+                ease: 'back.out(1.7)'
             });
 
-            setCurrentDot(0);
-            if (finalPanel) finalPanel.hidden = true;
-            initLegendCounts();
-            buildFinalRecap();
-            updateCount();
-            boot();
-
-            console.log(`[OPS] ${channels.length} canaux · ${legendItems.length} niveaux · prêt.`);
-
-            /* ═══ Interactions cards ═══ */
-
-            channels.forEach((channel, index) => {
-                const action = channel.querySelector('.channel__action');
-
-                action.addEventListener('click', () => {
-                    const state = channel.dataset.state;
-
-                    if (state === 'active') {
-                        startInspection(channel, index);
-                        return;
-                    }
-
-                    if (state === 'open') {
-                        inspection?.token.skip?.();
-                        return;
-                    }
-
-                    if (state === 'validated') {
-                        cancelInspection();
-                        const isOpen = !channel.querySelector('.channel__panel').hidden;
-                        if (isOpen) {
-                            setPanel(channel, false);
-                            action.textContent = 'RAPPORT — AFFICHER';
-                        } else {
-                            closeOthers(channel);
-                            setPanel(channel, true);
-                            action.textContent = 'RAPPORT — MASQUER';
-                        }
-                    }
-                });
+            gsap.from('.terminal-subtitle', {
+                opacity: 0,
+                y: -20,
+                duration: 0.8,
+                delay: 0.2,
+                ease: 'power3.out'
             });
-
-            /* ═══ Navigation par pastilles ═══ */
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    const channel = channels[index];
-                    if (!channel || channel.dataset.state !== 'validated') return;
-
-                    cancelInspection();
-                    closeOthers(channel);
-                    setPanel(channel, true);
-                    channel.querySelector('.channel__action').textContent = 'RAPPORT — MASQUER';
-                    channel.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
-                });
-            });
-
-        })();
+        });
     </script>
+
 </body>
 
 </html>
